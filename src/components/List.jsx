@@ -1,24 +1,36 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { View, ScrollView, StyleSheet } from "react-native";
+
+import all from './../client/list'
 
 import Item from './../components/Item';
 
-const List = ({ seila }) => (
-  <ScrollView style={styles.container}>
-    <Item style={styles.item} 
-          description="Leite Tirol bla bla bla"
-          category="Mercearia"
-          price="R$ 38,50"/>
-    <Item style={styles.item} 
-          description="Pão Francês"
-          category="Mercearia"
-          price="R$ 40,50"/>
-    <Item style={styles.item}
-          description="Coca-Cola 2L"
-          category="Bebidas"
-          price="R$ 9,50"/>
-  </ScrollView>
-);
+const List = ({ seila }) => {
+
+  const [loading, setLoading] = useState(true);
+  const [list, setList] = useState([]);
+  
+  useEffect(() => {
+    all({pointOfSaleId: 1}).then(response => {
+      setLoading(false);
+      setList(response);
+    })
+  }, []);
+
+  return (
+    <ScrollView style={styles.container}>
+      {list.map(({id, description, categoryName, price, slots}) => (
+        <Item key={id} 
+              style={styles.item} 
+              description={description}
+              category={categoryName}
+              price={price}
+              qty={slots[0].quantity}/>
+        ))
+      }
+    </ScrollView>
+  )
+};
 
 export default List;
 
