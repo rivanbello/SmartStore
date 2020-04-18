@@ -1,15 +1,15 @@
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { SafeAreaView, StyleSheet, Text, View } from 'react-native';
 
 import List from './src/components/List';
 import Filter from './src/components/Filter';
 
 export default function App() {
   return (
-    <View style={styles.container}>
+    <SafeAreaView style={styles.container}>
       <Filter style={styles.filter}/>
       <List/>
-    </View>
+    </SafeAreaView>
   );
 }
 

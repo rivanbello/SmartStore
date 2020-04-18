@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, ScrollView, StyleSheet } from "react-native";
+import { FlatList, ScrollView, StyleSheet } from "react-native";
 
 import all from './../client/list'
 
@@ -18,17 +18,18 @@ const List = ({ seila }) => {
   }, []);
 
   return (
-    <ScrollView style={styles.container}>
-      {list.map(({id, description, categoryName, price, slots}) => (
-        <Item key={id} 
+      <FlatList 
+        data={list}
+        keyExtractor={item => item.id}
+        renderItem={(item) => (
+          <Item 
               style={styles.item} 
-              description={description}
-              category={categoryName}
-              price={price}
-              qty={slots[0].quantity}/>
-        ))
-      }
-    </ScrollView>
+              description={item.description}
+              category={item.categoryName}
+              price={item.price}
+              qty={item.price}/>
+        )}
+      />
   )
 };
 
