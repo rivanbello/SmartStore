@@ -1,16 +1,15 @@
 import React from 'react';
 import { View, Text, StyleSheet } from "react-native";
-
 import Avatar from './../components/Avatar';
+import { COLORS } from '../constants';
 
 const Item = ({ img, description, category, qty, price, style }) => (
   <View style={{...styles.container, ...style}}>
-    <Avatar/>
     <View style={styles.content}>
-      <Text style={styles.description}>{ description }</Text>
-      <Text style={styles.smallDescription}>{ category }</Text>
-      <Text style={styles.smallDescription}>Quantidade: { qty }</Text>
-      <Text style={styles.price}>{ price }</Text>
+      <Avatar/>
+      <Text style={styles.price}>R$ {price.toFixed(2).replace('.', ',')}</Text>
+      <Text style={styles.description} numberOfLines={2}>{description}</Text>
+      <Text style={styles.quantity}>{qty}un</Text>
     </View>
   </View>
 );
@@ -22,27 +21,28 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'flex-start',
-    borderWidth: 1,
-    width: '100%',
-    maxHeight: 110,
-    padding: 7,
-    borderRadius: 5
+    width: 74,
+    maxHeight: 250,
   },
   content: {
     flex: 1,
     flexDirection: 'column',
   },
   description: {
-    fontSize: 17,
-  },
-  smallDescription: {
     fontSize: 14,
+    fontWeight: 'bold',
+    color: COLORS.darkGray,
+    // whiteSpace: 'nowrap',
+    // overflow: 'hidden',
+    // textOverflow: 'ellipsis',
+  },
+  quantity: {
+    fontSize: 12,
+    color: COLORS.lightGray,
   },
   price: {
-    position: 'absolute',
-    bottom: 0,
-    right: 0,
-    fontSize: 20,
-    fontWeight: "bold",   
+    fontSize: 14,
+    fontWeight: 'bold',
+    color: COLORS.primary,
   }
 });

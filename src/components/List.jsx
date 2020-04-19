@@ -17,17 +17,19 @@ const List = ({ seila }) => {
     })
   }, []);
 
+  console.warn(list[0])
   return (
-      <FlatList 
+      <FlatList
+        style={{ width: '100%'}}
         data={list}
         keyExtractor={item => item.id}
-        renderItem={(item) => (
+        renderItem={({item: { description, categoryName, price, slots } = {}} ) => (
           <Item 
-              style={styles.item} 
-              description={item.description}
-              category={item.categoryName}
-              price={item.price}
-              qty={item.price}/>
+            style={styles.item} 
+            description={description}
+            category={categoryName}
+            price={price}
+            qty={slots && slots[0].quantity}/>
         )}
       />
   )
