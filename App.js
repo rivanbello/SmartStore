@@ -1,6 +1,7 @@
 import React from 'react';
 import { SafeAreaView, StyleSheet } from 'react-native';
 import { HomeScreen } from './src/components/screens/';
+require('./src/firebase');
 
 export default function App() {
   return (
