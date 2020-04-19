@@ -1,13 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { FlatList, View, StyleSheet } from "react-native";
 import { Dimensions } from 'react-native';
-const screenWidth = Math.round(Dimensions.get('window').width);
-
 import all from '../../client/list'
-
+import ListHeader from './ListHeader';
 import Item from './Item';
 
-const List = ({ seila }) => {
+const screenWidth = Math.round(Dimensions.get('window').width);
+const List = () => {
 
   const [loading, setLoading] = useState(true);
   const [list, setList] = useState([]);
@@ -20,6 +19,7 @@ const List = ({ seila }) => {
   }, []);
   return (
     <View>
+      <ListHeader label="Bebidas" expandLabel="Ver tudo" style={styles.header}/>
       <FlatList
         style={styles.container}
         horizontal
@@ -45,8 +45,10 @@ const styles = StyleSheet.create({
   container: {
     // width: '100%',
   },
+  header: {
+    marginBottom: 16,
+  },
   item: {
     marginRight: (screenWidth - (74 * 4) - 40) / 3,
-    // width: 100,
   }
 });

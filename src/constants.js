@@ -1,7 +1,8 @@
 const COLORS = {
   primary: '#E64463',
   darkGray: '#656565',
-  lightGray: '#A3A3A3',
+  gray: '#D9D7D7',
+  lightGray: '#F8F8F8',
 }
 
 export {

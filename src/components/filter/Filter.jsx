@@ -1,9 +1,18 @@
 import React from 'react';
-import { TextInput, StyleSheet } from "react-native";
+import { TextInput, StyleSheet, View } from "react-native";
 
-const Filter = ({ style }) => (
-  <TextInput style={{...styles.container, ...style}} placeholder= "Pesquisar produto">
-  </TextInput>
+const Filter = ({ style, Icon, placeholder, placeholderTextColor }) => (
+    
+    <View
+      style={{...styles.container, ...style}}
+    >
+        {Icon} 
+      <TextInput
+        placeholder={placeholder}
+        style={{ marginLeft: 14 }}
+        placeholderTextColor={placeholderTextColor}
+      />
+    </View>
 );
 
 export default Filter;
@@ -13,6 +22,11 @@ const styles = StyleSheet.create({
     padding: 5,
     borderWidth: 2,
     borderRadius: 5,
+    height: 50,
     width: '100%',
+    paddingHorizontal: 14,
+    display: 'flex',
+    flexDirection: 'row',
+    alignItems: 'center',
   },
 });

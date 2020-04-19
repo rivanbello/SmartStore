@@ -10,7 +10,7 @@ const Avatar = ({ src, style }) => (
 
 const styles = StyleSheet.create({
   avatar: {
-    backgroundColor: COLORS.lightGray,
+    backgroundColor: COLORS.gray,
     borderRadius: 15,
     width: 74,
     height: 74,
