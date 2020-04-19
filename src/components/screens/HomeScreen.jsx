@@ -4,9 +4,11 @@ import List from '../list/List';
 import Filter from '../filter/Filter';
 import { Ionicons } from '@expo/vector-icons';
 import { COLORS } from '../../constants';
+import { HomeHeader } from '../headers';
 
 const HomeScreen = () => (
   <View style={styles.container}>
+    {/* <HomeHeader /> */}
     <Filter
       style={styles.filter}
       placeholder="O que você está procurando?"
