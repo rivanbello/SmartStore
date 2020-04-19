@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import { FlatList, ScrollView, StyleSheet } from "react-native";
+import { FlatList, View, StyleSheet } from "react-native";
+import { Dimensions } from 'react-native';
+const screenWidth = Math.round(Dimensions.get('window').width);
 
-import all from './../client/list'
+import all from '../../client/list'
 
-import Item from './../components/Item';
+import Item from './Item';
 
 const List = ({ seila }) => {
 
@@ -16,15 +18,16 @@ const List = ({ seila }) => {
       setList(response);
     })
   }, []);
-
-  console.warn(list[0])
   return (
+    <View>
       <FlatList
-        style={{ width: '100%'}}
+        style={styles.container}
+        horizontal
         data={list}
+        contentContainerStyle={styles.content}
         keyExtractor={item => item.id}
         renderItem={({item: { description, categoryName, price, slots } = {}} ) => (
-          <Item 
+          <Item
             style={styles.item} 
             description={description}
             category={categoryName}
@@ -32,6 +35,7 @@ const List = ({ seila }) => {
             qty={slots && slots[0].quantity}/>
         )}
       />
+    </View>
   )
 };
 
@@ -39,9 +43,10 @@ export default List;
 
 const styles = StyleSheet.create({
   container: {
-    width: '100%'
+    // width: '100%',
   },
   item: {
-    marginBottom: 10
+    marginRight: (screenWidth - (74 * 4) - 40) / 3,
+    // width: 100,
   }
 });

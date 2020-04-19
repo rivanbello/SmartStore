@@ -1,15 +1,17 @@
 import React from 'react';
 import { View, Text, StyleSheet } from "react-native";
-import Avatar from './../components/Avatar';
-import { COLORS } from '../constants';
+import Avatar from '../list/Avatar';
+import { COLORS } from '../../constants';
 
-const Item = ({ img, description, category, qty, price, style }) => (
+const Item = ({ img, description, qty, price, style }) => (
   <View style={{...styles.container, ...style}}>
     <View style={styles.content}>
-      <Avatar/>
-      <Text style={styles.price}>R$ {price.toFixed(2).replace('.', ',')}</Text>
-      <Text style={styles.description} numberOfLines={2}>{description}</Text>
-      <Text style={styles.quantity}>{qty}un</Text>
+      <Avatar style={styles.avatar} src={img}/>
+      <Text style={{ ...styles.price, ...styles.text }}>R$ {price.toFixed(2).replace('.', ',')}</Text>
+      <Text style={{ ...styles.description, ...styles.text }} numberOfLines={2}>{description}</Text>
+      <Text style={{ ...styles.quantity, ...styles.text }}>
+        {Number(qty) < 9 ? '0' : ''}{qty}un
+      </Text>
     </View>
   </View>
 );
@@ -17,6 +19,9 @@ const Item = ({ img, description, category, qty, price, style }) => (
 export default Item;
 
 const styles = StyleSheet.create({
+  avatar: {
+    marginBottom: 9,
+  },
   container: {
     flexDirection: 'row',
     alignItems: 'center',
@@ -32,9 +37,6 @@ const styles = StyleSheet.create({
     fontSize: 14,
     fontWeight: 'bold',
     color: COLORS.darkGray,
-    // whiteSpace: 'nowrap',
-    // overflow: 'hidden',
-    // textOverflow: 'ellipsis',
   },
   quantity: {
     fontSize: 12,
@@ -44,5 +46,8 @@ const styles = StyleSheet.create({
     fontSize: 14,
     fontWeight: 'bold',
     color: COLORS.primary,
+  },
+  text: {
+    marginLeft: 5,
   }
 });
