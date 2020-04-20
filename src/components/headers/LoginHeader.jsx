@@ -1,20 +1,24 @@
 import React from 'react';
-import { Row, StyleSheet } from '../layout';
+import { Text, StyleSheet } from 'react-native';
+import { Row } from '../layout';
+import Header from './Header';
 import { COLORS } from '../../constants';
 
 const LoginHeader = () => (
-  <Row style={styles.container}>
-    <Text style={styles.text}>Ainda não tem conta?</Text>
-    <Text style={styles.link}>Cadastre-se</Text>
-  </Row>
+  <Header>
+    <Row style={styles.content}>
+      <Text style={styles.text}>Ainda não tem conta?</Text>
+      <Text style={styles.link}> Cadastre-se</Text>
+    </Row>
+  </Header>
 );
 
 const styles = StyleSheet.create({
-  container: {
+  content: {
     justifyContent: 'flex-end',
   },
   text: {
-    color: COLORS.grey,
+    color: COLORS.darkGray,
   },
   link: {
     color: COLORS.primary,
