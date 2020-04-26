@@ -3,8 +3,8 @@ import { StyleSheet } from 'react-native';
 import { SCREEN_WIDTH, SCREEN_HEIGHT } from '../../constants';
 import { Row } from '../layout';
 
-const Header = ({ children }) => (
-  <Row style={styles.container}>
+const Header = ({ children, style }) => (
+  <Row style={{ ...styles.container, ...style }}>
     {children}
   </Row>
 );
