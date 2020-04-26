@@ -31,7 +31,7 @@ const FormItem = ({ Icon, style, placeholder }) => {
           duration: 150,
         }
     ])
-    } else {
+    } else if (!inputHasContent) {
       floatingLabel([
         {
           position: labelXPosition,
@@ -82,7 +82,7 @@ const FormItem = ({ Icon, style, placeholder }) => {
           ...styles.input,
         }}
         onFocus={() => setActive(true)}
-        onBlur={() => !inputHasContent && setActive(false)}
+        onBlur={() => setActive(false)}
         onChangeText={
           (text) => text.length > 0
           ? setInputHasContent(true)
