@@ -1,8 +1,6 @@
-import React, { useState } from 'react';
-import { TouchableOpacity } from 'react-native';
+import React from 'react';
+import { PrimaryButton } from '../buttons';
 import FormItem from './FormItem';
-import { Row } from '../layout';
-import { COLORS } from '../../constants';
 import { FontAwesome, Entypo } from '@expo/vector-icons';
 
 const LoginForm = () => {
@@ -33,8 +31,19 @@ const LoginForm = () => {
           size: 24,
         }}
       />
+      <PrimaryButton
+        label="Entrar"
+        style={styles.button}
+      />
     </>
   )
 };
+
+const styles = {
+  button: {
+    marginTop: 40,
+    marginBottom: 19,
+  },
+}
 
 export default LoginForm;

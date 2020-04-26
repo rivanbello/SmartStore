@@ -2,7 +2,7 @@ import React from 'react';
 import { MaterialIcons } from '@expo/vector-icons';
 import { LoginHeader } from '../headers';
 import { LoginForm } from '../forms';
-import { PrimaryButton, Link } from '../buttons';
+import { Link } from '../buttons';
 import { COLORS } from '../../constants';
 import Screen from './Screen'
 
@@ -13,15 +13,9 @@ const LoginScreen = () => {
       <MaterialIcons
         size={250}
         name="landscape"
-        style={
-          styles.icon
-        }
+        style={styles.icon}
       />
       <LoginForm />
-      <PrimaryButton
-        label="Entrar"
-        style={styles.button}
-      />
       <Link
         label="Esqueci minha senha"
         style={styles.passwordLink}
@@ -31,10 +25,6 @@ const LoginScreen = () => {
 }
 
 const styles = {
-  button: {
-    marginTop: 40,
-    marginBottom: 19,
-  },
   passwordLink: {
     marginBottom: 40,
   },
