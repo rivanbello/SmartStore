@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Row } from '../layout';
 import { Animated, TextInput, StyleSheet } from 'react-native';
 import { COLORS } from '../../constants';
-import { floatingLabel } from './Animations';
+import { floatingLabel } from './animations';
 
 const FormItem = ({ Icon, style, placeholder }) => {
 
@@ -10,18 +10,19 @@ const FormItem = ({ Icon, style, placeholder }) => {
   const [labelXPosition] = useState(new Animated.Value(10));
   const [labelYPosition] = useState(new Animated.Value(0));
   const [labelFontSize] = useState(new Animated.Value(14));
+  const [inputHasContent, setInputHasContent] = useState(false);
 
   useEffect(() => {
     if (active) {
       floatingLabel([
         {
           position: labelXPosition,
-          toValue: -20,
+          toValue: 0,
           duration: 150,
         },
         {
           position: labelYPosition,
-            toValue: -20,
+            toValue: -12,
             duration: 150,
         },
         {
@@ -34,12 +35,12 @@ const FormItem = ({ Icon, style, placeholder }) => {
       floatingLabel([
         {
           position: labelXPosition,
-          toValue:  10,
+          toValue:  34,
           duration: 150,
         },
         {
           position: labelYPosition,
-          toValue:  0,
+          toValue:  5,
           duration: 150,
         },
         {
@@ -67,6 +68,7 @@ const FormItem = ({ Icon, style, placeholder }) => {
           style={{
             left: labelXPosition,
             top: labelYPosition,
+            position: 'absolute'
           }}
         >
         <Animated.Text
@@ -80,9 +82,13 @@ const FormItem = ({ Icon, style, placeholder }) => {
           ...styles.input,
         }}
         onFocus={() => setActive(true)}
-        onBlur={() => setActive(false)}
+        onBlur={() => !inputHasContent && setActive(false)}
+        onChangeText={
+          (text) => text.length > 0
+          ? setInputHasContent(true)
+          : setInputHasContent(false)
+        }
       />
-    {/* } */}
       
     </Row>
   );
