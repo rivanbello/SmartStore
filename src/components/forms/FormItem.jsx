@@ -1,16 +1,28 @@
 import React, { useState, useEffect } from 'react';
 import { Row } from '../layout';
-import { Animated, TextInput, StyleSheet } from 'react-native';
+import {
+  Animated,
+  TextInput,
+  StyleSheet,
+  TouchableOpacity,
+  View,
+} from 'react-native';
 import { COLORS } from '../../constants';
 import { floatingLabel } from './animations';
 
-const FormItem = ({ Icon, style, placeholder }) => {
-
+const FormItem = ({
+  Icon,
+  style,
+  placeholder,
+  password = false,
+  RightIcon,
+}) => {
   const [active, setActive] = useState(false);
   const [labelXPosition] = useState(new Animated.Value(10));
   const [labelYPosition] = useState(new Animated.Value(0));
   const [labelFontSize] = useState(new Animated.Value(14));
   const [inputHasContent, setInputHasContent] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
 
   useEffect(() => {
     if (active) {
@@ -83,6 +95,7 @@ const FormItem = ({ Icon, style, placeholder }) => {
         style={{
           ...styles.input,
         }}
+        secureTextEntry={password && !showPassword}
         onFocus={() => setActive(true)}
         onBlur={() => setActive(false)}
         onChangeText={
@@ -91,7 +104,23 @@ const FormItem = ({ Icon, style, placeholder }) => {
           : setInputHasContent(false)
         }
       />
-      
+      {RightIcon &&
+        <TouchableOpacity
+          style={{
+            ...styles.rightIcon,
+          }}
+          onPress={() => setShowPassword(!showPassword)}
+        >
+          <RightIcon.component
+            name={showPassword ? RightIcon.activeName : RightIcon.name}
+            size={RightIcon.size}
+            style={{
+              ...(active ? styles.iconActive : styles.icon),
+              display: (!active ? 'none' : 'flex'),
+            }}
+          />
+        </TouchableOpacity>
+      }
     </Row>
   );
 }
@@ -107,6 +136,10 @@ const styles = StyleSheet.create({
   },
   icon: {
     color: COLORS.gray,
+  },
+  rightIcon: {
+    position: 'absolute',
+    right: 0,
   },
   iconActive: {
     color: COLORS.primary,
