@@ -16,7 +16,7 @@ const ListHeader = ({ label, collapsed = true, expandLabel, style }) => (
       style={{
         fontSize: 19,
         fontWeight: 'bold',
-        color: COLORS.darkGray
+        color: COLORS.darkestGray
       }}>
         {label}
     </Text>

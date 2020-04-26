@@ -7,10 +7,11 @@ const LoginForm = () => (
   <>
     <FormItem
       placeholder="E-mail"
+      style={{ marginBottom: 22 }}
       Icon={{
         component: FontAwesome,
         name: "user-circle",
-        size: 20
+        size: 20,
       }}
     />
     <FormItem

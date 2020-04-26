@@ -36,7 +36,7 @@ const styles = StyleSheet.create({
   description: {
     fontSize: 14,
     fontWeight: 'bold',
-    color: COLORS.darkGray,
+    color: COLORS.darkestGray,
   },
   quantity: {
     fontSize: 12,

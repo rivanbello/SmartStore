@@ -18,7 +18,7 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-end',
   },
   text: {
-    color: COLORS.darkGray,
+    color: COLORS.darkestGray,
   },
   link: {
     color: COLORS.primary,

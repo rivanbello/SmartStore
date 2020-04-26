@@ -22,7 +22,7 @@ const FormItem = ({ Icon, style, placeholder }) => {
         },
         {
           position: labelYPosition,
-            toValue: -12,
+            toValue: -14,
             duration: 150,
         },
         {
@@ -64,7 +64,6 @@ const FormItem = ({ Icon, style, placeholder }) => {
         style={active ? styles.iconActive : styles.icon}
       />
       <Animated.View
-          // style={active && styles.floatingPlaceholder || styles.placeholder}
           style={{
             left: labelXPosition,
             top: labelYPosition,
@@ -72,7 +71,10 @@ const FormItem = ({ Icon, style, placeholder }) => {
           }}
         >
         <Animated.Text
-          style={{ fontSize: labelFontSize }}
+          style={{
+            fontSize: labelFontSize,
+            color: active ? COLORS.darkestGray : COLORS.gray,
+           }}
         >
           {placeholder}
         </Animated.Text>
@@ -104,7 +106,7 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   icon: {
-    color: COLORS.darkGray,
+    color: COLORS.gray,
   },
   iconActive: {
     color: COLORS.primary,
@@ -112,18 +114,6 @@ const styles = StyleSheet.create({
   placeholderView: {
     left: 30,
   },
-  placeholder: {
-    position: 'absolute',
-    color: COLORS.gray,
-    fontSize: 16,
-  },
-  floatingPlaceholder: {
-    position: 'absolute',
-    color: COLORS.darkGray,
-    left: 0,
-    bottom: 30,
-    fontSize: 10,
-  }
 });
 
 export default FormItem;

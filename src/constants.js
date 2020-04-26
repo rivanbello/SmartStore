@@ -4,9 +4,9 @@ const SCREEN_HEIGHT = Math.round(Dimensions.get('window').height);
 
 const COLORS = {
   primary: '#E64463',
-  darkestGray: '#A3A3A3',
-  darkGray: '#656565',
-  gray: '#D9D7D7',
+  darkGray: '#A3A3A3',
+  darkestGray: '#656565',
+  gray: '#C4C4C4',
   lightGray: '#F8F8F8',
 }
 

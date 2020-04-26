@@ -12,7 +12,7 @@ const HomeScreen = () => (
     <Filter
       style={styles.filter}
       placeholder="O que você está procurando?"
-      placeholderTextColor={COLORS.darkGray}
+      placeholderTextColor={COLORS.darkestGray}
       Icon={<Ionicons name="ios-search" size={26} style={{ color: COLORS.primary }}/>}
     />
     <List/>
@@ -29,7 +29,7 @@ const styles = StyleSheet.create({
     width: '100%',
     fontSize: 14,
     backgroundColor: COLORS.lightGray,
-    color: COLORS.darkGray,
+    color: COLORS.darkestGray,
     borderWidth: 0,
     borderRadius: 12,
   },
