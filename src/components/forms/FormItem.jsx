@@ -2,9 +2,10 @@ import React, { useState, useEffect } from 'react';
 import { Row } from '../layout';
 import { Animated, TextInput, StyleSheet } from 'react-native';
 import { COLORS } from '../../constants';
+import { floatingLabel } from './Animations';
 
-const FormItem = ({ Icon, style, placeholder}) => {
-  
+const FormItem = ({ Icon, style, placeholder }) => {
+
   const [active, setActive] = useState(false);
   const [labelXPosition] = useState(new Animated.Value(10));
   const [labelYPosition] = useState(new Animated.Value(0));
@@ -12,33 +13,43 @@ const FormItem = ({ Icon, style, placeholder}) => {
 
   useEffect(() => {
     if (active) {
-      Animated.timing(labelXPosition, {
-        toValue: -20,
-        duration: 500,
-      }).start();
-      Animated.timing(labelYPosition, {
-        toValue: -20,
-        duration: 500,
-      }).start();
-      Animated.timing(labelFontSize, {
-        toValue: 10,
-        duration: 500,
-      }).start();
+      floatingLabel([
+        {
+          position: labelXPosition,
+          toValue: -20,
+          duration: 150,
+        },
+        {
+          position: labelYPosition,
+            toValue: -20,
+            duration: 150,
+        },
+        {
+          position: labelFontSize,
+          toValue: 10,
+          duration: 150,
+        }
+    ])
     } else {
-      Animated.timing(labelXPosition, {
-        toValue: -20,
-        duration: 500,
-      }).start();
-      Animated.timing(labelYPosition, {
-        toValue: -20,
-        duration: 500,
-      }).start();
-      Animated.timing(labelFontSize, {
-        toValue: 10,
-        duration: 500,
-      }).start();
+      floatingLabel([
+        {
+          position: labelXPosition,
+          toValue:  10,
+          duration: 150,
+        },
+        {
+          position: labelYPosition,
+          toValue:  0,
+          duration: 150,
+        },
+        {
+          position: labelFontSize,
+          toValue:  14,
+          duration: 150,
+        }
+      ]);
     }
-  }, []);
+  }, [active]);
 
   return (
     <Row style={{
@@ -70,7 +81,6 @@ const FormItem = ({ Icon, style, placeholder}) => {
         }}
         onFocus={() => setActive(true)}
         onBlur={() => setActive(false)}
-        placeholderTextColor={COLORS.gray}
       />
     {/* } */}
       
@@ -98,7 +108,7 @@ const styles = StyleSheet.create({
   },
   placeholder: {
     position: 'absolute',
-    color: COLORS.darkGray,
+    color: COLORS.gray,
     fontSize: 16,
   },
   floatingPlaceholder: {
