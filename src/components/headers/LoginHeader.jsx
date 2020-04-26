@@ -19,9 +19,11 @@ const styles = StyleSheet.create({
   },
   text: {
     color: COLORS.darkestGray,
+    fontWeight: 'bold',
   },
   link: {
     color: COLORS.primary,
+    fontWeight: 'bold',
   }
 });
 

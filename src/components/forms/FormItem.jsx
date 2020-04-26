@@ -5,7 +5,6 @@ import {
   TextInput,
   StyleSheet,
   TouchableOpacity,
-  View,
 } from 'react-native';
 import { COLORS } from '../../constants';
 import { floatingLabel } from './animations';
