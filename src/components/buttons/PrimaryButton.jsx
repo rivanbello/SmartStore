@@ -2,12 +2,20 @@ import React from 'react';
 import { COLORS } from '../../constants';
 import { TouchableOpacity, Text } from 'react-native';
 
-const PrimaryButton = ({ onPress, label }) => (
+const PrimaryButton = ({ onPress, label, style, labelStyle }) => (
   <TouchableOpacity
-    style={styles.container}
+    style={{
+      ...styles.container,
+      ...style,
+    }}
     onPress={() => onPress && onPress()}  
   >
-    <Text style={styles.label}>{label}</Text>
+    <Text style={{ 
+      ...styles.label,
+      ...labelStyle,
+    }}>
+      {label}
+    </Text>
   </TouchableOpacity>
 );
 
