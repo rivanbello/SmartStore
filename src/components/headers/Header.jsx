@@ -11,7 +11,6 @@ const Header = ({ children, style }) => (
 
 const styles = StyleSheet.create({
   container: {
-    width: SCREEN_WIDTH,
     maxHeight: SCREEN_HEIGHT * 0.08,
     padding: 5,
   }
