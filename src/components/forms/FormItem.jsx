@@ -13,6 +13,7 @@ const FormItem = ({
   Icon,
   style,
   placeholder,
+  focused = false,
   password = false,
   RightIcon,
 }) => {
@@ -94,6 +95,7 @@ const FormItem = ({
         style={{
           ...styles.input,
         }}
+        autoFocus={focused}
         secureTextEntry={password && !showPassword}
         onFocus={() => setActive(true)}
         onBlur={() => setActive(false)}

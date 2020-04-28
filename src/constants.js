@@ -8,6 +8,7 @@ const COLORS = {
   darkestGray: '#656565',
   gray: '#C4C4C4',
   lightGray: '#F8F8F8',
+  salmon: "#FFF4F6",
 }
 
 export {

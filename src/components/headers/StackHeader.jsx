@@ -9,8 +9,9 @@ const StackHeader = () => (
       <Feather
         name="arrow-left"
         size={26}
+        style={{ left: -2 }}
       />
-      <Text> Voltar</Text>
+      <Text>Voltar</Text>
     </TouchableOpacity>
   </Header>
 );

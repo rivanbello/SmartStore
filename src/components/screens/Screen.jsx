@@ -1,19 +1,19 @@
 import React from 'react';
-import { View } from 'react-native';
+import { SafeAreaView } from 'react-native';
 
 const Screen = ({ children, style }) => (
-  <View style={{ 
+  <SafeAreaView style={{ 
     ...styles.container,
     ...style,
   }}>
     {children}
-  </View>
+  </SafeAreaView>
 );
 
 const styles = {
   container: {
     width: '100%',
-    height: '100%',
+    flex: 1,
     paddingHorizontal: 18,
   }
 }
