@@ -4,7 +4,7 @@ import { Row } from '../layout';
 import { PrimaryButton } from '../buttons';
 import { COLORS } from '../../constants';
 
-const RegisterFooter = ({ step = 0, totalSteps = 0, buttonOnPress = (() => {}) }) => (
+const RegisterFooter = ({ step = 0, totalSteps = 0, onPress = (() => {}) }) => (
   <Row style={styles.container}>
     <View style={styles.stepBox}>
       <Text style={styles.stepBoxContent}>
@@ -14,7 +14,7 @@ const RegisterFooter = ({ step = 0, totalSteps = 0, buttonOnPress = (() => {}) }
     <PrimaryButton
       style={styles.button}
       label="Próxima"
-      onPress={buttonOnPress}
+      onPress={onPress}
     />
   </Row>
 );

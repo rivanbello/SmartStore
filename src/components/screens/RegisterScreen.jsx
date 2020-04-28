@@ -8,34 +8,37 @@ import { RegisterFooter } from '../footers';
 import steps from './formSteps';
 import {
   FontAwesome,
-  Entypo,
+  AntDesign,
   Ionicons,
   Feather,
-  MaterialIcons,
+  MaterialCommunityIcons,
 } from '@expo/vector-icons';
 
 const icons = {
   'FontAwesome': FontAwesome,
-  'Entypo': Entypo,
+  'AntDesign': AntDesign,
   'Ionicons': Ionicons,
   'Feather': Feather,
-  'MaterialIcons': MaterialIcons,
+  'MaterialCommunityIcons': MaterialCommunityIcons,
 }
+
 
 const RegisterScreen = ({ step: {  } = {} }) => {
   const [stepIndex, setStepIndex] = useState(0);
-  const [getBackFunction, setGetBackFunction] = useState(() => () => {
-    if (stepIndex > 0) setStepIndex(stepIndex - 1);
+  const [getBackFunction, setGetBackFunction] = useState(() => (currentIndex) => {
+    if (currentIndex > 0) setStepIndex(currentIndex - 1);
     // else navigation.navigate('login')
   });
   const nextStep = () => {
-    if (stepIndex < steps.length) setStepIndex(stepIndex + 1);
+    if (stepIndex < (steps.length - 1)) setStepIndex(stepIndex + 1);
     // else navigation.navigate ...
   }
 
   return (
     <Screen>
-      <StackHeader />
+      <StackHeader
+        onPress={() => getBackFunction(stepIndex)}
+      />
       <SafeAreaView style={styles.content}>
         <Text style={styles.title}>Cadastro</Text>
         <Text style={styles.stepLabel}>Vamos começar pelo seu nome</Text>
@@ -49,7 +52,11 @@ const RegisterScreen = ({ step: {  } = {} }) => {
             size: 20,
           }}
         />
-        <RegisterFooter />
+        <RegisterFooter
+          step={stepIndex + 1}
+          totalSteps={5}
+          onPress={() => nextStep()}
+        />
       </SafeAreaView>
     </Screen>
   )
