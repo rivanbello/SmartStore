@@ -22,7 +22,6 @@ const icons = {
   'MaterialCommunityIcons': MaterialCommunityIcons,
 }
 
-
 const RegisterScreen = ({ step: {  } = {} }) => {
   const [stepIndex, setStepIndex] = useState(0);
   const [getBackFunction, setGetBackFunction] = useState(() => (currentIndex) => {
@@ -41,8 +40,9 @@ const RegisterScreen = ({ step: {  } = {} }) => {
       />
       <SafeAreaView style={styles.content}>
         <Text style={styles.title}>Cadastro</Text>
-        <Text style={styles.stepLabel}>Vamos começar pelo seu nome</Text>
+        <Text style={styles.stepLabel}>{steps[stepIndex].label}</Text>
         <FormItem
+          phoneNumber={steps[stepIndex].phoneNumber}
           focused
           style={styles.formItem}
           placeholder={steps[stepIndex].formItems[0].placeholder}

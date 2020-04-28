@@ -23,7 +23,7 @@ const steps = [
     phoneNumber: true,
   },
   {
-    label: '###, insira seu e-mail',
+    label: '###, insira seu e-mail\n',
     stepIndex: 3,
     formItems: [
       {
@@ -35,7 +35,7 @@ const steps = [
     email: true,
   },
   {
-    label: '###, insira seu e-mail',
+    label: 'Perfeito, e qual é a sua data de nascimento?',
     stepIndex: 4,
     formItems: [
       {

@@ -6,6 +6,8 @@ import {
   StyleSheet,
   TouchableOpacity,
 } from 'react-native';
+import codes from './phoneCodes';
+import { Picker } from '@react-native-community/picker';
 import { COLORS } from '../../constants';
 import { floatingLabel } from './animations';
 
@@ -13,6 +15,7 @@ const FormItem = ({
   Icon,
   style,
   placeholder,
+  phoneNumber = false,
   focused = false,
   password = false,
   RightIcon,
@@ -75,6 +78,24 @@ const FormItem = ({
         size={Icon.size}
         style={active ? styles.iconActive : styles.icon}
       />
+      {phoneNumber && active &&
+        <Picker
+          style={{
+            height: 50,
+            width: 100,
+          }}
+          itemStyle={{
+            fontWeight: 'bold',
+          }}
+        >
+          {codes.map(({ fone, nome }) => {
+            fone = '+'+fone.replace(/^0+/, "");
+            return <Picker.Item
+              label={`${fone} (${nome})`}
+              value={fone} />
+          })}
+        </Picker>
+      }
       <Animated.View
           style={{
             left: labelXPosition,
