@@ -5,9 +5,11 @@ import {
   TextInput,
   StyleSheet,
   TouchableOpacity,
+  Text,
 } from 'react-native';
 import codes from './phoneCodes';
 import { Picker } from '@react-native-community/picker';
+import DateTimePicker from '@react-native-community/datetimepicker';
 import { COLORS } from '../../constants';
 import { floatingLabel } from './animations';
 
@@ -16,6 +18,7 @@ const FormItem = ({
   style,
   placeholder,
   phoneNumber = false,
+  datePicker = false,
   focused = false,
   password = false,
   RightIcon,
@@ -26,6 +29,8 @@ const FormItem = ({
   const [labelFontSize] = useState(new Animated.Value(14));
   const [inputHasContent, setInputHasContent] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
+  const [datePickerOpen, setDatePickerOpen] = useState(false);
+  const [date, setDate] = useState(new Date(1598051730000))
 
   useEffect(() => {
     if (active) {
@@ -72,6 +77,10 @@ const FormItem = ({
       ...styles.container,
       ...style,
       borderColor: active ? COLORS.primary : COLORS.gray,
+      borderWidth: datePicker ? 1 : 0,
+      borderRadius: datePicker ? 24 : 0,
+      height: datePicker ? 36 : 'auto',
+      paddingHorizontal: datePicker ? 15 : 0,
     }}>
       <Icon.component
         name={Icon.name}
@@ -96,7 +105,25 @@ const FormItem = ({
           })}
         </Picker>
       }
-      <Animated.View
+      {datePicker &&
+        <Text
+          style={styles.date}
+          onPress={() => setDatePickerOpen(true)}  
+        >
+          {date.getDate()}/
+          {date.getMonth().length === 2 ? date.getMonth() : `0${date.getMonth()}`}/
+          {date.getFullYear()}
+        </Text>
+      }
+      {console.warn(datePickerOpen)}
+      {datePicker && datePickerOpen &&
+        <DateTimePicker
+          value={date}
+          mode="date"
+          onChange={() => setDatePickerOpen(false)}
+        />
+      }
+      {!datePicker && <Animated.View
           style={{
             left: labelXPosition,
             top: labelYPosition,
@@ -111,8 +138,8 @@ const FormItem = ({
         >
           {placeholder}
         </Animated.Text>
-      </Animated.View>
-      <TextInput
+      </Animated.View>}
+      {!datePicker && <TextInput
         style={{
           ...styles.input,
         }}
@@ -125,7 +152,7 @@ const FormItem = ({
           ? setInputHasContent(true)
           : setInputHasContent(false)
         }
-      />
+      />}
       {RightIcon &&
         <TouchableOpacity
           style={{
@@ -148,13 +175,17 @@ const FormItem = ({
 }
 const styles = StyleSheet.create({
   container: {
-    // padding: 5,
     borderBottomWidth: 1,
     borderRadius: 5,
   },
   input: {
     marginLeft: 14,
     flex: 1,
+  },
+  date: {
+    flex: 1,
+    textAlign: 'center',
+    lineHeight: 30,
   },
   icon: {
     color: COLORS.gray,

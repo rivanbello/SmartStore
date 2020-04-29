@@ -45,6 +45,7 @@ const RegisterScreen = ({ step: {  } = {} }) => {
           phoneNumber={steps[stepIndex].phoneNumber}
           focused
           style={styles.formItem}
+          datePicker={steps[stepIndex].datePicker}
           placeholder={steps[stepIndex].formItems[0].placeholder}
           Icon={{
             component: icons[steps[stepIndex].formItems[0].iconFamily],
