@@ -21,6 +21,7 @@ const FormItem = ({
   datePicker = false,
   focused = false,
   password = false,
+  setFormValue,
   RightIcon,
 }) => {
   const [active, setActive] = useState(false);
@@ -30,7 +31,15 @@ const FormItem = ({
   const [inputHasContent, setInputHasContent] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const [datePickerOpen, setDatePickerOpen] = useState(false);
-  const [date, setDate] = useState(new Date(1598051730000))
+  const [inputValue, setInputValue] = useState('');
+  const [date, setDate] = useState(new Date(1598051730000));
+  const [pickerClosed, setPickerClosed] = useState(true);
+  const [phoneCode, setPhoneCode] = useState('+55');
+
+  useEffect(() => {
+      setInputValue('');
+      setFormValue('');
+  }, [placeholder])
 
   useEffect(() => {
     if (active) {
@@ -92,16 +101,19 @@ const FormItem = ({
           style={{
             height: 50,
             width: 100,
+            overflow: 'hidden',
           }}
           itemStyle={{
             fontWeight: 'bold',
+            color: 'red'
           }}
         >
-          {codes.map(({ fone, nome }) => {
-            fone = '+'+fone.replace(/^0+/, "");
+          {codes.map(({ fone: phone, nome }) => {
+            phone = '+'+phone.replace(/^0+/, "");
             return <Picker.Item
-              label={`${fone} (${nome})`}
-              value={fone} />
+              label={!pickerClosed ? `${phone} (${nome})` : phone}
+              value={phone}
+            />
           })}
         </Picker>
       }
@@ -110,17 +122,22 @@ const FormItem = ({
           style={styles.date}
           onPress={() => setDatePickerOpen(true)}  
         >
-          {date.getDate()}/
-          {date.getMonth().length === 2 ? date.getMonth() : `0${date.getMonth()}`}/
+          {date.getDate().length > 1 ? date.getDate() : `0${date.getDate()}`}/
+          {date.getMonth().length > 1 ? date.getMonth() : `0${date.getMonth()}`}/
           {date.getFullYear()}
         </Text>
       }
-      {console.warn(datePickerOpen)}
       {datePicker && datePickerOpen &&
         <DateTimePicker
           value={date}
           mode="date"
-          onChange={() => setDatePickerOpen(false)}
+          onChange={
+            (e, date) => {
+              setDatePickerOpen(false);
+              if (date && date.getMonth) setDate(date);
+              setFormValue(date);
+            }
+          }
         />
       }
       {!datePicker && <Animated.View
@@ -147,10 +164,14 @@ const FormItem = ({
         secureTextEntry={password && !showPassword}
         onFocus={() => setActive(true)}
         onBlur={() => setActive(false)}
+        value={inputValue}
         onChangeText={
-          (text) => text.length > 0
-          ? setInputHasContent(true)
-          : setInputHasContent(false)
+          (text) => { 
+            setInputValue(text);
+            setFormValue(text);
+            if (text.length > 0) setInputHasContent(true)
+            else setInputHasContent(false)
+          }
         }
       />}
       {RightIcon &&

@@ -2,6 +2,7 @@ import React from 'react';
 import { PrimaryButton } from '../buttons';
 import FormItem from './FormItem';
 import { FontAwesome, Entypo } from '@expo/vector-icons';
+import validateField from './formValidators';
 
 const LoginForm = () => {
 
@@ -9,7 +10,9 @@ const LoginForm = () => {
     <>
       <FormItem
         placeholder="E-mail"
+        setFormValue={(value) => validateField(stepIndex, value) && setLastValue(value)}        
         style={{ marginBottom: 22 }}
+        setFormValue={() => () => {}}
         Icon={{
           component: FontAwesome,
           name: "user-circle",
@@ -19,6 +22,7 @@ const LoginForm = () => {
       <FormItem
         placeholder="Senha"
         password
+        setFormValue={() => () => {}}
         Icon={{
           component: FontAwesome,
           name: "user-circle",
