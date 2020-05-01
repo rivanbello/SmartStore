@@ -37,11 +37,6 @@ const FormItem = ({
   const [pickerClosed, setPickerClosed] = useState(true);
   const [phoneCode, setPhoneCode] = useState('+55');
 
-  // useEffect(() => {
-  //     setInputValue('');
-  //     setFormValue('');
-  // }, [placeholder])
-
   useEffect(() => {
     if (active) {
       floatingLabel([

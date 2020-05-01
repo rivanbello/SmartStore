@@ -1,6 +1,12 @@
+import React from 'react';
+import { Text } from 'react-native'
+import { COLORS } from '../../constants';
 const createSteps = (context) => [
   {
-    label: 'Vamos começar pelo seu nome',
+    label: 
+    <Text style={styles.stepLabel}>
+      <Text>Vamos começar pelo seu nome</Text>
+    </Text>,
     stepIndex: 1,
     formItems: [
       {
@@ -11,7 +17,12 @@ const createSteps = (context) => [
     ]
   },
   {
-    label: `Legal ${context.nome}, agora insira seu número de telefone`,
+    label:
+    <Text style={styles.stepLabel}>
+      <Text>Legal </Text>
+      <Text style={{ color: COLORS.primary }}>{context.nome}</Text>
+      <Text>, agora insira seu número de telefone</Text>
+    </Text>,
     stepIndex: 2,
     formItems: [
       {
@@ -23,7 +34,11 @@ const createSteps = (context) => [
     phoneNumber: true,
   },
   {
-    label: '###, insira seu e-mail\n',
+    label:
+    <Text style={styles.stepLabel}>
+      <Text style={{ color: COLORS.primary }}>{context.nome}</Text>
+      <Text>, insira seu e-mail{'\n'}</Text>
+    </Text>,
     stepIndex: 3,
     formItems: [
       {
@@ -35,7 +50,7 @@ const createSteps = (context) => [
     email: true,
   },
   {
-    label: 'Perfeito, e qual é a sua data de nascimento?',
+    label: <Text style={styles.stepLabel}>Perfeito, e qual é a sua data de nascimento?</Text>,
     stepIndex: 4,
     formItems: [
       {
@@ -47,5 +62,13 @@ const createSteps = (context) => [
     datePicker: true,
   },
 ]
+
+const styles = {
+  stepLabel: {
+    fontSize: 30,
+    fontWeight: 'bold',
+    marginBottom: 26,
+  },
+};
 
 export default createSteps;

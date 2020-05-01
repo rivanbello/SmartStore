@@ -69,7 +69,7 @@ const RegisterScreen = () => {
       </Animated.View>
       <SafeAreaView style={styles.content}>
         <Text style={styles.title}>Cadastro</Text>
-        <Text style={styles.stepLabel}>{steps[stepIndex].label}</Text>
+        {steps[stepIndex].label}
         <FormItem
           phoneNumber={steps[stepIndex].phoneNumber}
           focused
@@ -110,14 +110,9 @@ const styles = {
     fontWeight: 'bold',
     marginBottom: 10,
   },
-  stepLabel: {
-    fontSize: 30,
-    fontWeight: 'bold',
-    marginBottom: 26,
-  },
   content: {
     flex: 1,
-    marginTop: '25%',
+    marginTop: '15%',
   },
 }
 
