@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import Screen from './Screen';
 import { StackHeader } from '../headers';
 import { Text, SafeAreaView, Animated } from 'react-native';
@@ -6,7 +6,7 @@ import { COLORS } from '../../constants';
 import { FormItem } from '../forms';
 import { RegisterFooter } from '../footers';
 import validateField from '../forms/formValidators';
-import steps from './formSteps';
+import generateSteps from './formSteps';
 import {
   FontAwesome,
   AntDesign,
@@ -15,6 +15,8 @@ import {
   MaterialCommunityIcons,
 } from '@expo/vector-icons';
 import { TopAlert } from '../misc';
+import { UserContext } from '../../context';
+// import steps from './formSteps'
 
 const icons = {
   'FontAwesome': FontAwesome,
@@ -25,20 +27,19 @@ const icons = {
 }
 
 const RegisterScreen = () => {
+  const [userInfo, setUserInfo] = useContext(UserContext);
+  const [steps, setSteps] = useState(generateSteps({}));
   const [stepIndex, setStepIndex] = useState(0);
   const [getBackFunction, setGetBackFunction] = useState(() => (currentIndex) => {
     if (currentIndex > 0) setStepIndex(currentIndex - 1);
     // else navigation.navigate('login')
   });
-  const [valuesAndSteps, setValuesAndSteps] = useState([]);
   const [lastValue, setLastValue] = useState('');
-  const didMountRef = useRef(false);
   const [fadeOpacity, setfadeOpacity] = useState(new Animated.Value(0));
   const nextStep = () => {
-    if (!lastValue) {
+    if (!validateField(stepIndex, lastValue)) {
       fadeOpacity.setValue(1);
       setfadeOpacity(new Animated.Value(1));
-      // setInterval(() => setShowError(false) , 3000);
     }
     else if (stepIndex < (steps.length - 1)) setStepIndex(stepIndex + 1);
     // else navigation.navigate ...
@@ -63,14 +64,16 @@ const RegisterScreen = () => {
         <TopAlert 
           secondLabel={`Digite um ${steps[stepIndex].formItems[0].placeholder.toLowerCase()} válido`}
           error
+          style={{ top: 16 }}
         />
-      </Animated.View>        
+      </Animated.View>
       <SafeAreaView style={styles.content}>
         <Text style={styles.title}>Cadastro</Text>
         <Text style={styles.stepLabel}>{steps[stepIndex].label}</Text>
         <FormItem
           phoneNumber={steps[stepIndex].phoneNumber}
           focused
+          savedValue={userInfo[`${steps[stepIndex].formItems[0].placeholder.toLowerCase()}`] || ''}
           style={styles.formItem}
           datePicker={steps[stepIndex].datePicker}
           placeholder={steps[stepIndex].formItems[0].placeholder}
@@ -80,7 +83,15 @@ const RegisterScreen = () => {
             name: steps[stepIndex].formItems[0].iconName,
             size: 20,
           }}
-          setFormValue={(value) => validateField(stepIndex, value) && setLastValue(value)}
+          setFormValue={(value) => {
+            const newUserInfo = {
+              ...userInfo,
+              [`${steps[stepIndex].formItems[0].placeholder.toLowerCase()}`]: value,
+            };
+            setUserInfo(newUserInfo)
+            setSteps(generateSteps(newUserInfo)); 
+            setLastValue(value);
+          }}
         />
         <RegisterFooter
           step={stepIndex + 1}

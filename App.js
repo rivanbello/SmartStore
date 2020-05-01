@@ -1,19 +1,23 @@
-import React from 'react';
+require('./src/firebase');
+import React, { useState } from 'react';
 import { SafeAreaView, StyleSheet, Text, View } from 'react-native';
 import {
   HomeScreen,
   LoginScreen,
   RegisterScreen,
 } from './src/components/screens';
-require('./src/firebase');
+import { UserContext } from './src/context';
 
 export default function App() {
+  const [userInfo, setUserInfo] = useState({});
   return (
-    <SafeAreaView style={styles.container}>
-      {/* <LoginScreen /> */}
-      {/* <HomeScreen /> */}
-      <RegisterScreen />
-    </SafeAreaView>
+    <UserContext.Provider value={[userInfo, setUserInfo]}>
+      <SafeAreaView style={styles.container}>
+        {/* <LoginScreen /> */}
+        {/* <HomeScreen /> */}
+        <RegisterScreen />
+      </SafeAreaView>
+    </UserContext.Provider>
   );
 }
 

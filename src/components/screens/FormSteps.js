@@ -1,4 +1,4 @@
-const steps = [
+const createSteps = (context) => [
   {
     label: 'Vamos começar pelo seu nome',
     stepIndex: 1,
@@ -11,7 +11,7 @@ const steps = [
     ]
   },
   {
-    label: 'Legal ###, agora insira seu número de telefone',
+    label: `Legal ${context.nome}, agora insira seu número de telefone`,
     stepIndex: 2,
     formItems: [
       {
@@ -48,4 +48,4 @@ const steps = [
   },
 ]
 
-export default steps;
+export default createSteps;

@@ -22,13 +22,14 @@ const FormItem = ({
   focused = false,
   password = false,
   setFormValue,
+  savedValue,
   RightIcon,
 }) => {
   const [active, setActive] = useState(false);
   const [labelXPosition] = useState(new Animated.Value(10));
   const [labelYPosition] = useState(new Animated.Value(0));
   const [labelFontSize] = useState(new Animated.Value(14));
-  const [inputHasContent, setInputHasContent] = useState(false);
+  const [inputHasContent, setInputHasContent] = useState(!!savedValue);
   const [showPassword, setShowPassword] = useState(false);
   const [datePickerOpen, setDatePickerOpen] = useState(false);
   const [inputValue, setInputValue] = useState('');
@@ -36,10 +37,10 @@ const FormItem = ({
   const [pickerClosed, setPickerClosed] = useState(true);
   const [phoneCode, setPhoneCode] = useState('+55');
 
-  useEffect(() => {
-      setInputValue('');
-      setFormValue('');
-  }, [placeholder])
+  // useEffect(() => {
+  //     setInputValue('');
+  //     setFormValue('');
+  // }, [placeholder])
 
   useEffect(() => {
     if (active) {
@@ -164,7 +165,7 @@ const FormItem = ({
         secureTextEntry={password && !showPassword}
         onFocus={() => setActive(true)}
         onBlur={() => setActive(false)}
-        value={inputValue}
+        value={savedValue}
         onChangeText={
           (text) => { 
             setInputValue(text);
