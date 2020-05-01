@@ -3,8 +3,8 @@ import { View, Text } from 'react-native';
 import { Row } from '../layout';
 import { COLORS } from '../../constants';
 
-const TopAlert = ({ firstLabel, secondLabel }) => (
-  <View style={styles.container}>
+const TopAlert = ({ firstLabel, secondLabel, style }) => (
+  <View style={{ ...styles.container, ...style }}>
     <Row style={styles.content}>
       <Text style={styles.text}>{firstLabel}</Text>
       <Text style={styles.link}>{secondLabel}</Text>

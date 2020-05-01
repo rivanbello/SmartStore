@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import Screen from './Screen';
 import { StackHeader } from '../headers';
 import { Text, SafeAreaView, Animated } from 'react-native';
@@ -30,31 +30,41 @@ const RegisterScreen = () => {
     if (currentIndex > 0) setStepIndex(currentIndex - 1);
     // else navigation.navigate('login')
   });
-  const [showError, setShowError] = useState(true);
   const [valuesAndSteps, setValuesAndSteps] = useState([]);
   const [lastValue, setLastValue] = useState('');
+  const didMountRef = useRef(false);
+  const [fadeOpacity, setfadeOpacity] = useState(new Animated.Value(0));
   const nextStep = () => {
-    if (!lastValue) { setShowError(true) }
+    if (!lastValue) {
+      fadeOpacity.setValue(1);
+      setfadeOpacity(new Animated.Value(1));
+      // setInterval(() => setShowError(false) , 3000);
+    }
     else if (stepIndex < (steps.length - 1)) setStepIndex(stepIndex + 1);
     // else navigation.navigate ...
   }
 
   useEffect(() => {
-  })
+      Animated.timing(fadeOpacity, {
+        toValue: 0,
+        delay: 2000,
+        duration: 1000,
+      }).start();
+  }, [fadeOpacity])
 
   return (
     <Screen>
       <StackHeader
         onPress={() => getBackFunction(stepIndex)}
       />
-      {showError &&
-        <Animated.View>
-          <TopAlert 
-            secondLabel={`Digite um ${steps[stepIndex].formItems[0].placeholder.toLowerCase()} válido`}
-            error
-          />
-        </Animated.View>        
-      }
+      <Animated.View
+        style={{ opacity: fadeOpacity }}
+      >
+        <TopAlert 
+          secondLabel={`Digite um ${steps[stepIndex].formItems[0].placeholder.toLowerCase()} válido`}
+          error
+        />
+      </Animated.View>        
       <SafeAreaView style={styles.content}>
         <Text style={styles.title}>Cadastro</Text>
         <Text style={styles.stepLabel}>{steps[stepIndex].label}</Text>
