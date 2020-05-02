@@ -2,7 +2,6 @@ import React, { useState, useEffect, useContext } from 'react';
 import Screen from './Screen';
 import { StackHeader } from '../headers';
 import { Text, SafeAreaView, Animated } from 'react-native';
-import { COLORS } from '../../constants';
 import { FormItem } from '../forms';
 import { RegisterFooter } from '../footers';
 import validateField from '../forms/formValidators';

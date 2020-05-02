@@ -32,10 +32,37 @@ const FormItem = ({
   const [inputHasContent, setInputHasContent] = useState(!!savedValue);
   const [showPassword, setShowPassword] = useState(false);
   const [datePickerOpen, setDatePickerOpen] = useState(false);
-  const [inputValue, setInputValue] = useState('');
   const [date, setDate] = useState(new Date(1598051730000));
   const [pickerClosed, setPickerClosed] = useState(true);
   const [phoneCode, setPhoneCode] = useState('+55');
+  const [maskedInputValue, setMaskedInputValue] = useState('(');
+
+  const onChangeText = (text) => {
+    let value = text;
+    console.clear();
+    if (value.length <= maskedInputValue.length) {
+     if (value.length === 2 || value.length === 8)
+      value = value.substring(0, value.length - 1);
+    }
+    setMaskedInputValue(value);
+    if (phoneNumber) value = value.replace(/[()-]/, '');
+    setFormValue(value);
+    if (value.length > 0) setInputHasContent(true)
+    else setInputHasContent(false)
+  };
+
+  const maskedPhoneNumber = () => {
+    if (!phoneCode === '+55') return savedValue;
+    let dirtyNumber = maskedInputValue;
+    if (maskedInputValue && !(savedValue > maskedInputValue.replace(/[()-]/, '')))
+      switch (maskedInputValue.length) {
+        case 0: dirtyNumber = maskedInputValue.concat('('); break;
+        case 2: dirtyNumber = maskedInputValue.concat(')'); break;
+        case 8: dirtyNumber = maskedInputValue.concat('-'); break;
+        default: break;
+      }
+    return dirtyNumber;
+  }
 
   useEffect(() => {
     if (active) {
@@ -163,15 +190,8 @@ const FormItem = ({
         secureTextEntry={password && !showPassword}
         onFocus={() => setActive(true)}
         onBlur={() => setActive(false)}
-        value={savedValue}
-        onChangeText={
-          (text) => { 
-            setInputValue(text);
-            setFormValue(text);
-            if (text.length > 0) setInputHasContent(true)
-            else setInputHasContent(false)
-          }
-        }
+        value={phoneNumber ? maskedPhoneNumber() : savedValue}
+        onChangeText={onChangeText}
       />}
       {RightIcon &&
         <TouchableOpacity
