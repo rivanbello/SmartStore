@@ -65,7 +65,8 @@ const createSteps = (context) => [
 
 const styles = {
   stepLabel: {
-    fontSize: 30,
+    color: COLORS.textPrimary,
+    fontSize: 24,
     fontWeight: 'bold',
     marginBottom: 26,
   },

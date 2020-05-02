@@ -64,7 +64,7 @@ const RegisterScreen = () => {
         <TopAlert 
           secondLabel={`Digite um ${steps[stepIndex].formItems[0].placeholder.toLowerCase()} válido`}
           error
-          style={{ top: 16 }}
+          style={{ top: 5 }}
         />
       </Animated.View>
       <SafeAreaView style={styles.content}>
@@ -106,13 +106,13 @@ const RegisterScreen = () => {
 const styles = {
   title: {
     fontSize: 14,
-    color: COLORS.gray,
+    color: '#D1D0DE',
     fontWeight: 'bold',
     marginBottom: 10,
   },
   content: {
     flex: 1,
-    marginTop: '15%',
+    marginTop: '16%',
   },
 }
 

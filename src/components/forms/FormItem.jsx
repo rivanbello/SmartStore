@@ -84,7 +84,7 @@ const FormItem = ({
       borderColor: active ? COLORS.primary : COLORS.gray,
       borderWidth: datePicker ? 1 : 0,
       borderRadius: datePicker ? 24 : 0,
-      height: datePicker ? 36 : 'auto',
+      height: datePicker ? 36 : 36,
       paddingHorizontal: datePicker ? 15 : 0,
     }}>
       <Icon.component
@@ -100,15 +100,18 @@ const FormItem = ({
             overflow: 'hidden',
           }}
           itemStyle={{
+            margin: 0,
             fontWeight: 'bold',
-            color: 'red'
+            color: 'red',
+            width: 10,
           }}
         >
-          {codes.map(({ fone: phone, nome }) => {
-            phone = '+'+phone.replace(/^0+/, "");
+          {codes.map(({ fone: phone, nome, iso }) => {
+            phone = '+'+phone.replace(/^0+/, "")+' ('+iso+')';
             return <Picker.Item
-              label={!pickerClosed ? `${phone} (${nome})` : phone}
+              label={!pickerClosed ? `${phone}` : phone}
               value={phone}
+              style={{ backgroundColor: 'red'}}
             />
           })}
         </Picker>

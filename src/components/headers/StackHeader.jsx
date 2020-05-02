@@ -2,6 +2,7 @@ import React from 'react';
 import Header from './Header';
 import { TouchableOpacity, Text } from 'react-native';
 import { Feather } from '@expo/vector-icons';
+import { COLORS } from '../../constants';
 
 const StackHeader = ({ onPress = (() => {}) }) => (
   <Header style={styles.container}>
@@ -12,9 +13,12 @@ const StackHeader = ({ onPress = (() => {}) }) => (
       <Feather
         name="arrow-left"
         size={26}
-        style={{ left: -2 }}
+        style={{
+          left: -2,
+          color: COLORS.textPrimary,
+        }}
       />
-      <Text>Voltar</Text>
+      <Text style={{ color: COLORS.textPrimary }}>Voltar</Text>
     </TouchableOpacity>
   </Header>
 );
