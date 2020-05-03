@@ -31,6 +31,7 @@ const CondoForm = ({ data }) => {
       <CondoList
         data={data.slice(1)}
         onPress={(index) => setSelected(index + 1)}
+        selectedItem={selected}
       />
     </View>
   || <Text>

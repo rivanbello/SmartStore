@@ -2,7 +2,7 @@ import React from 'react';
 import { FlatList } from 'react-native';
 import CondoCard from './CondoCard';
 
-const CondoList = ({ data, onPress }) => (
+const CondoList = ({ data, onPress, selectedItem }) => (
   <FlatList style={styles.container}
     data={data}
     renderItem={({ item: { name,
@@ -12,6 +12,7 @@ const CondoList = ({ data, onPress }) => (
       index
     }) => <CondoCard
       style={styles.item}
+      selected={selectedItem === index + 1}
       name={name}
       address={address}
       neighborhood={neighborhood}
