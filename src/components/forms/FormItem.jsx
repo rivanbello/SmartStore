@@ -35,34 +35,40 @@ const FormItem = ({
   const [date, setDate] = useState(new Date(1598051730000));
   const [pickerClosed, setPickerClosed] = useState(true);
   const [phoneCode, setPhoneCode] = useState('+55');
-  const [maskedInputValue, setMaskedInputValue] = useState('(');
+  const [maskedInputValue, setMaskedInputValue] = useState('');
+
+  const appendToPosition = (target, position, value) => {
+    if (target.length < position) return target;
+    return [target.slice(0, position), value, target.slice(position)].join('');
+  }
 
   const onChangeText = (text) => {
-    let value = text;
-    console.clear();
-    if (value.length <= maskedInputValue.length) {
-     if (value.length === 2 || value.length === 8)
-      value = value.substring(0, value.length - 1);
+    let value = text
+
+    if (phoneNumber && phoneCode === '+55') {
+      if (value.length === 1) {
+        if (Number(value[0])) value = appendToPosition(value, 0, '(')
+        else value = '';
+      }
+      if (value.length === 4) {
+        if (Number(value[3])) {
+          value = appendToPosition(value, 3, ')');
+          value = appendToPosition(value, 4, ' ');
+        } else value = value.slice(0, 3);
+      }
+      if (value.length === 11) {
+        if (Number(value[10])) value = appendToPosition(value, 10, '-');
+        else value = value.slice(0, 10);
+      }
+      setMaskedInputValue(value);
+      value = value.replace(/[)(-]/, '');
+      value = value.replace(')', '');
+      value = value.replace(' ', '');
     }
-    setMaskedInputValue(value);
-    if (phoneNumber) value = value.replace(/[()-]/, '');
     setFormValue(value);
     if (value.length > 0) setInputHasContent(true)
     else setInputHasContent(false)
   };
-
-  const maskedPhoneNumber = () => {
-    if (!phoneCode === '+55') return savedValue;
-    let dirtyNumber = maskedInputValue;
-    if (maskedInputValue && !(savedValue > maskedInputValue.replace(/[()-]/, '')))
-      switch (maskedInputValue.length) {
-        case 0: dirtyNumber = maskedInputValue.concat('('); break;
-        case 2: dirtyNumber = maskedInputValue.concat(')'); break;
-        case 8: dirtyNumber = maskedInputValue.concat('-'); break;
-        default: break;
-      }
-    return dirtyNumber;
-  }
 
   useEffect(() => {
     if (active) {
@@ -186,11 +192,13 @@ const FormItem = ({
         style={{
           ...styles.input,
         }}
+        maxLength={phoneNumber ? 15 : 50}
+        keyboardType={phoneNumber ? "numeric" : "default"}
         autoFocus={focused}
         secureTextEntry={password && !showPassword}
         onFocus={() => setActive(true)}
         onBlur={() => setActive(false)}
-        value={phoneNumber ? maskedPhoneNumber() : savedValue}
+        value={phoneNumber ? maskedInputValue : savedValue}
         onChangeText={onChangeText}
       />}
       {RightIcon &&

@@ -52,6 +52,10 @@ const RegisterScreen = () => {
       }).start();
   }, [fadeOpacity])
 
+  useEffect(() => {
+    setLastValue(userInfo[`${steps[stepIndex].formItems[0].placeholder.toLowerCase()}`] || '')
+  },[stepIndex])
+
   return (
     <Screen>
       <StackHeader
@@ -72,7 +76,7 @@ const RegisterScreen = () => {
         <FormItem
           phoneNumber={steps[stepIndex].phoneNumber}
           focused
-          savedValue={userInfo[`${steps[stepIndex].formItems[0].placeholder.toLowerCase()}`] || ''}
+          savedValue={lastValue}
           style={styles.formItem}
           datePicker={steps[stepIndex].datePicker}
           placeholder={steps[stepIndex].formItems[0].placeholder}

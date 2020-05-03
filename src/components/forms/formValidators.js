@@ -5,7 +5,7 @@ const validators = [
   },
   {
     index: 1,
-    rule: /[A-Za-zÀ-ÖØ-öø-ÿ]/,
+    rule: /^[0-9]*$/,
   },
   {
     index: 2,
