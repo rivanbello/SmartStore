@@ -1,7 +1,7 @@
 import React from 'react';
 import { Text } from 'react-native'
 import { COLORS } from '../../constants';
-const createSteps = (context) => [
+const generateSteps = (context) => [
   {
     label: 
     <Text style={styles.stepLabel}>
@@ -61,6 +61,15 @@ const createSteps = (context) => [
     ],
     datePicker: true,
   },
+  {
+    label: <Text style={styles.stepLabel}>Para finalizar, escolha o condomínio onde reside</Text>,
+    stepIndex: 5,
+    formItems: [
+      {
+        placeholder: 'condo',
+      }
+    ],
+  },
 ]
 
 const styles = {
@@ -72,4 +81,4 @@ const styles = {
   },
 };
 
-export default createSteps;
+export default generateSteps;

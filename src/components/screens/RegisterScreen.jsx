@@ -15,7 +15,7 @@ import {
 } from '@expo/vector-icons';
 import { TopAlert } from '../misc';
 import { UserContext } from '../../context';
-// import steps from './formSteps'
+import { CondoForm } from '../forms';
 
 const icons = {
   'FontAwesome': FontAwesome,
@@ -36,7 +36,7 @@ const RegisterScreen = () => {
   const [lastValue, setLastValue] = useState('');
   const [fadeOpacity, setfadeOpacity] = useState(new Animated.Value(0));
   const nextStep = () => {
-    if (!validateField(stepIndex, lastValue)) {
+    if (stepIndex < 3 && !validateField(stepIndex, lastValue)) {
       fadeOpacity.setValue(1);
       setfadeOpacity(new Animated.Value(1));
     }
@@ -73,7 +73,8 @@ const RegisterScreen = () => {
       <SafeAreaView style={styles.content}>
         <Text style={styles.title}>Cadastro</Text>
         {steps[stepIndex].label}
-        <FormItem
+        {stepIndex === 0 && <CondoForm data={condos} />}
+        {stepIndex > 0 && <FormItem
           phoneNumber={steps[stepIndex].phoneNumber}
           focused
           savedValue={lastValue}
@@ -95,7 +96,7 @@ const RegisterScreen = () => {
             setSteps(generateSteps(newUserInfo)); 
             setLastValue(value);
           }}
-        />
+        />}
         <RegisterFooter
           step={stepIndex + 1}
           totalSteps={5}
@@ -105,6 +106,33 @@ const RegisterScreen = () => {
     </Screen>
   )
 };
+
+const condos = [
+  {
+    name: "Condomínio Santa Cruz",
+    address: "R. Luiz Carlos Alvez, Mercês, 126523",
+    neighborhood: "Mercês - Curitiba",
+    distance: "15m",
+  },
+  {
+    name: "Condomínio Água da Pedra",
+    address: "R. Almirante José Padilha, 324",
+    neighborhood: "Santa Felicidade - Curitiba",
+    distance: "13km",
+  },
+  {
+    name: "Condomínio Água da Pedra",
+    address: "R. Almirante José Padilha, 324",
+    neighborhood: "Santa Felicidade - Curitiba",
+    distance: "13km",
+  },
+  {
+    name: "Condomínio Água da Pedra",
+    address: "R. Almirante José Padilha, 324",
+    neighborhood: "Santa Felicidade - Curitiba",
+    distance: "13km",
+  },
+]
 
 const styles = {
   title: {

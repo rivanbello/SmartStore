@@ -32,7 +32,7 @@ const styles = {
   stepBox: {
     width: '18%',
     height: 44,
-    backgroundColor: '#F0EFF7',
+    backgroundColor: COLORS.lightLilac,
     justifyContent: 'center',
   },
   stepBoxContent: {

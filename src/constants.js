@@ -10,6 +10,9 @@ const COLORS = {
   lightGray: '#F8F8F8',
   salmon: "#FFF4F6",
   textPrimary: '#656379',
+  darkLilac: '#656379',
+  lilac: '#A5A3BB',
+  lightLilac: '#F0EFF7',
 }
 
 export {
