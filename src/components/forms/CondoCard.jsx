@@ -2,12 +2,19 @@ import React from 'react';
 import { Row, Column } from '../layout';
 import { Text } from 'react-native';
 import { COLORS } from '../../constants';
+import { Entypo } from '@expo/vector-icons';
 
 const CondoCard = ({ name, address, neighborhood, distance, style }) => (
   <Column style={{ ...styles.container, ...style }}>
     <Row style={styles.label}>
       <Text style={styles.name}>{name}</Text>
-      <Text style={styles.distance}>{distance}</Text>
+      <Entypo
+        name="location-pin"
+        color={COLORS.primary}
+        size={14}
+      >
+        <Text style={styles.distance}>{distance}</Text>
+      </Entypo>
     </Row>
     <Text style={styles.description}>{address}</Text>
     <Text style={styles.description}>{neighborhood}</Text>
@@ -40,6 +47,7 @@ const styles = {
   distance: {
     textAlign: 'center',
     fontWeight: 'bold',
+    color: COLORS.textPrimary,
     fontSize: 12,
     alignSelf: 'flex-start',
   }
