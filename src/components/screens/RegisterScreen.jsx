@@ -33,6 +33,7 @@ const RegisterScreen = () => {
     if (currentIndex > 0) setStepIndex(currentIndex - 1);
     // else navigation.navigate('login')
   });
+  const [hideHeader, setHideHeader] = useState(false);
   const [lastValue, setLastValue] = useState('');
   const [fadeOpacity, setfadeOpacity] = useState(new Animated.Value(0));
   const nextStep = () => {
@@ -71,9 +72,16 @@ const RegisterScreen = () => {
         />
       </Animated.View>
       <SafeAreaView style={styles.content}>
-        <Text style={styles.title}>Cadastro</Text>
-        {steps[stepIndex].label}
-        {stepIndex === 0 && <CondoForm data={condos} />}
+        {!hideHeader && 
+          <>
+            <Text style={styles.title}>Cadastro</Text>
+            {steps[stepIndex].label}
+          </>
+        }
+        {stepIndex === 0 && <CondoForm
+          data={condos}
+          setHideHeader={setHideHeader}
+        />}
         {stepIndex > 0 && <FormItem
           phoneNumber={steps[stepIndex].phoneNumber}
           focused
@@ -99,6 +107,7 @@ const RegisterScreen = () => {
         />}
         <RegisterFooter
           step={stepIndex + 1}
+          style={{ backgroundColor: 'white' }}
           totalSteps={5}
           onPress={() => nextStep()}
         />

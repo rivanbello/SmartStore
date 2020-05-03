@@ -4,8 +4,8 @@ import { Row } from '../layout';
 import { PrimaryButton } from '../buttons';
 import { COLORS } from '../../constants';
 
-const RegisterFooter = ({ step = 0, totalSteps = 0, onPress = (() => {}) }) => (
-  <Row style={styles.container}>
+const RegisterFooter = ({ style, step = 0, totalSteps = 0, onPress = (() => {}) }) => (
+  <Row style={{ ...styles.container, ...style }}>
     <View style={styles.stepBox}>
       <Text style={styles.stepBoxContent}>
         {step}/{totalSteps}
@@ -24,13 +24,16 @@ const styles = {
     position: 'absolute',
     bottom: 0,
     justifyContent: 'space-between',
-    marginBottom: '15%',
+    alignItems: 'center',
+    paddingBottom: '12%',
+    paddingTop: '2%',
   },
   button: {
     width: '40%',
   },
   stepBox: {
     width: '18%',
+    top: 0,
     height: 44,
     backgroundColor: COLORS.lightLilac,
     justifyContent: 'center',

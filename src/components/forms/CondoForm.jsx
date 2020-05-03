@@ -11,10 +11,11 @@ import {
 import { COLORS } from '../../constants';
 import { Ionicons } from '@expo/vector-icons';
 
-const CondoForm = ({ data }) => {
+const CondoForm = ({ data, setHideHeader }) => {
   const [searchIsActive, setSearchIsActive] = useState(false);
   const [searchWidth] = useState(new Animated.Value(34))
   const [selected, setSelected] = useState(-1);
+  const [filter, setFilter] = useState('');
   useEffect(() => {
     searchIsActive && Animated.timing(searchWidth, {
       toValue: 100,
@@ -26,25 +27,32 @@ const CondoForm = ({ data }) => {
     }).start();
   }, [searchIsActive]);
   return (data &&
-    <View>
-      <Text style={styles.sectionLabel}>Sugestão</Text>
-      <CondoCard
-        selected={selected === 0}
-        name={data[0].name}
-        address={data[0].address}
-        neighborhood={data[0].neighborhood}
-        distance={data[0].distance}
-        onPress={() => setSelected(0)}
-      />
+    <View style={{ top: searchIsActive ? 0 : 20 }}>
+      {!searchIsActive &&
+      <View>
+        <Text style={styles.sectionLabel}>Sugestão</Text>
+        <CondoCard
+          selected={selected === 0}
+          name={data[0].name}
+          address={data[0].address}
+          neighborhood={data[0].neighborhood}
+          distance={data[0].distance}
+          onPress={() => setSelected(0)}
+        />
+        </View>
+      }
       <TouchableOpacity
-        onPress={() => setSearchIsActive(!searchIsActive)}
+        onPress={() => {
+          setSearchIsActive(!searchIsActive)
+          setHideHeader(true);
+        }}
       >
         <Animated.View
           style={{
             ...styles.searchField,
             width: searchWidth.interpolate({
               inputRange: [34, 100],
-              outputRange: ['34%', '100%'],
+              outputRange: ['40%', '100%'],
             }),
           }}
         >
@@ -56,17 +64,22 @@ const CondoForm = ({ data }) => {
           {searchIsActive && 
           <TextInput
             autoFocus
-            onBlur={() => setSearchIsActive(false)}
+            onBlur={() => {
+              !filter && setSearchIsActive(false);
+              setHideHeader(false);
+            }}
+            onFocus={() => setHideHeader(true)}
             style={{
               width: '80%',
               marginLeft: 30,
             }}
+            onChangeText={(text) => setFilter(text)}
           />}
         </Animated.View>
       </TouchableOpacity>
       <Text style={styles.sectionLabel}>Outros</Text>
       <CondoList
-        data={data.slice(1)}
+        data={filter ? data.slice(1) : data.filter(({ name }) => name.includes(filter))}
         onPress={(index) => setSelected(index + 1)}
         selectedItem={selected}
       />
