@@ -1,12 +1,30 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import CondoList from './CondoList';
 import CondoCard from './CondoCard';
-import { View, Text, TouchableOpacity } from 'react-native'
+import {
+  View,
+  Text,
+  TouchableOpacity,
+  Animated,
+  TextInput
+} from 'react-native'
 import { COLORS } from '../../constants';
 import { Ionicons } from '@expo/vector-icons';
 
 const CondoForm = ({ data }) => {
+  const [searchIsActive, setSearchIsActive] = useState(false);
+  const [searchWidth] = useState(new Animated.Value(34))
   const [selected, setSelected] = useState(-1);
+  useEffect(() => {
+    searchIsActive && Animated.timing(searchWidth, {
+      toValue: 100,
+      duration: 300,
+    }).start();
+    !searchIsActive && Animated.timing(searchWidth, {
+      toValue: 34,
+      duration: 300,
+    }).start();
+  }, [searchIsActive]);
   return (data &&
     <View>
       <Text style={styles.sectionLabel}>Sugestão</Text>
@@ -19,13 +37,32 @@ const CondoForm = ({ data }) => {
         onPress={() => setSelected(0)}
       />
       <TouchableOpacity
-        style={styles.searchField}
+        onPress={() => setSearchIsActive(!searchIsActive)}
       >
-        <Ionicons name="ios-search"
-          size={24}
-          style={styles.searchIcon}
-        />
-        <Text style={styles.searchPlaceholder}>Encontre</Text>
+        <Animated.View
+          style={{
+            ...styles.searchField,
+            width: searchWidth.interpolate({
+              inputRange: [34, 100],
+              outputRange: ['34%', '100%'],
+            }),
+          }}
+        >
+          <Ionicons name="ios-search"
+            size={24}
+            style={styles.searchIcon}
+          />
+          {!searchIsActive && <Text style={styles.searchPlaceholder}>Encontre</Text>}
+          {searchIsActive && 
+          <TextInput
+            autoFocus
+            onBlur={() => setSearchIsActive(false)}
+            style={{
+              width: '80%',
+              marginLeft: 30,
+            }}
+          />}
+        </Animated.View>
       </TouchableOpacity>
       <Text style={styles.sectionLabel}>Outros</Text>
       <CondoList
@@ -51,7 +88,7 @@ const styles = {
     alignItems: 'center',
     justifyContent: 'center',
     flexDirection: 'row',
-    width: '34%',
+    // width: '34%',
     borderRadius: 20,
     marginTop: 26,
     marginBottom: 22,
@@ -64,6 +101,8 @@ const styles = {
   },
   searchIcon: {
     color: COLORS.primary,
+    position: 'absolute',
+    left: 15
   }
 }
 
