@@ -24,7 +24,7 @@ const List = () => {
         style={styles.container}
         horizontal
         data={list}
-        contentContainerStyle={styles.content}
+        // contentContainerStyle={styles.content}
         keyExtractor={item => item.id}
         renderItem={({item: { description, categoryName, price, slots } = {}} ) => (
           <Item

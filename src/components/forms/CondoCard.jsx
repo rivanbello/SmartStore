@@ -1,32 +1,59 @@
-import React from 'react';
-import { Row, Column } from '../layout';
-import { Text } from 'react-native';
+import React, { useEffect } from 'react';
+import { Row } from '../layout';
+import { Text, TouchableOpacity } from 'react-native';
 import { COLORS } from '../../constants';
 import { Entypo } from '@expo/vector-icons';
 
-const CondoCard = ({ name, address, neighborhood, distance, style }) => (
-  <Column style={{ ...styles.container, ...style }}>
+const CondoCard = ({
+  name,
+  address,
+  neighborhood,
+  distance,
+  style,
+  selected,
+  onPress
+}) => {
+  return (
+    <TouchableOpacity style={{
+      ...styles.container,
+      ...style,
+      backgroundColor: selected ? COLORS.primary : styles.container.backgroundColor
+      }}
+      onPress={() => onPress()}
+    >
     <Row style={styles.label}>
-      <Text style={styles.name}>{name}</Text>
+      <Text style={{
+        ...styles.name,
+        color: selected ? 'white' : styles.name.color
+      }}>{name}</Text>
       <Entypo
         name="location-pin"
-        color={COLORS.primary}
+        color={selected ? 'white' : COLORS.primary}
         size={14}
       >
-        <Text style={styles.distance}>{distance}</Text>
+        <Text style={{
+          ...styles.distance,
+          color: selected ? 'white' : styles.distance.color
+        }}>
+          {distance}
+        </Text>
       </Entypo>
     </Row>
-    <Text style={styles.description}>{address}</Text>
-    <Text style={styles.description}>{neighborhood}</Text>
-  </Column>
-);
+    <Text style={{
+      ...styles.description,
+      color: selected ? 'white' : styles.description.color,
+    }}>{address}</Text>
+    <Text style={{
+      ...styles.description,
+      color: selected ? 'white' : styles.description.color,
+    }}>{neighborhood}</Text>
+  </TouchableOpacity>)
+};
 
-const styles = {
+let styles = {
   container: {
-    // backgroundColor: COLORS.lightLicac,
     backgroundColor: COLORS.lightLilac,
     borderRadius: 7,
-    // height: 40,
     justifyContent: 'space-between',
     padding: 10,
     width: '100%',

@@ -2,15 +2,21 @@ import React from 'react';
 import { FlatList } from 'react-native';
 import CondoCard from './CondoCard';
 
-const CondoList = () => (
+const CondoList = ({ data, onPress }) => (
   <FlatList style={styles.container}
-    data={['oi', 'wi']}
-    renderItem={() => <CondoCard
+    data={data}
+    renderItem={({ item: { name,
+      address,
+      neighborhood,
+      distance } = {},
+      index
+    }) => <CondoCard
       style={styles.item}
-      name="Condomínio Santa Cruz"
-      address="R. Luiz Carlos Alvez, Mercês, 126523"
-      neighborhood="Mercês - Curitiba"
-      distance="15m"
+      name={name}
+      address={address}
+      neighborhood={neighborhood}
+      distance={distance}
+      onPress={() => onPress(index)}
     />}
   />
 );

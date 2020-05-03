@@ -132,6 +132,18 @@ const condos = [
     neighborhood: "Santa Felicidade - Curitiba",
     distance: "13km",
   },
+  {
+    name: "Condomínio Água da Pedra",
+    address: "R. Almirante José Padilha, 324",
+    neighborhood: "Santa Felicidade - Curitiba",
+    distance: "13km",
+  },
+  {
+    name: "Condomínio Água da Pedra",
+    address: "R. Almirante José Padilha, 324",
+    neighborhood: "Santa Felicidade - Curitiba",
+    distance: "13km",
+  },
 ]
 
 const styles = {
