@@ -28,7 +28,7 @@ const icons = {
 const RegisterScreen = () => {
   const [userInfo, setUserInfo] = useContext(UserContext);
   const [steps, setSteps] = useState(generateSteps({}));
-  const [stepIndex, setStepIndex] = useState(4);
+  const [stepIndex, setStepIndex] = useState(0);
   const [getBackFunction, setGetBackFunction] = useState(() => (currentIndex) => {
     setHideHeader(false);
     if (currentIndex > 0) setStepIndex(currentIndex - 1);
