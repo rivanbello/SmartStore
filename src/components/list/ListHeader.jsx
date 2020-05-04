@@ -2,7 +2,13 @@ import React from 'react';
 import { View, Text, TouchableOpacity } from 'react-native';
 import { COLORS } from '../../constants';
 
-const ListHeader = ({ label, collapsed = true, expandLabel, style }) => (
+const ListHeader = ({
+  label,
+  collapsed = true,
+  expandLabel,
+  expandOnPress,
+  style,
+}) => (
   <View
     style={{
       ...styles.container,
@@ -18,7 +24,9 @@ const ListHeader = ({ label, collapsed = true, expandLabel, style }) => (
     </Text>
     {collapsed
       &&
-      <TouchableOpacity>
+      <TouchableOpacity
+        onPress={() => expandOnPress()}
+      >
         <Text
           style={{
             fontSize: 13, color: COLORS.lilac, fontWeight: 'bold'

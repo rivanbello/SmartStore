@@ -2,14 +2,14 @@ import React from 'react';
 import Item from '../list/Item';
 import { StackHeader } from '../headers';
 import Screen from './Screen';
-import { Dimensions } from 'react-native';
+import { Dimensions, FlatList } from 'react-native';
 
 const screenWidth = Math.round(Dimensions.get('window').width);
 
 const CategoryScreen = ({ 
   categoryName,
   data,
-  list,
+  list = [],
 }) => (
   <Screen>
     <FlatList

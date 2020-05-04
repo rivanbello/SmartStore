@@ -25,9 +25,15 @@ const List = ({ navigation }) => {
           label={category}
           expandLabel="Ver tudo"
           style={styles.header}
-        expandOnPress={() => navigation.navigate('Category', {
-          categoryName: categoryName || `Categoria ${categoryId}`
-        })}
+          expandOnPress={() => navigation.navigate('Category', {
+            // categoryName: categoryName || `Categoria ${categoryId}`
+            category,
+            list: list
+            .filter(({ categoryId, categoryName}) => 
+              category === `Categoria ${categoryId}`
+              || category === categoryName
+            )
+          })}
         />
         <FlatList
           style={styles.list}
