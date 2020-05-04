@@ -12,6 +12,7 @@ import {
   ProductScreen,
   CategoryScreen,
   InformationScreen,
+  SuggestionScreen,
 } from './src/components/screens';
 import { UserContext } from './src/context';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
@@ -72,8 +73,9 @@ export default function App() {
 
     <NavigationContainer>
       <UserContext.Provider value={[userInfo, setUserInfo]}>
-        <Stack.Navigator initialRouteName={"Info"}>
+        <Stack.Navigator initialRouteName={"Suggestion"}>
           <Stack.Screen name="Info" component={InformationScreen} options={{ headerShown: false }}/>
+          <Stack.Screen name="Suggestion" component={SuggestionScreen} options={{ headerShown: false }}/>
         </Stack.Navigator>
       </UserContext.Provider>
     </NavigationContainer>

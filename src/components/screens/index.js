@@ -5,6 +5,7 @@ import ConfirmationScreen from './ConfirmationScreen';
 import ProductScreen from './ProductScreen';
 import CategoryScreen from './CategoryScreen';
 import InformationScreen from './InformationScreen';
+import SuggestionScreen from './SuggestionScreen';
 
 export {
   CategoryScreen,
@@ -14,4 +15,5 @@ export {
   LoginScreen,
   RegisterScreen,
   ProductScreen,
+  SuggestionScreen,
 }
