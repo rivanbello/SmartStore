@@ -8,7 +8,7 @@ import { UserContext } from '../../context';
 
 const screenWidth = Math.round(Dimensions.get('window').width);
 
-const List = () => {
+const List = ({ navigation }) => {
   const [list, setList] = useState([]);
   const [userInfo, setUserInfo] = useContext(UserContext);
   
@@ -21,7 +21,14 @@ const List = () => {
   return (
     <ScrollView style={styles.container}>
       {userInfo.categories && userInfo.categories.map((category) => <> 
-        <ListHeader label={category} expandLabel="Ver tudo" style={styles.header}/>
+        <ListHeader
+          label={category}
+          expandLabel="Ver tudo"
+          style={styles.header}
+        expandOnPress={() => navigation.navigate('Category', {
+          categoryName: categoryName || `Categoria ${categoryId}`
+        })}
+        />
         <FlatList
           style={styles.list}
           horizontal

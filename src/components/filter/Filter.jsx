@@ -8,7 +8,6 @@ const Filter = ({ style, Icon, placeholder, placeholderTextColor }) => (
     >
       <TextInput
         placeholder={placeholder}
-        style={{ marginLeft: 14 }}
         placeholderTextColor={placeholderTextColor}
         />
         {Icon} 
@@ -23,7 +22,7 @@ const styles = StyleSheet.create({
     borderRadius: 24,
     height: 50,
     width: '100%',
-    paddingHorizontal: 14,
+    paddingHorizontal: 22,
     display: 'flex',
     justifyContent: 'space-between',
     flexDirection: 'row',

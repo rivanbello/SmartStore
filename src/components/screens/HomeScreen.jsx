@@ -7,7 +7,7 @@ import { COLORS } from '../../constants';
 import { HomeHeader } from '../headers';
 import Screen from './Screen';
 
-const HomeScreen = () => (
+const HomeScreen = ({ navigation }) => (
     <>
     <HomeHeader />
       <Screen>
@@ -17,7 +17,7 @@ const HomeScreen = () => (
           placeholderTextColor={COLORS.darkestGray}
           Icon={<Ionicons name="ios-search" size={26} style={{ color: COLORS.primary }}/>}
         />
-        <List />
+        <List navigation={navigation} />
       </Screen>
     </>
 );
