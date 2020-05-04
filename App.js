@@ -60,25 +60,25 @@ export default function App() {
     // </NavigationContainer>
     
 
-    // <NavigationContainer>
-    //   <UserContext.Provider value={[userInfo, setUserInfo]}>
-    //     <Stack.Navigator initialRouteName={!logged ? "Login" : "Category"}>
-    //       <Stack.Screen name="Login" component={LoginScreen} options={{ headerShown: false }}/>
-    //       <Stack.Screen name="Main" component={HomeScreen} options={{ headerShown: false }}/>
-    //       <Stack.Screen name="Product" component={ProductScreen} options={{ headerShown: false }}/>
-    //       <Stack.Screen name="Category" component={CategoryScreen} options={{ headerShown: false }}/>
-    //     </Stack.Navigator>
-    //   </UserContext.Provider>
-    // </NavigationContainer>
-
     <NavigationContainer>
       <UserContext.Provider value={[userInfo, setUserInfo]}>
-        <Stack.Navigator initialRouteName={"Suggestion"}>
-          <Stack.Screen name="Info" component={InformationScreen} options={{ headerShown: false }}/>
-          <Stack.Screen name="Suggestion" component={SuggestionScreen} options={{ headerShown: false }}/>
+        <Stack.Navigator initialRouteName={!logged ? "Login" : "Main"}>
+          <Stack.Screen name="Login" component={LoginScreen} options={{ headerShown: false }}/>
+          <Stack.Screen name="Main" component={HomeScreen} options={{ headerShown: false }}/>
+          <Stack.Screen name="Product" component={ProductScreen} options={{ headerShown: false }}/>
+          <Stack.Screen name="Category" component={CategoryScreen} options={{ headerShown: false }}/>
         </Stack.Navigator>
       </UserContext.Provider>
     </NavigationContainer>
+
+    // <NavigationContainer>
+    //   <UserContext.Provider value={[userInfo, setUserInfo]}>
+    //     <Stack.Navigator initialRouteName={"Suggestion"}>
+    //       <Stack.Screen name="Info" component={InformationScreen} options={{ headerShown: false }}/>
+    //       <Stack.Screen name="Suggestion" component={SuggestionScreen} options={{ headerShown: false }}/>
+    //     </Stack.Navigator>
+    //   </UserContext.Provider>
+    // </NavigationContainer>
   );
 }
 

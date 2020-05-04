@@ -6,12 +6,12 @@ const Filter = ({ style, Icon, placeholder, placeholderTextColor }) => (
     <View
       style={{...styles.container, ...style}}
     >
-        {Icon} 
       <TextInput
         placeholder={placeholder}
         style={{ marginLeft: 14 }}
         placeholderTextColor={placeholderTextColor}
-      />
+        />
+        {Icon} 
     </View>
 );
 
@@ -25,6 +25,7 @@ const styles = StyleSheet.create({
     width: '100%',
     paddingHorizontal: 14,
     display: 'flex',
+    justifyContent: 'space-between',
     flexDirection: 'row',
     alignItems: 'center',
   },

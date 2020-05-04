@@ -55,7 +55,7 @@ const styles = StyleSheet.create({
     marginTop: 30,
   },
   list: {
-    marginBottom: 10,
+    marginBottom: 30,
   },
   header: {
     marginBottom: 16,
