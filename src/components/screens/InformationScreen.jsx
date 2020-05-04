@@ -25,6 +25,9 @@ const InformationScreen = () => (
       F.A.Q.
     </Text>
     <FAQItem />
+    <TouchableOpacity style={styles.feedback}>
+      <Text style={styles.feedbackText}>Envie seu feedback</Text>
+    </TouchableOpacity>
   </Screen>
 );
 
@@ -60,8 +63,21 @@ const FAQItem = () => {
 const styles = {
   pageTitle: {
     alignSelf: 'center',
+    fontWeight: 'bold',
+    fontSize: 18,
+    color: COLORS.textPrimary,
+  },
+  feedback: {
+    paddingHorizontal: 20,
+    backgroundColor: COLORS.salmon,
+    height: 40,
+    justifyContent: 'center',
+    borderRadius: 5,
+    marginTop: 30,
+  },
+  feedbackText: {
+    color: COLORS.primary,
     textAlign: 'center',
-    width: '100%',
     fontWeight: 'bold',
   },
   title: {
