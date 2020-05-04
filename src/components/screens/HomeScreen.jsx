@@ -1,29 +1,28 @@
 import React from 'react';
-import { StyleSheet, View } from 'react-native';
+import { StyleSheet, SafeAreaView } from 'react-native';
 import List from '../list/List';
 import Filter from '../filter/Filter';
 import { Ionicons } from '@expo/vector-icons';
 import { COLORS } from '../../constants';
 import { HomeHeader } from '../headers';
+import Screen from './Screen';
 
 const HomeScreen = () => (
-  <View style={styles.container}>
-    {/* <HomeHeader /> */}
-    <Filter
-      style={styles.filter}
-      placeholder="O que você está procurando?"
-      placeholderTextColor={COLORS.darkestGray}
-      Icon={<Ionicons name="ios-search" size={26} style={{ color: COLORS.primary }}/>}
-    />
-    <List/>
-  </View>
+    <>
+    <HomeHeader />
+      <Screen>
+        <Filter
+          style={styles.filter}
+          placeholder="O que você está procurando?"
+          placeholderTextColor={COLORS.darkestGray}
+          Icon={<Ionicons name="ios-search" size={26} style={{ color: COLORS.primary }}/>}
+        />
+        <List />
+      </Screen>
+    </>
 );
 
 const styles = StyleSheet.create({
-  container: {
-    width: '100%',
-    height: '100%',
-  },
   filter:{
     marginBottom: 20,
     width: '100%',
@@ -32,6 +31,9 @@ const styles = StyleSheet.create({
     color: COLORS.darkestGray,
     borderWidth: 0,
     borderRadius: 12,
+    position: 'absolute',
+    top: -25,
+    left: 18,
   },
 });
 

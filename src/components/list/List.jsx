@@ -6,24 +6,24 @@ import ListHeader from './ListHeader';
 import Item from './Item';
 
 const screenWidth = Math.round(Dimensions.get('window').width);
-const List = () => {
 
+const List = () => {
   const [loading, setLoading] = useState(true);
   const [list, setList] = useState([]);
   
   useEffect(() => {
-    all({pointOfSaleId: 1}).then(response => {
+    all({ pointOfSaleId: 1 }).then(response => {
       setLoading(false);
       setList(response);
     })
   }, []);
   return (
-    <View>
+    <View style={styles.container}>
       <ListHeader label="Bebidas" expandLabel="Ver tudo" style={styles.header}/>
       <FlatList
-        style={styles.container}
+        // style={styles.container}
         horizontal
-        data={list}
+        data={list.slice(0, 10)}
         // contentContainerStyle={styles.content}
         keyExtractor={item => item.id}
         renderItem={({item: { description, categoryName, price, slots } = {}} ) => (
@@ -43,7 +43,7 @@ export default List;
 
 const styles = StyleSheet.create({
   container: {
-    // width: '100%',
+    marginTop: 30,
   },
   header: {
     marginBottom: 16,

@@ -20,8 +20,7 @@ export default Filter;
 const styles = StyleSheet.create({
   container: {
     padding: 5,
-    borderWidth: 2,
-    borderRadius: 5,
+    borderRadius: 24,
     height: 50,
     width: '100%',
     paddingHorizontal: 14,

@@ -1,20 +1,36 @@
 import React from 'react';
-import { View, StyleSheet } from 'react-native';
-import { Ionicons } from '@expo/vector-icons';
-import { DoubleLabelButton } from '../buttons';
+import { View, Text, StyleSheet, Image } from 'react-native';
+import { Row } from '../layout';
+import { HomeHeaderBackground } from '../../assets/images';
+import Filter from '../filter/Filter';
 
-const HomeHeader = ({ username, balance }) => (
+const HomeHeader = ({ balance, name = 'Nome' }) => (
   <View style={styles.container}>
-    <DoubleLabelButton
-      labels={["Saldo Atual", `R$ ${balance || '0,00'}`]}
-      Icon={<Ionicons name={"ios-arrow"}/>}
-    />
+    <Image source={HomeHeaderBackground} style={styles.image}/>
+    <Row style={styles.label}>
+      <Text style={{ color: '#FFA5AD', fontSize: 20 }}>
+        Olá
+        <Text style={{ color: '#fff', fontWeight: 'bold' }}> {name}</Text>
+      </Text>
+    </Row>
   </View>
 );
 
 const styles = StyleSheet.create({
   container: {
-
+    justifyContent: 'space-between',
+  },
+  image: {
+    width: '100%',
+    // flex: 1,
+    // position: 'absolute',
+    // top: -18,
+  },
+  label: {
+    justifyContent: 'flex-start',
+    position: 'absolute',
+    top: 40,
+    left: 20,
   },
   buttons: {
     display: 'flex',

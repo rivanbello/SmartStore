@@ -5,18 +5,14 @@ import { COLORS } from '../../constants';
 const ListHeader = ({ label, collapsed = true, expandLabel, style }) => (
   <View
     style={{
+      ...styles.container,
       ...style,
-      width: '100%', display: "flex",
-      flexDirection: "row",
-      justifyContent: 'space-between',
-      alignItems: 'center'
     }}
   >
     <Text
       style={{
         fontSize: 19,
-        fontWeight: 'bold',
-        color: COLORS.darkestGray
+        color: COLORS.darkLilac,
       }}>
         {label}
     </Text>
@@ -25,7 +21,7 @@ const ListHeader = ({ label, collapsed = true, expandLabel, style }) => (
       <TouchableOpacity>
         <Text
           style={{
-            fontSize: 12, color: COLORS.primary, fontWeight: 'bold'
+            fontSize: 13, color: COLORS.lilac, fontWeight: 'bold'
           }}>
             {expandLabel}
         </Text>
@@ -33,5 +29,14 @@ const ListHeader = ({ label, collapsed = true, expandLabel, style }) => (
     }
   </View>
 );
+
+const styles = {
+  container: {
+    width: '100%', display: "flex",
+    flexDirection: "row",
+    justifyContent: 'space-between',
+    alignItems: 'center',
+  }
+}
 
 export default ListHeader;

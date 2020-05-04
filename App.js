@@ -1,8 +1,9 @@
 require('./src/firebase');
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { SafeAreaView, StyleSheet, Text, View } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
+import all from './src/client/list';
 import {
   ConfirmationScreen,
   HomeScreen,
@@ -16,8 +17,21 @@ const Stack = createStackNavigator();
 
 export default function App() {
   const [userInfo, setUserInfo] = useState({});
-  const [logged, setLogged] = useState(false);
-
+  const [logged, setLogged] = useState(true);
+  useEffect(() => {
+    all({ pointOfSaleId: 1 }).then(response => {
+      let categories = [];
+      response.map(({ categoryId, categoryName }) => {
+        if (!categoryName) {
+          if (!categories.includes(`Categoria ${categoryId}`)) categories.push(`Categoria ${categoryId}`)
+        } else {
+          if (!categories.includes(categoryName)) categories.push(categoryName)
+        }
+      })
+      setUserInfo({ ...userInfo, availableProducts: response, categories });
+    })
+  }, []);
+  
   return (
     // <NavigationContainer>
     //   <UserContext.Provider value={[userInfo, setUserInfo]}>
@@ -44,9 +58,9 @@ export default function App() {
 
     <NavigationContainer>
       <UserContext.Provider value={[userInfo, setUserInfo]}>
-        <Stack.Navigator initialRouteName={logged ? "Login" : "Main"}>
-          <Stack.Screen name="Login" component={LoginScreen} />
-          <Stack.Screen name="Main" component={HomeScreen} />
+        <Stack.Navigator initialRouteName={!logged ? "Login" : "Main"}>
+          <Stack.Screen name="Login" component={LoginScreen} options={{ headerShown: false }}/>
+          <Stack.Screen name="Main" component={HomeScreen} options={{ headerShown: false }}/>
         </Stack.Navigator>
       </UserContext.Provider>
     </NavigationContainer>
