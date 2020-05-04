@@ -40,7 +40,7 @@ const styles = StyleSheet.create({
   },
   quantity: {
     fontSize: 12,
-    color: COLORS.lightGray,
+    color: COLORS.lilac,
   },
   price: {
     fontSize: 14,

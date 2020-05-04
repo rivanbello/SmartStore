@@ -34,13 +34,13 @@ const List = () => {
             .slice(0, 10)}
           // contentContainerStyle={styles.content}
           keyExtractor={item => item.id}
-          renderItem={({item: { description, categoryName, price, slots } = {}} ) => (
+          renderItem={({item: { description, categoryName, price, quantity } = {}} ) => (
             <Item
               style={styles.item} 
               description={description}
               category={categoryName}
               price={price}
-              qty={slots && slots[0].quantity}/>
+              qty={quantity}/>
           )}
         />
       </>)}
