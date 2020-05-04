@@ -1,10 +1,10 @@
 import React from 'react';
-import { View, Text, StyleSheet } from "react-native";
+import { View, TouchableOpacity, Text, StyleSheet } from "react-native";
 import Avatar from '../list/Avatar';
 import { COLORS } from '../../constants';
 
 const Item = ({ img, description, qty, price, style }) => (
-  <View style={{...styles.container, ...style}}>
+  <TouchableOpacity style={{...styles.container, ...style}}>
     <View style={styles.content}>
       <Avatar style={styles.avatar} src={img}/>
       <Text style={{ ...styles.price, ...styles.text }}>R$ {price.toFixed(2).replace('.', ',')}</Text>
@@ -13,7 +13,7 @@ const Item = ({ img, description, qty, price, style }) => (
         {Number(qty) < 9 ? '0' : ''}{qty}un
       </Text>
     </View>
-  </View>
+  </TouchableOpacity>
 );
 
 export default Item;

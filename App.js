@@ -9,6 +9,8 @@ import {
   HomeScreen,
   LoginScreen,
   RegisterScreen,
+  ProductScreen,
+  CategoryScreen,
 } from './src/components/screens';
 import { UserContext } from './src/context';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
@@ -58,9 +60,11 @@ export default function App() {
 
     <NavigationContainer>
       <UserContext.Provider value={[userInfo, setUserInfo]}>
-        <Stack.Navigator initialRouteName={!logged ? "Login" : "Main"}>
+        <Stack.Navigator initialRouteName={!logged ? "Login" : "Category"}>
           <Stack.Screen name="Login" component={LoginScreen} options={{ headerShown: false }}/>
           <Stack.Screen name="Main" component={HomeScreen} options={{ headerShown: false }}/>
+          <Stack.Screen name="Product" component={ProductScreen} options={{ headerShown: false }}/>
+          <Stack.Screen name="Category" component={CategoryScreen} options={{ headerShown: false }}/>
         </Stack.Navigator>
       </UserContext.Provider>
     </NavigationContainer>
