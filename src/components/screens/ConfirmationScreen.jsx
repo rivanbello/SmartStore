@@ -41,14 +41,18 @@ const styles = {
   title: {
     fontWeight: 'bold',
     fontSize: 26,
+    marginBottom: '5%',
+    color: COLORS.darkLilac,
   },
   icon: {
     color: COLORS.primary,
-    position: 'absolute',
+    marginBottom: '5%'
   },
   description: {
     fontSize: 18,
     color: COLORS.lilac,
+    textAlign: 'center',
+    marginBottom: '15%'
   },
   button: {
     width: '80%',

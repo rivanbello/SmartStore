@@ -19,33 +19,37 @@ export default function App() {
   const [logged, setLogged] = useState(false);
 
   return (
-    <NavigationContainer>
-      <UserContext.Provider value={[userInfo, setUserInfo]}>
-        <Stack.Navigator initialRouteName={"ConfirmRegistration"}>
-          <Stack.Screen name="Register" component={RegisterScreen} options={{ headerShown: false }}/>
-          <Stack.Screen
-            name="ConfirmRegistration"
-              title='hihi'
-            options={{
-              headerShown: false,
-              buttonLabel: 'oi'
-            }}
-          >
-            {props => <ConfirmationScreen {...props} {...confirmationScreenProps} />}
-          </Stack.Screen>
-        </Stack.Navigator>
-      </UserContext.Provider>
-    </NavigationContainer>
-    
-
     // <NavigationContainer>
     //   <UserContext.Provider value={[userInfo, setUserInfo]}>
-    //     <Stack.Navigator initialRouteName={logged ? "Login" : "Main"}>
+    //   <Stack.Navigator initialRouteName={logged ? "Login" : "Main"}>
     //       <Stack.Screen name="Login" component={LoginScreen} />
     //       <Stack.Screen name="Main" component={HomeScreen} />
     //     </Stack.Navigator>
+    //     <Stack.Navigator initialRouteName={"ConfirmRegistration"}>
+    //       <Stack.Screen name="Register" component={RegisterScreen} options={{ headerShown: false }}/>
+    //       <Stack.Screen
+    //         name="ConfirmRegistration"
+    //           title='hihi'
+    //         options={{
+    //           headerShown: false,
+    //           buttonLabel: 'oi'
+    //         }}
+    //       >
+    //         {props => <ConfirmationScreen {...props} {...confirmationScreenProps} />}
+    //       </Stack.Screen>
+    //     </Stack.Navigator>
     //   </UserContext.Provider>
     // </NavigationContainer>
+    
+
+    <NavigationContainer>
+      <UserContext.Provider value={[userInfo, setUserInfo]}>
+        <Stack.Navigator initialRouteName={logged ? "Login" : "Main"}>
+          <Stack.Screen name="Login" component={LoginScreen} />
+          <Stack.Screen name="Main" component={HomeScreen} />
+        </Stack.Navigator>
+      </UserContext.Provider>
+    </NavigationContainer>
   );
 }
 
