@@ -28,16 +28,21 @@ const icons = {
 const RegisterScreen = () => {
   const [userInfo, setUserInfo] = useContext(UserContext);
   const [steps, setSteps] = useState(generateSteps({}));
-  const [stepIndex, setStepIndex] = useState(0);
+  const [stepIndex, setStepIndex] = useState(4);
   const [getBackFunction, setGetBackFunction] = useState(() => (currentIndex) => {
+    setHideHeader(false);
     if (currentIndex > 0) setStepIndex(currentIndex - 1);
     // else navigation.navigate('login')
   });
+  const [chosenCondo, setChosenCondo] = useState(false);
   const [hideHeader, setHideHeader] = useState(false);
   const [lastValue, setLastValue] = useState('');
   const [fadeOpacity, setfadeOpacity] = useState(new Animated.Value(0));
   const nextStep = () => {
     if (stepIndex < 3 && !validateField(stepIndex, lastValue)) {
+      fadeOpacity.setValue(1);
+      setfadeOpacity(new Animated.Value(1));
+    } else if (stepIndex === 4 && !chosenCondo) {
       fadeOpacity.setValue(1);
       setfadeOpacity(new Animated.Value(1));
     }
@@ -66,7 +71,11 @@ const RegisterScreen = () => {
         style={{ opacity: fadeOpacity }}
       >
         <TopAlert 
-          secondLabel={`Digite um ${steps[stepIndex].formItems[0].placeholder.toLowerCase()} válido`}
+          secondLabel={
+            stepIndex < 4 ?
+            `Digite um ${steps[stepIndex].formItems[0].placeholder.toLowerCase()} válido`
+            : 'Escolha um condomínio'
+          }
           error
           style={{ top: 5 }}
         />
@@ -78,11 +87,21 @@ const RegisterScreen = () => {
             {steps[stepIndex].label}
           </>
         }
-        {stepIndex === 0 && <CondoForm
+        {stepIndex === 4 && <CondoForm
           data={condos}
           setHideHeader={setHideHeader}
+          setFormValue={(value) => {
+            const newUserInfo = {
+              ...userInfo,
+              [`${steps[stepIndex].formItems[0].placeholder.toLowerCase()}`]: value,
+            };
+            setUserInfo(newUserInfo)
+            setChosenCondo(value);
+            setSteps(generateSteps(newUserInfo)); 
+            setLastValue(value);
+          }}
         />}
-        {stepIndex > 0 && <FormItem
+        {stepIndex < 4 && <FormItem
           phoneNumber={steps[stepIndex].phoneNumber}
           focused
           savedValue={lastValue}
@@ -107,7 +126,9 @@ const RegisterScreen = () => {
         />}
         <RegisterFooter
           step={stepIndex + 1}
-          style={{ backgroundColor: 'white' }}
+          style={{
+            backgroundColor: 'white',
+          }}
           totalSteps={5}
           onPress={() => nextStep()}
         />

@@ -24,7 +24,6 @@ const styles = {
     position: 'absolute',
     bottom: 0,
     justifyContent: 'space-between',
-    alignItems: 'center',
     paddingBottom: '12%',
     paddingTop: '2%',
   },

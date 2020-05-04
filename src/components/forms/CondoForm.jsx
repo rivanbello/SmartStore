@@ -11,11 +11,14 @@ import {
 import { COLORS } from '../../constants';
 import { Ionicons } from '@expo/vector-icons';
 
-const CondoForm = ({ data, setHideHeader }) => {
+const CondoForm = ({ data, setHideHeader, setFormValue }) => {
   const [searchIsActive, setSearchIsActive] = useState(false);
   const [searchWidth] = useState(new Animated.Value(34))
   const [selected, setSelected] = useState(-1);
   const [filter, setFilter] = useState('');
+  useEffect(() => {
+    setFormValue(data[selected])
+  }, [selected])
   useEffect(() => {
     searchIsActive && Animated.timing(searchWidth, {
       toValue: 100,

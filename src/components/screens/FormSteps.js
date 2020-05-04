@@ -3,12 +3,10 @@ import { Text } from 'react-native'
 import { COLORS } from '../../constants';
 const generateSteps = (context) => [
   {
-    // label: 
-    // <Text style={styles.stepLabel}>
-    //   <Text>Vamos começar pelo seu nome</Text>
-    // </Text>,
-    label: <Text style={styles.stepLabel}>Para finalizar, escolha o condomínio onde reside</Text>,
-    
+    label: 
+    <Text style={styles.stepLabel}>
+      <Text>Vamos começar pelo seu nome</Text>
+    </Text>,
     stepIndex: 1,
     formItems: [
       {
