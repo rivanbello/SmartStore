@@ -18,9 +18,8 @@ const CategoryScreen = ({ route, navigation }) => {
   }
   return (
   <Screen>
-    {console.warn(rows.length)}
     <StackHeader
-      onPress={() => navigation.goBack() }
+      onPress={() => navigation.goBack()}
     />
     <Text style={styles.title}>{category}</Text>
     {rows.map((row) => (
@@ -32,6 +31,12 @@ const CategoryScreen = ({ route, navigation }) => {
             // category={category}
             price={price}
             qty={quantity}
+            onPress={() => navigation.navigate('Product', {
+              stock: quantity == 0 ? true : false,
+              name: description,
+              price,
+              qty: quantity,
+            })}
           />
         ))}
       </Row>

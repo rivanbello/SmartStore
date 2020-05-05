@@ -53,7 +53,14 @@ const List = ({ navigation }) => {
               description={description}
               category={categoryName}
               price={price}
-              qty={quantity}/>
+              qty={quantity}
+              onPress={() => navigation.navigate('Product', {
+                stock: quantity == 0 ? true : false,
+                name: description,
+                price,
+                qty: quantity,
+              })}
+            />
           )}
         />
       </>)}

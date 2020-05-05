@@ -3,8 +3,8 @@ import { View, TouchableOpacity, Text, StyleSheet } from "react-native";
 import Avatar from '../list/Avatar';
 import { COLORS } from '../../constants';
 
-const Item = ({ img, description, qty, price, style }) => (
-  <TouchableOpacity style={{...styles.container, ...style}}>
+const Item = ({ img, description, qty, price, style, onPress }) => (
+  <TouchableOpacity onPress={onPress} style={{...styles.container, ...style}}>
     <View style={styles.content}>
       <Avatar style={styles.avatar} src={img}/>
       <Text style={{ ...styles.price, ...styles.text }}>R$ {price && price.toFixed(2).replace('.', ',')}</Text>

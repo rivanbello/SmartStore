@@ -6,16 +6,18 @@ import { Row } from '../layout';
 import { COLORS } from '../../constants';
 import { StackHeader } from '../headers';
 
-const ProductScreen = ({
-  image,
-  adult = false,
-  stock = false,
-  name,
-  price,
-  qty,
-}) => (
+const ProductScreen = ({ route, navigation }) => {
+  const {
+    image,
+    adult = false,
+    stock = false,
+    name,
+    price,
+    qty,
+  } = route.params;
+  return (
   <UnsafeScreen>
-    <StackHeader />
+    <StackHeader onPress={() => navigation.goBack()} />
     <Row style={styles.imageBackground}>
       {/* <Image /> */}
       {stock ? 
@@ -28,12 +30,12 @@ const ProductScreen = ({
     <Row style={{ justifyContent: 'space-between' }}>
       <Text style={styles.title}>{name}</Text>
       <Text style={styles.quantity}>
-      {Number(qty) < 9 ? '0' : ''}{qty}un      
+        {Number(qty) < 9 ? '0' : ''}{qty}un   
       </Text>
     </Row>
     {!adult && <Text style={styles.regularPrice}>R$ {price && price.toFixed(2).replace('.', ',')}</Text>}
-  </UnsafeScreen>
-);
+  </UnsafeScreen>)
+};
 
 const styles = {
   imageBackground: {
@@ -43,7 +45,8 @@ const styles = {
   title: {
     color: COLORS.fontPrimary,
     textWeight: 'bold',
-    fontSize: 26
+    fontSize: 26,
+    maxWidth: '80%'
   },
   regularPrice: {
     fontSize: 26,
