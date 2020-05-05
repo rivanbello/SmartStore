@@ -7,6 +7,7 @@ import all from './src/client/list';
 import {
   ConfirmationScreen,
   RegisterScreen,
+  PasswordFeedbackScreen,
   InformationScreen,
   FeedbackConfirmationScreen,
   SuggestionScreen,
@@ -30,7 +31,7 @@ const Tab = createBottomTabNavigator();
 
 export default function App() {
   const [userInfo, setUserInfo] = useState({});
-  const [logged, setLogged] = useState(true);
+  const [logged, setLogged] = useState(false);
   useEffect(() => {
     all({ pointOfSaleId: 1 }).then(response => {
       let categories = [];
@@ -70,12 +71,14 @@ export default function App() {
     
     <NavigationContainer>
       <UserContext.Provider value={[userInfo, setUserInfo]}>
-      <Stack.Navigator>
+      <Stack.Navigator initialRouteName={!logged ? "Login" : "Navigator"}>
+        <Stack.Screen name="Login" component={LoginScreen} options= {{ headerShown: false }} />
         <Stack.Screen name="Navigator" component={AppNavigator} options={{ headerShown: false }} />
         <Stack.Screen name="Product" component={ProductScreen} options={{ headerShown: false }} />
         <Stack.Screen name="Category" component={CategoryScreen} options={{ headerShown: false }} />
         <Stack.Screen name="Suggestion" component={SuggestionScreen} options={{ headerShown: false }} />
         <Stack.Screen name="FeedbackConfirmation" component={FeedbackConfirmationScreen} options={{ headerShown: false }} />
+        <Stack.Screen name="PasswordFeedback" component={PasswordFeedbackScreen} options={{ headerShown: false }} />
       </Stack.Navigator>
       </UserContext.Provider>
     </NavigationContainer>
@@ -95,15 +98,14 @@ const AppNavigator = () => <Tab.Navigator
     screenOptions={MainTabScreenOptions}
     tabBarOptions={MainTabBarOptions}
     >
-    <Tab.Screen
-      name="Home"
-      component={HomeScreen}
-      options={{ headerShown: false }}
-    />
-    <Tab.Screen name="Info" component={InformationScreen} options={{ headerShown: false }}/>
-    <Tab.Screen name="Perfil" component={LoginScreen} options={{ headerShown: false }}/>
+      <Tab.Screen
+        name="Home"
+        component={HomeScreen}
+        options={{ headerShown: false }}
+      />
+      <Tab.Screen name="Info" component={InformationScreen} options={{ headerShown: false }}/>
+      <Tab.Screen name="Perfil" component={LoginScreen} options={{ headerShown: false }}/>
     </Tab.Navigator>
-
 
 const MainTabScreenOptions = ({ route }) => ({
   tabBarIcon: ({ focused, color, size }) => {

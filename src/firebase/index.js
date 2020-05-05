@@ -11,5 +11,21 @@ const firebaseConfig = {
   measurementId: "G-T8C9DWMGLQ"
 };
 // Initialize Firebase
-firebase.initializeApp(firebaseConfig);
-// firebase.analytics();
+if (!firebase.apps.length) {
+  firebase.initializeApp(firebaseConfig);
+}
+
+const login = ({ setUserLogged, username, password, setError }) => {
+  firebase.auth().signInWithEmailAndPassword(username, password)
+  .then(() => setUserLogged())
+  .catch(function(error) {
+    setError('Credenciais inválidas');
+    // Handle Errors here.
+    var errorCode = error.code;
+    var errorMessage = error.message;
+  });
+}
+
+export {
+  login,
+}

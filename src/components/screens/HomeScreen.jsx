@@ -7,20 +7,24 @@ import { COLORS } from '../../constants';
 import { HomeHeader } from '../headers';
 import Screen from './Screen';
 
-const HomeScreen = ({ navigation }) => (
-    <>
-    <HomeHeader />
-      <Screen>
-        <Filter
-          style={styles.filter}
-          placeholder="O que você está procurando?"
-          placeholderTextColor={COLORS.darkestGray}
-          Icon={<Ionicons name="ios-search" size={26} style={{ color: COLORS.primary }}/>}
-        />
-        <List navigation={navigation} />
-      </Screen>
-    </>
-);
+const HomeScreen = ({ route: { params = {} } = {}, navigation }) => {
+  const {
+    username,
+  } = params;
+  return (<>
+  {console.warn(username)}
+  <HomeHeader />
+    <Screen>
+      <Filter
+        style={styles.filter}
+        placeholder="O que você está procurando?"
+        placeholderTextColor={COLORS.darkestGray}
+        Icon={<Ionicons name="ios-search" size={26} style={{ color: COLORS.primary }}/>}
+      />
+      <List navigation={navigation} />
+    </Screen>
+  </>)
+};
 
 const styles = StyleSheet.create({
   filter:{

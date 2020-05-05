@@ -1,5 +1,4 @@
 import React from 'react';
-import { MaterialIcons } from '@expo/vector-icons';
 import { LoginBackground } from '../../assets/images';
 import { Image, Text } from 'react-native';
 import { TopAlert } from '../misc';
@@ -8,7 +7,7 @@ import { COLORS } from '../../constants';
 import Screen from './Screen'
 import { SCREEN_WIDTH } from '../../constants';
 
-const LoginScreen = () => {
+const LoginScreen = ({ navigation }) => {
   return (
     <Screen>
       <TopAlert
@@ -21,7 +20,7 @@ const LoginScreen = () => {
         source={LoginBackground}
       />
       <Text style={styles.title}>Compras inteligentes para sua família</Text>
-      <LoginForm />
+      <LoginForm navigation={navigation} />
     </Screen>
   )
 }

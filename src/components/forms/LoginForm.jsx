@@ -1,11 +1,21 @@
-import React from 'react';
+import React, { useContext, useState, useEffect } from 'react';
 import { PrimaryButton, Link } from '../buttons';
 import { Row } from '../layout';
 import FormItem from './FormItem';
 import { FontAwesome, Entypo } from '@expo/vector-icons';
 import validateField from './formValidators';
+import { UserContext } from '../../context';
+import { login } from '../../firebase';
 
-const LoginForm = () => {
+const LoginForm = ({ navigation }) => {
+  const [userInfo, setUserInfo] = useContext(UserContext);
+  const [username, setUsername] = useState('willianrigowow@gmail.com');
+  const [password, setPassword] = useState('123123');
+  const [error, setError] = useState('');
+
+  useEffect(() => {
+    navigation.navigate('Navigator', { username, password });
+  }, [userInfo])
 
   return (
     <>
@@ -13,7 +23,7 @@ const LoginForm = () => {
         placeholder="E-mail"
         setFormValue={(value) => validateField(stepIndex, value) && setLastValue(value)}        
         style={{ marginBottom: 22 }}
-        setFormValue={() => () => {}}
+        setFormValue={(value) => setUsername(value)}
         Icon={{
           component: FontAwesome,
           name: "user-circle",
@@ -23,7 +33,7 @@ const LoginForm = () => {
       <FormItem
         placeholder="Senha"
         password
-        setFormValue={() => () => {}}
+        setFormValue={(value) => setPassword(value)}
         Icon={{
           component: FontAwesome,
           name: "user-circle",
@@ -39,9 +49,14 @@ const LoginForm = () => {
       <Row style={styles.buttonContainer}>
         <Link
           label="Esqueci minha senha"
+          onPress={() => navigation.navigate('ForgotPasswordScreen')}
         />
         <PrimaryButton
           label="Entrar"
+          onPress={() => login({ username, password, setUserLogged: () => {
+            setUserInfo({ ...userInfo, logged: true })},
+            setError: (e) => setError(e),
+          })}
           style={styles.button}
         />
       </Row>
