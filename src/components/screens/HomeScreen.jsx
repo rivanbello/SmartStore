@@ -8,11 +8,7 @@ import { HomeHeader } from '../headers';
 import Screen from './Screen';
 
 const HomeScreen = ({ route: { params = {} } = {}, navigation }) => {
-  const {
-    username,
-  } = params;
   return (<>
-  {console.warn(username)}
   <HomeHeader />
     <Screen>
       <Filter

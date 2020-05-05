@@ -19,7 +19,10 @@ const login = ({ setUserLogged, username, password, setError }) => {
   firebase.auth().signInWithEmailAndPassword(username, password)
   .then(() => setUserLogged())
   .catch(function(error) {
-    setError('Credenciais inválidas');
+    if(error.includes('network')) {
+      setError('Erro de conexão. Verifique sua internet e tente novamente.');
+    } else setError('Credenciais inválidas. Insira um e-mail e uma senha já cadastrados.');
+    console.warn(error)
     // Handle Errors here.
     var errorCode = error.code;
     var errorMessage = error.message;

@@ -1,4 +1,5 @@
 import React, { useContext, useState, useEffect } from 'react';
+import { Text } from 'react-native';
 import { PrimaryButton, Link } from '../buttons';
 import { Row } from '../layout';
 import FormItem from './FormItem';
@@ -9,12 +10,12 @@ import { login } from '../../firebase';
 
 const LoginForm = ({ navigation }) => {
   const [userInfo, setUserInfo] = useContext(UserContext);
-  const [username, setUsername] = useState('willianrigowow@gmail.com');
-  const [password, setPassword] = useState('123123');
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
   const [error, setError] = useState('');
 
   useEffect(() => {
-    navigation.navigate('Navigator', { username, password });
+    if(userInfo.logged) navigation.navigate('Navigator', { username, password });
   }, [userInfo])
 
   return (
@@ -60,6 +61,7 @@ const LoginForm = ({ navigation }) => {
           style={styles.button}
         />
       </Row>
+      {!!error && <Text style={styles.error}>Credenciais inválidas.</Text>}
     </>
   )
 };
@@ -74,6 +76,11 @@ const styles = {
   button: {
     width: '40%',
   },
+  error: {
+    textAlign: 'center',
+    color: 'red',
+    textWeight: 'bold',
+  }
 }
 
 export default LoginForm;
