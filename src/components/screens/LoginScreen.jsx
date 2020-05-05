@@ -10,17 +10,18 @@ import { SCREEN_WIDTH } from '../../constants';
 const LoginScreen = ({ navigation }) => {
   return (
     <Screen>
-      <TopAlert
-        firstLabel="Ainda não tem conta?"
-        secondLabel=" Cadastre-se"
-        style={{ top: 60 }}
-      />
       <Image
         style={styles.image}
         source={LoginBackground}
       />
       <Text style={styles.title}>Compras inteligentes para sua família</Text>
       <LoginForm navigation={navigation} />
+      <TopAlert
+        firstLabel="Ainda não tem conta?"
+        secondLabel=" Cadastre-se"
+        style={{ top: 60 }}
+        onPress={() => navigation.navigate('Register')}
+      />
     </Screen>
   )
 }

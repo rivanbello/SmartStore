@@ -73,6 +73,7 @@ export default function App() {
       <UserContext.Provider value={[userInfo, setUserInfo]}>
       <Stack.Navigator initialRouteName={!logged ? "Login" : "Navigator"}>
         <Stack.Screen name="Login" component={LoginScreen} options= {{ headerShown: false }} />
+        <Stack.Screen name="Register" component={RegisterScreen} options= {{ headerShown: false }} />
         <Stack.Screen name="Navigator" component={AppNavigator} options={{ headerShown: false }} />
         <Stack.Screen name="Product" component={ProductScreen} options={{ headerShown: false }} />
         <Stack.Screen name="Category" component={CategoryScreen} options={{ headerShown: false }} />

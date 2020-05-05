@@ -1,22 +1,25 @@
 import React from 'react';
-import { View, Text } from 'react-native';
+import { View, Text, TouchableOpacity } from 'react-native';
 import { Row } from '../layout';
 import { COLORS } from '../../constants';
 
-const TopAlert = ({ firstLabel, secondLabel, style, error }) => (
-  <View style={{
+const TopAlert = ({ firstLabel, secondLabel, style, error, onPress }) => (
+  <TouchableOpacity
+    onPress={() => onPress()}
+    style={{
     ...styles.container,
     ...style,
     backgroundColor: error ? COLORS.primary : '#fff',
   }}>
     <Row style={styles.content}>
+
       <Text style={styles.text}>{firstLabel}</Text>
-      <Text
-        style={{ ...styles.link, color: error ? 'white' : COLORS.primary }}>
-        {secondLabel}
-      </Text>
+        <Text
+          style={{ ...styles.link, color: error ? 'white' : COLORS.primary }}>
+          {secondLabel}
+        </Text>
     </Row>
-  </View>
+  </ TouchableOpacity>
 );
 
 const styles = {

@@ -25,7 +25,7 @@ const icons = {
   'MaterialCommunityIcons': MaterialCommunityIcons,
 }
 
-const RegisterScreen = () => {
+const RegisterScreen = ({ navigation }) => {
   const [userInfo, setUserInfo] = useContext(UserContext);
   const [steps, setSteps] = useState(generateSteps({}));
   const [stepIndex, setStepIndex] = useState(0);
@@ -65,7 +65,8 @@ const RegisterScreen = () => {
   return (
     <Screen>
       <StackHeader
-        onPress={() => getBackFunction(stepIndex)}
+        onPress={stepIndex === 0 ? () => navigation.goBack() : () => getBackFunction(stepIndex)}
+        
       />
       <Animated.View
         style={{ opacity: fadeOpacity }}

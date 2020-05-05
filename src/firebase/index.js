@@ -22,7 +22,6 @@ const login = ({ setUserLogged, username, password, setError }) => {
     if(error.includes('network')) {
       setError('Erro de conexão. Verifique sua internet e tente novamente.');
     } else setError('Credenciais inválidas. Insira um e-mail e uma senha já cadastrados.');
-    console.warn(error)
     // Handle Errors here.
     var errorCode = error.code;
     var errorMessage = error.message;
