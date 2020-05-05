@@ -6,18 +6,27 @@ import { createStackNavigator } from '@react-navigation/stack';
 import all from './src/client/list';
 import {
   ConfirmationScreen,
-  HomeScreen,
-  LoginScreen,
   RegisterScreen,
+  InformationScreen,
+  FeedbackConfirmationScreen,
+  SuggestionScreen,
+  LoginScreen,
+  HomeScreen,
   ProductScreen,
   CategoryScreen,
-  InformationScreen,
-  SuggestionScreen,
 } from './src/components/screens';
 import { UserContext } from './src/context';
-import { MaterialCommunityIcons } from '@expo/vector-icons';
+import {
+  Foundation,
+  AntDesign,
+  Ionicons,
+  MaterialCommunityIcons,
+} from '@expo/vector-icons';
+import { COLORS } from './src/constants';
 
 const Stack = createStackNavigator();
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+const Tab = createBottomTabNavigator();
 
 export default function App() {
   const [userInfo, setUserInfo] = useState({});
@@ -59,15 +68,15 @@ export default function App() {
     //   </UserContext.Provider>
     // </NavigationContainer>
     
-
     <NavigationContainer>
       <UserContext.Provider value={[userInfo, setUserInfo]}>
-        <Stack.Navigator initialRouteName={!logged ? "Login" : "Main"}>
-          <Stack.Screen name="Login" component={LoginScreen} options={{ headerShown: false }}/>
-          <Stack.Screen name="Main" component={HomeScreen} options={{ headerShown: false }}/>
-          <Stack.Screen name="Product" component={ProductScreen} options={{ headerShown: false }}/>
-          <Stack.Screen name="Category" component={CategoryScreen} options={{ headerShown: false }}/>
-        </Stack.Navigator>
+      <Stack.Navigator>
+        <Stack.Screen name="Navigator" component={AppNavigator} options={{ headerShown: false }} />
+        <Stack.Screen name="Product" component={ProductScreen} options={{ headerShown: false }} />
+        <Stack.Screen name="Category" component={CategoryScreen} options={{ headerShown: false }} />
+        <Stack.Screen name="Suggestion" component={SuggestionScreen} options={{ headerShown: false }} />
+        <Stack.Screen name="FeedbackConfirmation" component={FeedbackConfirmationScreen} options={{ headerShown: false }} />
+      </Stack.Navigator>
       </UserContext.Provider>
     </NavigationContainer>
 
@@ -81,6 +90,51 @@ export default function App() {
     // </NavigationContainer>
   );
 }
+
+const AppNavigator = () => <Tab.Navigator
+    screenOptions={MainTabScreenOptions}
+    tabBarOptions={MainTabBarOptions}
+    >
+    <Tab.Screen
+      name="Home"
+      component={HomeScreen}
+      options={{ headerShown: false }}
+    />
+    <Tab.Screen name="Info" component={InformationScreen} options={{ headerShown: false }}/>
+    <Tab.Screen name="Perfil" component={LoginScreen} options={{ headerShown: false }}/>
+    </Tab.Navigator>
+
+
+const MainTabScreenOptions = ({ route }) => ({
+  tabBarIcon: ({ focused, color, size }) => {
+    let iconName;
+    let IconFamily;
+    if (route.name === 'Home') {
+      IconFamily=Foundation;
+      iconName = 'home'
+    } else if (route.name === 'Info') {
+      IconFamily = AntDesign;
+      iconName = 'questioncircle';
+    } else if (route.name === 'Perfil') {
+      IconFamily = Ionicons;
+      iconName = 'md-person';
+    } else return;
+    return <IconFamily
+        name={iconName}
+        size={route.name == 'Info' ? size - 3 : size}
+        color={color}
+      />;
+  },
+});
+
+const MainTabBarOptions = {
+  activeTintColor: COLORS.primary,
+  inactiveTintColor: COLORS.lilac,
+  labelStyle: {
+    fontSize: 12,
+    fontWeight: 'bold',
+  },
+};
 
 const confirmationScreenProps = {
   title: 'Perfeito',

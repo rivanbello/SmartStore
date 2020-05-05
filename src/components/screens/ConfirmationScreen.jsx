@@ -14,7 +14,7 @@ const ConfirmationScreen = ({
 }) => (
   <Screen style={styles.container}>
     {!Icon && 
-    <Image source={image} />}
+    <Image source={image} style={styles.image}/>}
     {Icon && 
       <Icon.family
         style={styles.icon}
@@ -47,6 +47,9 @@ const styles = {
   icon: {
     color: COLORS.primary,
     marginBottom: '5%'
+  },
+  image: {
+    marginBottom: 50,
   },
   description: {
     fontSize: 18,

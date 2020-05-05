@@ -6,7 +6,7 @@ import { Row } from '../layout';
 import { COLORS } from '../../constants';
 import { StackHeader } from '../headers';
 
-const ProductScreen = ({ route, navigation }) => {
+const ProductScreen = ({ route: { params = {} } = {}, navigation }) => {
   const {
     image,
     adult = false,
@@ -14,7 +14,7 @@ const ProductScreen = ({ route, navigation }) => {
     name,
     price,
     qty,
-  } = route.params;
+  } = params;
   return (
   <UnsafeScreen>
     <StackHeader onPress={() => navigation.goBack()} />

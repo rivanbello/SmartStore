@@ -5,11 +5,11 @@ import { Row } from '../layout';
 import { StackHeader } from '../headers';
 import { PrimaryButton } from '../buttons';
 import { COLORS } from '../../constants';
-const SuggestionScreen = () => {
+const SuggestionScreen = ({ navigation }) => {
   const [value, setValue] = useState('');
   return (
     <Screen>
-      <StackHeader/>
+      <StackHeader onPress={() => navigation.goBack()} />
         <View style={{ justifyContent: 'space-between', flex: 1 }}>
         <View>
           <TextInput
@@ -19,9 +19,10 @@ const SuggestionScreen = () => {
           {/* <Text style={styles.pageTitle}>Sugestão</Text> */}
           <View style={styles.separationLine} />
           <Text style={{ color: COLORS.lilac, marginTop: 15, }}>Sua opinião é muito importante pra que nosso aplicativo evolua de acordo com suas necessidade</Text>
-          {!value && <Text style={{ color: 'red', marginTop: 15, textAlign: 'center' }}>Insira uma sugestão antes de continuar</Text>}
+          {!value && <Text style={{ color: 'red', marginTop: 15, textAlign: 'center' }}>Escreva uma sugestão antes de continuar</Text>}
         </View>
         <PrimaryButton
+          onPress={() => navigation.navigate('FeedbackConfirmation') }
           style={{ marginBottom: 30 }}
           label={'Enviar sugestão'}
         />

@@ -1,33 +1,39 @@
 import React, { useState } from 'react';
-import { Text, View, TouchableOpacity } from 'react-native';
+import { Text, View, TouchableOpacity, ScrollView } from 'react-native';
 import { COLORS } from '../../constants';
 import { Row } from '../layout';
 import Screen from './Screen';
 
-const InformationScreen = () => (
+const InformationScreen = ({ navigation }) => (
   <Screen>
-    <Text style={styles.pageTitle}>Informações</Text>
-    <Text style={styles.title}>
-      Como comprar?
-    </Text>
-    <Text style={styles.content}>
-      Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque consequat,
-      eros quis sollicitudin tincidunt, ipsum quam tincidunt tortor, id euismod augue purus vel libero. Aliquam sollicitudin velit massa, eu laoreet lacus tempor imperdiet.
-    </Text>
-    <Text style={styles.title}>
-      Como comprar?
-    </Text>
-    <Text style={styles.content}>
-      Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque consequat,
-      eros quis sollicitudin tincidunt, ipsum quam tincidunt tortor, id euismod augue purus vel libero. Aliquam sollicitudin velit massa, eu laoreet lacus tempor imperdiet.
-    </Text>
-    <Text style={styles.title}>
-      F.A.Q.
-    </Text>
-    <FAQItem />
-    <TouchableOpacity style={styles.feedback}>
-      <Text style={styles.feedbackText}>Envie seu feedback</Text>
-    </TouchableOpacity>
+    <ScrollView>
+      <Text style={styles.pageTitle}>Informações</Text>
+      <Text style={styles.title}>
+        Como comprar?
+      </Text>
+      <Text style={styles.content}>
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque consequat,
+        eros quis sollicitudin tincidunt, ipsum quam tincidunt tortor, id euismod augue purus vel libero. Aliquam sollicitudin velit massa, eu laoreet lacus tempor imperdiet.
+      </Text>
+      <Text style={styles.title}>
+        Como comprar?
+      </Text>
+      <Text style={styles.content}>
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque consequat,
+        eros quis sollicitudin tincidunt, ipsum quam tincidunt tortor, id euismod augue purus vel libero. Aliquam sollicitudin velit massa, eu laoreet lacus tempor imperdiet.
+      </Text>
+      <Text style={styles.title}>
+        F.A.Q.
+      </Text>
+      <FAQItem />
+      <TouchableOpacity
+        style={styles.feedback}
+        onPress={() => navigation.navigate('Suggestion')}
+      >
+        <Text style={styles.feedbackText}>Envie seu feedback</Text>
+      </TouchableOpacity>
+      <View style={{ height: 40}} />
+    </ScrollView>
   </Screen>
 );
 
