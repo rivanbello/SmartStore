@@ -7,7 +7,7 @@ const Item = ({ img, description, qty, price, style }) => (
   <TouchableOpacity style={{...styles.container, ...style}}>
     <View style={styles.content}>
       <Avatar style={styles.avatar} src={img}/>
-      <Text style={{ ...styles.price, ...styles.text }}>R$ {price.toFixed(2).replace('.', ',')}</Text>
+      <Text style={{ ...styles.price, ...styles.text }}>R$ {price && price.toFixed(2).replace('.', ',')}</Text>
       <Text style={{ ...styles.description, ...styles.text }} numberOfLines={2}>{description}</Text>
       <Text style={{ ...styles.quantity, ...styles.text }}>
         {Number(qty) < 9 ? '0' : ''}{qty}un
