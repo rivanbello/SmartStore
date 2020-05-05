@@ -14,7 +14,7 @@ const LoginScreen = () => {
       <TopAlert
         firstLabel="Ainda não tem conta?"
         secondLabel=" Cadastre-se"
-        style={{ top: 70 }}
+        style={{ top: 60 }}
       />
       <Image
         style={styles.image}
@@ -33,6 +33,8 @@ const styles = {
     maxWidth: '90%',
     fontSize: 32,
     color: COLORS.textPrimary,
+    marginTop: '30%',
+    marginBottom: '12%',
   },
   image: {
     width: SCREEN_WIDTH * 1.02,

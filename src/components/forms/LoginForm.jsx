@@ -53,6 +53,7 @@ const styles = {
   buttonContainer: {
     marginTop: 30,
     marginBottom: 19,
+    paddingHorizontal: 8,
     justifyContent: 'space-between',
   },
   button: {
