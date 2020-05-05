@@ -63,6 +63,7 @@ const FormItem = ({
       setMaskedInputValue(value);
       value = value.replace(/[)(-]/, '');
       value = value.replace(')', '');
+      value = value.replace('-', '');
       value = value.replace(' ', '');
     }
     setFormValue(value);
@@ -125,7 +126,7 @@ const FormItem = ({
         size={Icon.size}
         style={active ? styles.iconActive : styles.icon}
       />
-      {phoneNumber && active &&
+      {/* {phoneNumber && active &&
         <Picker
           style={{
             height: 50,
@@ -147,8 +148,8 @@ const FormItem = ({
               style={{ backgroundColor: 'red'}}
             />
           })}
-        </Picker>
-      }
+        </Picker> 
+      } */}
       {datePicker &&
         <Text
           style={styles.date}

@@ -39,6 +39,7 @@ const RegisterScreen = ({ navigation }) => {
   const [lastValue, setLastValue] = useState('');
   const [fadeOpacity, setfadeOpacity] = useState(new Animated.Value(0));
   const nextStep = () => {
+    console.warn(lastValue)
     if (stepIndex < 3 && !validateField(stepIndex, lastValue)) {
       fadeOpacity.setValue(1);
       setfadeOpacity(new Animated.Value(1));
