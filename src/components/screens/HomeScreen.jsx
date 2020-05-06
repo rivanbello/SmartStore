@@ -12,8 +12,9 @@ const HomeScreen = ({ route: { params = {} } = {}, navigation }) => {
   const [userInfo, setUserInfo] = useContext(UserContext);
 
   return (<>
-  <HomeHeader name={userInfo.nome}/>
+  <HomeHeader name={userInfo.nome} condoName={userInfo.condo.name}/>
     <Screen>
+      {console.warn(userInfo)}
       <Filter
         style={styles.filter}
         placeholder="O que você está procurando?"

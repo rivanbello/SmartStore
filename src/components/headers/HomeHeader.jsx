@@ -4,7 +4,7 @@ import { Row } from '../layout';
 import { HomeHeaderBackground } from '../../assets/images';
 import Filter from '../filter/Filter';
 
-const HomeHeader = ({ balance, name = 'Nome' }) => (
+const HomeHeader = ({ balance, name = 'Nome', condoName }) => (
   <View style={styles.container}>
     <Image source={HomeHeaderBackground} style={styles.image}/>
     <Row style={styles.label}>
@@ -12,6 +12,7 @@ const HomeHeader = ({ balance, name = 'Nome' }) => (
         Olá
         <Text style={{ color: '#fff', fontWeight: 'bold' }}> {name}</Text>
       </Text>
+      <Text style={styles.condoName}>{condoName}</Text>
     </Row>
   </View>
 );
@@ -27,10 +28,21 @@ const styles = StyleSheet.create({
     // top: -18,
   },
   label: {
-    justifyContent: 'flex-start',
+    justifyContent: 'space-between',
     position: 'absolute',
     top: 40,
-    left: 20,
+    paddingHorizontal: 20,
+    // left: 20,
+  },
+  condoName: {
+    borderWidth: 1,
+    borderColor: 'white',
+    textAlign: 'center',
+    borderRadius: 12,
+    paddingVertical: 3,
+    paddingHorizontal: 4,
+    color: 'white',
+    fontWeight: 'bold',
   },
   buttons: {
     display: 'flex',
