@@ -70,6 +70,7 @@ const CondoForm = ({ data, setHideHeader, setFormValue }) => {
             onBlur={() => {
               !filter && setSearchIsActive(false);
               setHideHeader(false);
+              setFilter('');
             }}
             onFocus={() => setHideHeader(true)}
             style={{

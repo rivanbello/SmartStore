@@ -6,7 +6,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 import all from './src/client/list';
 import pointsOfSale from './src/client/pointsOfSale';
 import {
-  ConfirmationScreen,
+  RegisterConfirmationScreen,
   RegisterScreen,
   PasswordFeedbackScreen,
   InformationScreen,
@@ -43,22 +43,24 @@ export default function App() {
           if (!categories.includes(categoryName)) categories.push(categoryName)
         }
       })
-      setUserInfo({ ...userInfo, availableProducts: response, categories });
-    })
-  }, []);
-  useEffect(() => {
-    pointsOfSale().then(response => {
-      const condos = [];
-      response.map((pos) => {
-        const name = `Cond. ${pos.localName}`;
-        condos.push({
-          name,
-          address: "R. Luiz Carlos Alvez, Mercês, 126523 (fictício)",
-          neighborhood: "Mercês - Curitiba",
-          distance: "15m",
-        });
+      const newUserInfo = { ...userInfo, availableProducts: response, categories }; 
+      setUserInfo(newUserInfo);
+      return newUserInfo;
+    }).then((info) => {
+      pointsOfSale().then(response => {
+        const condos = [];
+        response.map((pos) => {
+          const name = `Cond. ${pos.localName}`;
+          condos.push({
+            name,
+            id: pos.id,
+            address: "R. Luiz Carlos Alvez, Mercês, 126523 (fictício)",
+            neighborhood: "Mercês - Curitiba",
+            distance: "15m",
+          });
+        })
+        setUserInfo({ ...info, condos })
       })
-      setUserInfo({ ...userInfo, condos })
     })
   }, []);
   
@@ -83,14 +85,7 @@ export default function App() {
         <Stack.Screen name="Navigator" component={AppNavigator} options={{ headerShown: false }} />
         <Stack.Screen name="Product" component={ProductScreen} options={{ headerShown: false }} />
         {/* <Stack.Screen name="RegisterConfirmation" component={ConfirmationScreen} options={{ headerShown: false }} /> */}
-        <Stack.Screen
-            name="RegisterConfirmation"
-            options={{
-              headerShown: false,
-            }}
-          >
-            {props => <ConfirmationScreen {...props} {...confirmationScreenProps} />}
-          </Stack.Screen>
+        <Stack.Screen name="RegisterConfirmation" component={RegisterConfirmationScreen} options={{ headerShown: false }} />
         <Stack.Screen name="Category" component={CategoryScreen} options={{ headerShown: false }} />
         <Stack.Screen name="Suggestion" component={SuggestionScreen} options={{ headerShown: false }} />
         <Stack.Screen name="Info" component={InformationScreen} options={{ headerShown: false }}/>

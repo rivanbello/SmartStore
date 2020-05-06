@@ -90,8 +90,8 @@ const RegisterScreen = ({ navigation }) => {
             {steps[stepIndex].label}
           </>
         }
-        {stepIndex === 4 && <CondoForm
-          data={condos}
+        {stepIndex === 4 && userInfo.condos.length > 0 && <CondoForm
+          data={userInfo.condos}
           setHideHeader={setHideHeader}
           setFormValue={(value) => {
             const newUserInfo = {
@@ -140,31 +140,31 @@ const RegisterScreen = ({ navigation }) => {
   )
 };
 
-const condos = [
-  {
-    name: "Condomínio Santa Cruz",
-    address: "R. Luiz Carlos Alvez, Mercês, 126523",
-    neighborhood: "Mercês - Curitiba",
-    distance: "15m",
-  },
-  {
-    name: "Condomínio Água da Pedra",
-    address: "R. Almirante José Padilha, 324",
-    neighborhood: "Santa Felicidade - Curitiba",
-    distance: "13km",
-  },
-  {
-    name: "Condomínio 2gua da Pedra",
-    address: "R. Almirante José Padilha, 324",
-    neighborhood: "Santa Felicidade - Curitiba",
-    distance: "13km",
-  },
-  {
-    name: "Condomínio 3gua da Pedra",
-    address: "R. Almirante José Padilha, 324",
-    neighborhood: "Santa Felicidade - Curitiba",
-    distance: "13km",
-  },
+// const condos = [
+//   {
+//     name: "Condomínio Santa Cruz",
+//     address: "R. Luiz Carlos Alvez, Mercês, 126523",
+//     neighborhood: "Mercês - Curitiba",
+//     distance: "15m",
+//   },
+//   {
+//     name: "Condomínio Água da Pedra",
+//     address: "R. Almirante José Padilha, 324",
+//     neighborhood: "Santa Felicidade - Curitiba",
+//     distance: "13km",
+//   },
+//   {
+//     name: "Condomínio 2gua da Pedra",
+//     address: "R. Almirante José Padilha, 324",
+//     neighborhood: "Santa Felicidade - Curitiba",
+//     distance: "13km",
+//   },
+//   {
+//     name: "Condomínio 3gua da Pedra",
+//     address: "R. Almirante José Padilha, 324",
+//     neighborhood: "Santa Felicidade - Curitiba",
+//     distance: "13km",
+//   },
   // {
   //   name: "Condomínio 4gua da Pedra",
   //   address: "R. Almirante José Padilha, 324",
@@ -177,7 +177,7 @@ const condos = [
   //   neighborhood: "Santa Felicidade - Curitiba",
   //   distance: "13km",
   // },
-]
+// ]
 
 const styles = {
   title: {
