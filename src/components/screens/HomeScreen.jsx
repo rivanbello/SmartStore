@@ -1,6 +1,7 @@
 import React, { useContext, useState } from 'react';
 import { StyleSheet, SafeAreaView } from 'react-native';
 import List from '../list/List';
+import FreeList from '../list/FreeList';
 import Filter from '../filter/Filter';
 import { Ionicons } from '@expo/vector-icons';
 import { COLORS } from '../../constants';
@@ -11,6 +12,7 @@ import { UserContext } from '../../context';
 const HomeScreen = ({ route: { params = {} } = {}, navigation }) => {
   const [userInfo, setUserInfo] = useContext(UserContext);
   const [searchActive, setSearchActive] = useState(false);
+  const [filterValue, setFilterValue] = useState('');
   return (<>
   <HomeHeader
     name={userInfo.nome}
@@ -23,12 +25,17 @@ const HomeScreen = ({ route: { params = {} } = {}, navigation }) => {
         style={styles.filter}
         placeholder="O que você está procurando?"
         focused={searchActive}
+        onChangeText={(value) => setFilterValue(value)}
         onFocus={() => setSearchActive(true)}
         onBlur={() => setSearchActive(false)}
         placeholderTextColor={COLORS.darkestGray}
         Icon={<Ionicons name="ios-search" size={26} style={{ color: COLORS.primary }}/>}
       />
-      <List navigation={navigation} />
+      {console.warn(userInfo.availableProducts)}
+      {searchActive && filterValue
+        ? <FreeList list={userInfo && userInfo.availableProducts} />
+        : <List navigation={navigation} filterValue={filterValue} />
+      }
     </Screen>
   </>)
 };
