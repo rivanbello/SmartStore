@@ -1,13 +1,26 @@
 import React from 'react';
 import { TextInput, StyleSheet, View } from "react-native";
 
-const Filter = ({ style, Icon, placeholder, placeholderTextColor }) => (
+const Filter = ({
+  style,
+  Icon,
+  placeholder,
+  focused,
+  placeholderTextColor,
+  onBlur = () => {},
+  onFocus = () => {},
+  onChangeText = () => {}
+}) => (
     
     <View
       style={{...styles.container, ...style}}
     >
       <TextInput
         placeholder={placeholder}
+        onFocus={() => onFocus()}
+        autoFocus={focused}
+        onChangeText={onChangeText}
+        onBlur={() => onBlur()}
         placeholderTextColor={placeholderTextColor}
         />
         {Icon} 

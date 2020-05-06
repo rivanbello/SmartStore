@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import { StyleSheet, SafeAreaView } from 'react-native';
 import List from '../list/List';
 import Filter from '../filter/Filter';
@@ -10,14 +10,21 @@ import { UserContext } from '../../context';
 
 const HomeScreen = ({ route: { params = {} } = {}, navigation }) => {
   const [userInfo, setUserInfo] = useContext(UserContext);
-
+  const [searchActive, setSearchActive] = useState(false);
   return (<>
-  <HomeHeader name={userInfo.nome} condoName={userInfo.condo && userInfo.condo.name}/>
+  <HomeHeader
+    name={userInfo.nome}
+    condoName={userInfo.condo && userInfo.condo.name}
+    searchActive={searchActive}
+    setSearchActive={() => setSearchActive(false)}
+  />
     <Screen>
-      {console.warn(userInfo)}
       <Filter
         style={styles.filter}
         placeholder="O que você está procurando?"
+        focused={searchActive}
+        onFocus={() => setSearchActive(true)}
+        onBlur={() => setSearchActive(false)}
         placeholderTextColor={COLORS.darkestGray}
         Icon={<Ionicons name="ios-search" size={26} style={{ color: COLORS.primary }}/>}
       />

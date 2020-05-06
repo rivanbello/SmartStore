@@ -7,7 +7,7 @@ import { StackHeader } from '../headers';
 const HomeHeader = ({ balance, name = 'Nome', condoName, searchActive = false, setSearchActive = (() => {}) }) => (
   <View style={styles.container}>
     <Image source={HomeHeaderBackground} style={styles.image}/>
-    {searchActive ? 
+    {!searchActive ? 
       <Row style={styles.label}>
         <Text style={{ color: '#FFA5AD', fontSize: 20 }}>
           Olá
@@ -15,7 +15,11 @@ const HomeHeader = ({ balance, name = 'Nome', condoName, searchActive = false, s
         </Text>
         <Text style={styles.condoName}> {condoName} </Text>
       </Row>
-    : <StackHeader style={styles.stackHeader} fontStyle={{ color: 'white' }} />
+    : <StackHeader
+        style={styles.stackHeader}
+        fontStyle={{ color: 'white' }}
+        onPress={() => setSearchActive(false)}
+      />
     }
   </View>
 );
