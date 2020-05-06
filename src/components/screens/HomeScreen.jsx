@@ -27,13 +27,12 @@ const HomeScreen = ({ route: { params = {} } = {}, navigation }) => {
         focused={searchActive}
         onChangeText={(value) => setFilterValue(value)}
         onFocus={() => setSearchActive(true)}
-        onBlur={() => setSearchActive(false)}
+        onBlur={() => !filterValue && setSearchActive(false)}
         placeholderTextColor={COLORS.darkestGray}
         Icon={<Ionicons name="ios-search" size={26} style={{ color: COLORS.primary }}/>}
       />
-      {console.warn(userInfo.availableProducts)}
       {searchActive && filterValue
-        ? <FreeList list={userInfo && userInfo.availableProducts} />
+        ? <FreeList list={userInfo && userInfo.availableProducts.filter(({ description}) => description.includes(filterValue))} />
         : <List navigation={navigation} filterValue={filterValue} />
       }
     </Screen>
