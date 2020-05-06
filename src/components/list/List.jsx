@@ -13,7 +13,7 @@ const List = ({ navigation }) => {
   const [userInfo, setUserInfo] = useContext(UserContext);
   
   useEffect(() => {
-    all({ pointOfSaleId: userInfo.condo.id }).then(response => {
+    all({ pointOfSaleId: 1 }).then(response => {
       setList(response);
     })
     if(userInfo) setList(userInfo.availableProducts);

@@ -2,24 +2,33 @@ import React from 'react';
 import { View, Text, StyleSheet, Image } from 'react-native';
 import { Row } from '../layout';
 import { HomeHeaderBackground } from '../../assets/images';
-import Filter from '../filter/Filter';
+import { StackHeader } from '../headers';
 
-const HomeHeader = ({ balance, name = 'Nome', condoName }) => (
+const HomeHeader = ({ balance, name = 'Nome', condoName, searchActive = false, setSearchActive = (() => {}) }) => (
   <View style={styles.container}>
     <Image source={HomeHeaderBackground} style={styles.image}/>
-    <Row style={styles.label}>
-      <Text style={{ color: '#FFA5AD', fontSize: 20 }}>
-        Olá
-        <Text style={{ color: '#fff', fontWeight: 'bold' }}> {name}</Text>
-      </Text>
-      <Text style={styles.condoName}> {condoName} </Text>
-    </Row>
+    {searchActive ? 
+      <Row style={styles.label}>
+        <Text style={{ color: '#FFA5AD', fontSize: 20 }}>
+          Olá
+          <Text style={{ color: '#fff', fontWeight: 'bold' }}> {name}</Text>
+        </Text>
+        <Text style={styles.condoName}> {condoName} </Text>
+      </Row>
+    : <StackHeader style={styles.stackHeader} fontStyle={{ color: 'white' }} />
+    }
   </View>
 );
 
 const styles = StyleSheet.create({
   container: {
     justifyContent: 'space-between',
+  },
+  stackHeader: {
+    position: 'absolute',
+    top: '10%',
+    left: 20,
+    color: 'white',
   },
   image: {
     width: '100%',

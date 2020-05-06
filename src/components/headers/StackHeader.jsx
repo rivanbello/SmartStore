@@ -4,8 +4,8 @@ import { TouchableOpacity, Text } from 'react-native';
 import { Feather } from '@expo/vector-icons';
 import { COLORS } from '../../constants';
 
-const StackHeader = ({ onPress = (() => {}) }) => (
-  <Header style={styles.container}>
+const StackHeader = ({ onPress = (() => {}), style, fontStyle }) => (
+  <Header style={{ ...styles.container, ...style }}>
     <TouchableOpacity
       style={styles.wrapper}
       onPress={onPress}
@@ -16,9 +16,10 @@ const StackHeader = ({ onPress = (() => {}) }) => (
         style={{
           left: -2,
           color: COLORS.textPrimary,
+          ...fontStyle,
         }}
       />
-      <Text style={{ color: COLORS.textPrimary }}>Voltar</Text>
+      <Text style={{ color: COLORS.textPrimary, ...fontStyle }}>Voltar</Text>
     </TouchableOpacity>
   </Header>
 );

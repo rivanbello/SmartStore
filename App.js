@@ -34,19 +34,6 @@ export default function App() {
   const [userInfo, setUserInfo] = useState({ condos: [] });
   const [logged, setLogged] = useState(false);
   useEffect(() => {
-    all({ pointOfSaleId: 1 }).then(response => {
-      let categories = [];
-      response.map(({ categoryId, categoryName }) => {
-        if (!categoryName) {
-          if (!categories.includes(`Categoria ${categoryId}`)) categories.push(`Categoria ${categoryId}`)
-        } else {
-          if (!categories.includes(categoryName)) categories.push(categoryName)
-        }
-      })
-      const newUserInfo = { ...userInfo, availableProducts: response, categories }; 
-      setUserInfo(newUserInfo);
-      return newUserInfo;
-    }).then((info) => {
       pointsOfSale().then(response => {
         const condos = [];
         response.map((pos) => {
@@ -59,9 +46,23 @@ export default function App() {
             distance: "15m",
           });
         })
-        setUserInfo({ ...info, condos })
+        const newUserInfo = { ...userInfo, condos };
+        setUserInfo(newUserInfo)
+        return newUserInfo;
+      }).then(info => {
+        all({ pointOfSaleId: 1 }).then(response => {
+          let categories = [];
+          response.map(({ categoryId, categoryName }) => {
+            if (!categoryName) {
+              if (!categories.includes(`Categoria ${categoryId}`)) categories.push(`Categoria ${categoryId}`)
+            } else {
+              if (!categories.includes(categoryName)) categories.push(categoryName)
+            }
+          })
+          const newUserInfo = { ...info, availableProducts: response, categories }; 
+          setUserInfo(newUserInfo);
+        })
       })
-    })
   }, []);
   
   return (
@@ -79,7 +80,7 @@ export default function App() {
     
     <NavigationContainer>
       <UserContext.Provider value={[userInfo, setUserInfo]}>
-      <Stack.Navigator initialRouteName={!logged ? "Login" : "Navigator"}>
+      <Stack.Navigator initialRouteName={logged ? "Login" : "Navigator"}>
         <Stack.Screen name="Login" component={LoginScreen} options= {{ headerShown: false }} />
         <Stack.Screen name="Register" component={RegisterScreen} options= {{ headerShown: false }} />
         <Stack.Screen name="Navigator" component={AppNavigator} options={{ headerShown: false }} />
