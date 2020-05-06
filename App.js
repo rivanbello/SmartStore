@@ -1,5 +1,5 @@
 require('./src/firebase');
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { SafeAreaView, StyleSheet, Text, View } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
@@ -31,7 +31,7 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 const Tab = createBottomTabNavigator();
 
 export default function App() {
-  const [userInfo, setUserInfo] = useState({});
+  const [userInfo, setUserInfo] = useState({ condos: [] });
   const [logged, setLogged] = useState(false);
   useEffect(() => {
     all({ pointOfSaleId: 1 }).then(response => {
@@ -48,18 +48,19 @@ export default function App() {
   }, []);
   useEffect(() => {
     pointsOfSale().then(response => {
+      const condos = [];
       response.map((pos) => {
         const name = `Cond. ${pos.localName}`;
-        setUserInfo({ ...userInfo, condos: condos.concat({
+        condos.push({
           name,
           address: "R. Luiz Carlos Alvez, Mercês, 126523 (fictício)",
           neighborhood: "Mercês - Curitiba",
           distance: "15m",
-        })})
+        });
       })
+      setUserInfo({ ...userInfo, condos })
     })
-  });
-
+  }, []);
   
   return (
     // <NavigationContainer>

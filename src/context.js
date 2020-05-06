@@ -1,3 +1,3 @@
 import { createContext } from 'react';
 
-export const UserContext = createContext({ condos: [] });
+export const UserContext = createContext({});
