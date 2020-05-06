@@ -43,7 +43,7 @@ const styles = StyleSheet.create({
   label: {
     justifyContent: 'space-between',
     position: 'absolute',
-    top: 40,
+    top: 30,
     paddingHorizontal: 20,
     // left: 20,
   },
