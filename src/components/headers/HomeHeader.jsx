@@ -12,7 +12,7 @@ const HomeHeader = ({ balance, name = 'Nome', condoName }) => (
         Olá
         <Text style={{ color: '#fff', fontWeight: 'bold' }}> {name}</Text>
       </Text>
-      <Text style={styles.condoName}>{condoName}</Text>
+      <Text style={styles.condoName}> {condoName} </Text>
     </Row>
   </View>
 );
@@ -38,11 +38,12 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: 'white',
     textAlign: 'center',
-    borderRadius: 12,
+    borderRadius: 16,
     paddingVertical: 3,
     paddingHorizontal: 4,
     color: 'white',
     fontWeight: 'bold',
+    fontSize: 16,
   },
   buttons: {
     display: 'flex',
