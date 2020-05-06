@@ -9,6 +9,7 @@ import FeedbackConfirmationScreen from './FeedbackConfirmationScreen';
 import InformationScreen from './InformationScreen';
 import SuggestionScreen from './SuggestionScreen';
 import PasswordFeedbackScreen from './PasswordFeedbackScreen';
+import ProfileScreen from './ProfileScreen';
 // import ForgotPasswordScreen from './ForgotPasswordScreen';
 
 export {
@@ -24,4 +25,5 @@ export {
   PasswordFeedbackScreen,
   ProductScreen,
   SuggestionScreen,
+  ProfileScreen,
 }

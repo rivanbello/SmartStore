@@ -16,6 +16,7 @@ import {
   HomeScreen,
   ProductScreen,
   CategoryScreen,
+  ProfileScreen,
 } from './src/components/screens';
 import { UserContext } from './src/context';
 import {
@@ -80,7 +81,7 @@ export default function App() {
     
     <NavigationContainer>
       <UserContext.Provider value={[userInfo, setUserInfo]}>
-      <Stack.Navigator initialRouteName={logged ? "Login" : "Navigator"}>
+      <Stack.Navigator initialRouteName={!logged ? "Login" : "Navigator"}>
         <Stack.Screen name="Login" component={LoginScreen} options= {{ headerShown: false }} />
         <Stack.Screen name="Register" component={RegisterScreen} options= {{ headerShown: false }} />
         <Stack.Screen name="Navigator" component={AppNavigator} options={{ headerShown: false }} />
@@ -110,13 +111,13 @@ const AppNavigator = () => <Tab.Navigator
     screenOptions={MainTabScreenOptions}
     tabBarOptions={MainTabBarOptions}
     >
+      <Tab.Screen name="Perfil" component={ProfileScreen} options={{ headerShown: false }}/>
       <Tab.Screen
         name="Home"
         component={HomeScreen}
         options={{ headerShown: false }}
       />
       <Tab.Screen name="Info" component={InformationScreen} options={{ headerShown: false }}/>
-      {/* <Tab.Screen name="Perfil" component={LoginScreen} options={{ headerShown: false }}/> */}
     </Tab.Navigator>
 
 const MainTabScreenOptions = ({ route }) => ({

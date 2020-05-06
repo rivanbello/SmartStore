@@ -29,6 +29,15 @@ const login = ({ setUserLogged, username, password, setError }) => {
   });
 }
 
+const register = ({ username, password }) => {
+  firebase.auth().createUserWithEmailAndPassword(username, password)
+  .then(() => setUserLogged())  
+  .catch(function(error) {
+    
+  });
+}
+
 export {
   login,
+  register,
 }

@@ -2,6 +2,7 @@ import React, { useState, useEffect, useContext } from 'react';
 import Screen from './Screen';
 import { StackHeader } from '../headers';
 import { Text, SafeAreaView, Animated } from 'react-native';
+import { register } from '../../firebase';
 import { FormItem } from '../forms';
 import { RegisterFooter } from '../footers';
 import validateField from '../forms/formValidators';
@@ -50,7 +51,13 @@ const RegisterScreen = ({ navigation }) => {
       fadeOpacity.setValue(1);
       setfadeOpacity(new Animated.Value(1));
     } else if (stepIndex < (steps.length - 1)) setStepIndex(stepIndex + 1);
-    else navigation.navigate('RegisterConfirmation');
+    else register({
+      username: userInfo.email,
+      password: '1234',
+    }).then(() => {
+      setUserInfo({ ...userInfo, logged: true })
+      navigation.navigate('RegisterConfirmation')
+    });
   }
 
   useEffect(() => {
