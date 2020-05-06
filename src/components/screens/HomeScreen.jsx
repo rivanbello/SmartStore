@@ -31,8 +31,15 @@ const HomeScreen = ({ route: { params = {} } = {}, navigation }) => {
         placeholderTextColor={COLORS.darkestGray}
         Icon={<Ionicons name="ios-search" size={26} style={{ color: COLORS.primary }}/>}
       />
-      {searchActive && filterValue
-        ? <FreeList list={userInfo && userInfo.availableProducts.filter(({ description}) => description.includes(filterValue))} />
+      {searchActive
+        ? <FreeList list={
+            userInfo &&
+            userInfo.availableProducts
+              .filter(({ description }) => {
+                if (filterValue) return description.toUpperCase().includes(filterValue.toUpperCase())
+                else return true;
+              })
+          }/>
         : <List navigation={navigation} filterValue={filterValue} />
       }
     </Screen>

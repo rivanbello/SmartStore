@@ -83,7 +83,7 @@ const CondoForm = ({ data, setHideHeader, setFormValue }) => {
       </TouchableOpacity>
       <Text style={styles.sectionLabel}>Outros</Text>
       <CondoList
-        data={filter ? data.slice(1) : data.filter(({ name }) => name.includes(filter))}
+        data={filter ? data.slice(1) : data.filter(({ name }) => name.toUpperCase().includes(filter.toUpperCase()))}
         onPress={(index) => setSelected(index + 1)}
         selectedItem={selected}
       />
