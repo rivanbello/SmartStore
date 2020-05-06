@@ -31,6 +31,7 @@ const RegisterScreen = ({ navigation }) => {
   const [stepIndex, setStepIndex] = useState(0);
   const [getBackFunction, setGetBackFunction] = useState(() => (currentIndex) => {
     setHideHeader(false);
+    setfadeOpacity(new Animated.Value(0));
     if (currentIndex > 0) setStepIndex(currentIndex - 1);
     // else navigation.navigate('login')
   });
@@ -39,16 +40,17 @@ const RegisterScreen = ({ navigation }) => {
   const [lastValue, setLastValue] = useState('');
   const [fadeOpacity, setfadeOpacity] = useState(new Animated.Value(0));
   const nextStep = () => {
-    console.warn(lastValue)
-    if (stepIndex < 3 && !validateField(stepIndex, lastValue)) {
+    if (stepIndex < 3 && !validateField(stepIndex, lastValue) || !lastValue) {
+      fadeOpacity.setValue(1);
+      setfadeOpacity(new Animated.Value(1));
+    } else if (stepIndex === 3 && typeof lastValue === 'date' && (lastValue.UTC() < 1325383200000)) {
       fadeOpacity.setValue(1);
       setfadeOpacity(new Animated.Value(1));
     } else if (stepIndex === 4 && !chosenCondo) {
       fadeOpacity.setValue(1);
       setfadeOpacity(new Animated.Value(1));
-    }
-    else if (stepIndex < (steps.length - 1)) setStepIndex(stepIndex + 1);
-    // else navigation.navigate ...
+    } else if (stepIndex < (steps.length - 1)) setStepIndex(stepIndex + 1);
+    else navigation.navigate('RegisterConfirmation');
   }
 
   useEffect(() => {
@@ -67,7 +69,6 @@ const RegisterScreen = ({ navigation }) => {
     <Screen>
       <StackHeader
         onPress={stepIndex === 0 ? () => navigation.goBack() : () => getBackFunction(stepIndex)}
-        
       />
       <Animated.View
         style={{ opacity: fadeOpacity }}
@@ -147,7 +148,7 @@ const condos = [
     distance: "15m",
   },
   {
-    name: "Condomínio 1gua da Pedra",
+    name: "Condomínio Água da Pedra",
     address: "R. Almirante José Padilha, 324",
     neighborhood: "Santa Felicidade - Curitiba",
     distance: "13km",
@@ -164,18 +165,18 @@ const condos = [
     neighborhood: "Santa Felicidade - Curitiba",
     distance: "13km",
   },
-  {
-    name: "Condomínio 4gua da Pedra",
-    address: "R. Almirante José Padilha, 324",
-    neighborhood: "Santa Felicidade - Curitiba",
-    distance: "13km",
-  },
-  {
-    name: "Condomínio 5gua da Pedra",
-    address: "R. Almirante José Padilha, 324",
-    neighborhood: "Santa Felicidade - Curitiba",
-    distance: "13km",
-  },
+  // {
+  //   name: "Condomínio 4gua da Pedra",
+  //   address: "R. Almirante José Padilha, 324",
+  //   neighborhood: "Santa Felicidade - Curitiba",
+  //   distance: "13km",
+  // },
+  // {
+  //   name: "Condomínio 5gua da Pedra",
+  //   address: "R. Almirante José Padilha, 324",
+  //   neighborhood: "Santa Felicidade - Curitiba",
+  //   distance: "13km",
+  // },
 ]
 
 const styles = {

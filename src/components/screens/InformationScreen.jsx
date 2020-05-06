@@ -3,9 +3,13 @@ import { Text, View, TouchableOpacity, ScrollView } from 'react-native';
 import { COLORS } from '../../constants';
 import { Row } from '../layout';
 import Screen from './Screen';
+import { StackHeader } from '../headers';
 
 const InformationScreen = ({ navigation }) => (
   <Screen>
+    {/* <StackHeader
+      onPress={() => navigation.popToTop()}
+    /> */}
     <ScrollView>
       <Text style={styles.pageTitle}>Informações</Text>
       <Text style={styles.title}>

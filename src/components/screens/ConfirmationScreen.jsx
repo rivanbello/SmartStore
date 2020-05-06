@@ -10,6 +10,7 @@ const ConfirmationScreen = ({
   title,
   description,
   buttonLabel,
+  navigation,
   onPress,
 }) => (
   <Screen style={styles.container}>
@@ -27,7 +28,7 @@ const ConfirmationScreen = ({
     <PrimaryButton
       label={buttonLabel}
       style={styles.button}
-      onPress={() => onPress()}
+      onPress={() => { if(navigation) navigation.navigate('Navigator'); else onPress()}}
     />
   </Screen>
 )

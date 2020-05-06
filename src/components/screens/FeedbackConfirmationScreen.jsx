@@ -8,7 +8,7 @@ const FeedbackConfirmationScreen = ({ navigation }) => (
     description="Seu Feedback é muito importante."
     image={FeedbackImage}
     buttonLabel={'Voltar ao início'}
-    onPress={() => navigation.navigate('Info')}
+    onPress={() => navigation.navigate('Navigator')}
   />
 )
 

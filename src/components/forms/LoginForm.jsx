@@ -61,7 +61,7 @@ const LoginForm = ({ navigation }) => {
           style={styles.button}
         />
       </Row>
-      {!!error && <Text style={styles.error}>Credenciais inválidas.</Text>}
+      {!!error && <Text style={styles.error}>{error}</Text>}
     </>
   )
 };
@@ -79,7 +79,7 @@ const styles = {
   error: {
     textAlign: 'center',
     color: 'red',
-    textWeight: 'bold',
+    fontWeight: 'bold',
   }
 }
 

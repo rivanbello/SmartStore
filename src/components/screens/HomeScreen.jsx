@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { StyleSheet, SafeAreaView } from 'react-native';
 import List from '../list/List';
 import Filter from '../filter/Filter';
@@ -6,10 +6,13 @@ import { Ionicons } from '@expo/vector-icons';
 import { COLORS } from '../../constants';
 import { HomeHeader } from '../headers';
 import Screen from './Screen';
+import { UserContext } from '../../context';
 
 const HomeScreen = ({ route: { params = {} } = {}, navigation }) => {
+  const [userInfo, setUserInfo] = useContext(UserContext);
+
   return (<>
-  <HomeHeader />
+  <HomeHeader name={userInfo.nome}/>
     <Screen>
       <Filter
         style={styles.filter}

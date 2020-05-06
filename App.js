@@ -4,6 +4,7 @@ import { SafeAreaView, StyleSheet, Text, View } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import all from './src/client/list';
+import pointsOfSale from './src/client/pointsOfSale';
 import {
   ConfirmationScreen,
   RegisterScreen,
@@ -45,6 +46,20 @@ export default function App() {
       setUserInfo({ ...userInfo, availableProducts: response, categories });
     })
   }, []);
+  useEffect(() => {
+    pointsOfSale().then(response => {
+      response.map((pos) => {
+        const name = `Cond. ${pos.localName}`;
+        setUserInfo({ ...userInfo, condos: condos.concat({
+          name,
+          address: "R. Luiz Carlos Alvez, Mercês, 126523 (fictício)",
+          neighborhood: "Mercês - Curitiba",
+          distance: "15m",
+        })})
+      })
+    })
+  });
+
   
   return (
     // <NavigationContainer>
@@ -55,16 +70,6 @@ export default function App() {
     //     </Stack.Navigator>
     //     <Stack.Navigator initialRouteName={"ConfirmRegistration"}>
     //       <Stack.Screen name="Register" component={RegisterScreen} options={{ headerShown: false }}/>
-    //       <Stack.Screen
-    //         name="ConfirmRegistration"
-    //           title='hihi'
-    //         options={{
-    //           headerShown: false,
-    //           buttonLabel: 'oi'
-    //         }}
-    //       >
-    //         {props => <ConfirmationScreen {...props} {...confirmationScreenProps} />}
-    //       </Stack.Screen>
     //     </Stack.Navigator>
     //   </UserContext.Provider>
     // </NavigationContainer>
@@ -76,8 +81,18 @@ export default function App() {
         <Stack.Screen name="Register" component={RegisterScreen} options= {{ headerShown: false }} />
         <Stack.Screen name="Navigator" component={AppNavigator} options={{ headerShown: false }} />
         <Stack.Screen name="Product" component={ProductScreen} options={{ headerShown: false }} />
+        {/* <Stack.Screen name="RegisterConfirmation" component={ConfirmationScreen} options={{ headerShown: false }} /> */}
+        <Stack.Screen
+            name="RegisterConfirmation"
+            options={{
+              headerShown: false,
+            }}
+          >
+            {props => <ConfirmationScreen {...props} {...confirmationScreenProps} />}
+          </Stack.Screen>
         <Stack.Screen name="Category" component={CategoryScreen} options={{ headerShown: false }} />
         <Stack.Screen name="Suggestion" component={SuggestionScreen} options={{ headerShown: false }} />
+        <Stack.Screen name="Info" component={InformationScreen} options={{ headerShown: false }}/>
         <Stack.Screen name="FeedbackConfirmation" component={FeedbackConfirmationScreen} options={{ headerShown: false }} />
         <Stack.Screen name="PasswordFeedback" component={PasswordFeedbackScreen} options={{ headerShown: false }} />
       </Stack.Navigator>
@@ -87,7 +102,6 @@ export default function App() {
     // <NavigationContainer>
     //   <UserContext.Provider value={[userInfo, setUserInfo]}>
     //     <Stack.Navigator initialRouteName={"Suggestion"}>
-    //       <Stack.Screen name="Info" component={InformationScreen} options={{ headerShown: false }}/>
     //       <Stack.Screen name="Suggestion" component={SuggestionScreen} options={{ headerShown: false }}/>
     //     </Stack.Navigator>
     //   </UserContext.Provider>
@@ -105,7 +119,7 @@ const AppNavigator = () => <Tab.Navigator
         options={{ headerShown: false }}
       />
       <Tab.Screen name="Info" component={InformationScreen} options={{ headerShown: false }}/>
-      <Tab.Screen name="Perfil" component={LoginScreen} options={{ headerShown: false }}/>
+      {/* <Tab.Screen name="Perfil" component={LoginScreen} options={{ headerShown: false }}/> */}
     </Tab.Navigator>
 
 const MainTabScreenOptions = ({ route }) => ({
