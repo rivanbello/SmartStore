@@ -4,7 +4,7 @@ import { Row } from '../layout';
 import { HomeHeaderBackground } from '../../assets/images';
 import { StackHeader } from '../headers';
 
-const HomeHeader = ({ balance, name = 'Nome', condoName, searchActive = false, setSearchActive = (() => {}) }) => (
+const HomeHeader = ({ balance, name, condoName, searchActive = false, setSearchActive = (() => {}) }) => (
   <View style={styles.container}>
     <Image source={HomeHeaderBackground} style={styles.image}/>
     {!searchActive ? 

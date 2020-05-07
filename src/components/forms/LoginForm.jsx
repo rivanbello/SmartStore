@@ -6,7 +6,7 @@ import FormItem from './FormItem';
 import { FontAwesome, Entypo } from '@expo/vector-icons';
 import validateField from './formValidators';
 import { UserContext } from '../../context';
-import { login } from '../../firebase';
+import { login } from '../../auth';
 
 const LoginForm = ({ navigation }) => {
   const [userInfo, setUserInfo] = useContext(UserContext);
@@ -49,15 +49,20 @@ const LoginForm = ({ navigation }) => {
       />
       <Row style={styles.buttonContainer}>
         <Link
-          label="Esqueci minha senha"
+          label=""
           onPress={() => navigation.navigate('ForgotPasswordScreen')}
         />
         <PrimaryButton
           label="Entrar"
-          onPress={() => login({ username, password, setUserLogged: () => {
-            setUserInfo({ ...userInfo, logged: true })},
-            setError: (e) => setError(e),
-          })}
+          onPress={() => login({ username, password })
+            .then(({
+              name: nome,
+              phoneNumber: telefone,
+              nascimento: birthDate,
+              condoId,
+              
+            } = {}) => setUserInfo({ ...{userInfo}, logged: true }))
+            .catch(e => setError(e))}
           style={styles.button}
         />
       </Row>

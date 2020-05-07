@@ -25,6 +25,7 @@ const ProfileScreen = ({ navigation }) => {
           <ProfileItem firstLabel="Nome" value={userInfo && userInfo.condo && userInfo.condo.name} />
           <TouchableOpacity onPress={() => {
             setUserInfo({ ...userInfo, logged: false })
+            AsyncStorage.setItem(userInfo['e-mail'], { nome: userInfo.nome, telefone: userInfo.telefone, condo: userInfo.condo })
             navigation.navigate('Login');
           }}>
             <Text>Sair da minha conta</Text>

@@ -5,6 +5,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import all from './src/client/list';
 import pointsOfSale from './src/client/pointsOfSale';
+import { login } from './src/auth';
 import {
   RegisterConfirmationScreen,
   RegisterScreen,
@@ -26,6 +27,7 @@ import {
   MaterialCommunityIcons,
 } from '@expo/vector-icons';
 import { COLORS } from './src/constants';
+import { dbh } from './src/firebase';
 
 const Stack = createStackNavigator();
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
@@ -34,6 +36,14 @@ const Tab = createBottomTabNavigator();
 export default function App() {
   const [userInfo, setUserInfo] = useState({ condos: [] });
   const [logged, setLogged] = useState(false);
+  // (() => {
+  //   dbh.collection("users").doc("willianrigowow@gmail.com").set({
+  //     name: "Willian Rigo",
+  //     phoneNumber: "41997753978",
+  //     birthDate: "2020-05-07T03:09:03.077Z",
+  //     condoId: 1,
+  //   })
+  // })()
   useEffect(() => {
       pointsOfSale().then(response => {
         const condos = [];
@@ -111,7 +121,7 @@ const AppNavigator = () => <Tab.Navigator
     screenOptions={MainTabScreenOptions}
     tabBarOptions={MainTabBarOptions}
     >
-      <Tab.Screen name="Perfil" component={ProfileScreen} options={{ headerShown: false }}/>
+      {/* <Tab.Screen name="Perfil" component={ProfileScreen} options={{ headerShown: false }}/> */}
       <Tab.Screen
         name="Home"
         component={HomeScreen}

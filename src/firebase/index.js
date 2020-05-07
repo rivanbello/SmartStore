@@ -1,4 +1,5 @@
 import * as firebase from 'firebase';
+import 'firebase/firestore';
 
 const firebaseConfig = {
   apiKey: "AIzaSyBJKp6gsQHpmJ5_5IneGlhwKGZjFmdrF0s",
@@ -15,29 +16,44 @@ if (!firebase.apps.length) {
   firebase.initializeApp(firebaseConfig);
 }
 
-const login = ({ setUserLogged, username, password, setError }) => {
-  firebase.auth().signInWithEmailAndPassword(username, password)
-  .then(() => setUserLogged())
-  .catch(function(error) {
-    console.log(typeof error)
-    if(String(error).includes('network')) {
-      setError('Erro de conexão. Verifique sua internet e tente novamente.');
-    } else setError('Credenciais inválidas. Insira um e-mail e uma senha já cadastrados.');
-    // Handle Errors here.
-    var errorCode = error.code;
-    var errorMessage = error.message;
+const db = firebase.firestore();
+const firebaseLogin = ({ email, password }) => {
+  return firebase
+    .auth()
+    .signInWithEmailAndPassword(email, password)
+    .then(() => {
+      db.collection("users")
+        .doc("willianrigowow@gmail.com")
+        .get()
+        .then(doc => {
+          if (!doc.exists) throw new Error('Dados do usuário não encontrados na base.')
+          else return doc.data();
+        })
+    })
+    .catch((error) => {
+      if(String(error).includes('network')) {
+        console.warn('Erro de conexão. Verifique sua internet e tente novamente.');
+      // } else console.warn('Credenciais inválidas. Insira um e-mail e uma senha já cadastrados.');
+    } else console.warn(String(error))
   });
 }
 
-const register = ({ username, password }) => {
-  firebase.auth().createUserWithEmailAndPassword(username, password)
-  .then(() => setUserLogged())  
+const firebaseRegister = ({ email, password, name, phoneNumber }) => {
+  firebase.auth().createUserWithEmailAndPassword(email, password)
+  .then(() => {
+    AsyncStorage.setItem(email, { password, name, phoneNumber });
+    return dbRoot.add({
+      email,
+      nome,
+      telefone,
+    });
+  })
   .catch(function(error) {
     
   });
 }
 
 export {
-  login,
-  register,
+  firebaseLogin,
+  firebaseRegister,
 }
