@@ -38,18 +38,19 @@ const firebaseLogin = ({ email, password }) => {
   });
 }
 
-const firebaseRegister = ({ email, password, name, phoneNumber }) => {
-  firebase.auth().createUserWithEmailAndPassword(email, password)
-  .then(() => {
-    AsyncStorage.setItem(email, { password, name, phoneNumber });
-    return dbRoot.add({
-      email,
-      nome,
-      telefone,
-    });
-  })
+const firebaseRegister = ({ email, password, name, phoneNumber, condoId, birthDate }) => {
+  db.collection("users")
+    .doc("willianrigowow@gmail.com")
+    .get()
+    .then(doc => {
+      if (doc.exists) throw new Error('Email já cadastrado.')
+      firebase.auth().createUserWithEmailAndPassword(email, password)
+      .then(res => {
+        // if (doc.exists) throw new Error('Email já cadastrado.')
+      })
+    })
   .catch(function(error) {
-    
+    throw new Error('Erro ao realizar o cadastro. Verifique sua conexão ou tente novamente mais tarde.');
   });
 }
 
