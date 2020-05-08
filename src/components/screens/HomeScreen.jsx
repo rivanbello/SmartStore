@@ -1,5 +1,5 @@
-import React, { useContext, useState } from 'react';
-import { StyleSheet, SafeAreaView } from 'react-native';
+import React, { useContext, useState, useEffect } from 'react';
+import { StyleSheet } from 'react-native';
 import List from '../list/List';
 import FreeList from '../list/FreeList';
 import Filter from '../filter/Filter';
@@ -8,11 +8,18 @@ import { COLORS } from '../../constants';
 import { HomeHeader } from '../headers';
 import Screen from './Screen';
 import { UserContext } from '../../context';
+import all from '../../client/list';
 
 const HomeScreen = ({ route: { params = {} } = {}, navigation }) => {
   const [userInfo, setUserInfo] = useContext(UserContext);
   const [searchActive, setSearchActive] = useState(false);
   const [filterValue, setFilterValue] = useState('');
+  useEffect(() => {
+    all({ pointOfSaleId: userInfo.condo.id }).then(response => {
+      setUserInfo({ ...userInfo, availableProducts: response });
+    })
+  }, []);
+
   return (<>
   <HomeHeader
     name={userInfo.nome}
@@ -40,7 +47,13 @@ const HomeScreen = ({ route: { params = {} } = {}, navigation }) => {
                 else return true;
               })
           }/>
-        : <List navigation={navigation} filterValue={filterValue} />
+        : <List
+        navigation={navigation}
+        filterValue={filterValue}
+        list={
+          userInfo &&
+          userInfo.availableProducts}
+        />
       }
     </Screen>
   </>)

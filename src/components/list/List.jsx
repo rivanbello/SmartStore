@@ -1,23 +1,15 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { FlatList, ScrollView, StyleSheet } from "react-native";
 import { Dimensions } from 'react-native';
-import all from '../../client/list'
 import ListHeader from './ListHeader';
 import Item from './Item';
 import { UserContext } from '../../context';
 
 const screenWidth = Math.round(Dimensions.get('window').width);
 
-const List = ({ navigation }) => {
-  const [list, setList] = useState([]);
+const List = ({ navigation, list }) => {
+  // const [list, setList] = useState([]);
   const [userInfo, setUserInfo] = useContext(UserContext);
-  
-  useEffect(() => {
-    all({ pointOfSaleId: 1 }).then(response => {
-      setList(response);
-    })
-    if(userInfo) setList(userInfo.availableProducts);
-  }, []);
 
   return (
     <ScrollView style={styles.container}>

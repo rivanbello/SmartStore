@@ -1,6 +1,5 @@
 const all = async ({ limit = 10, listedIds, pointOfSaleId }) => {
   try {
-
     const response = await fetch(`https://touchpay-api.amlabs.com.br/api/public/MicroMarket/${pointOfSaleId}/Inventory`, {
       method: 'GET',
       headers: {
@@ -10,7 +9,7 @@ const all = async ({ limit = 10, listedIds, pointOfSaleId }) => {
       },
     });
 
-    return (await response.json()).slice(0, 20);
+    return (await response.json());
   } catch (error) {
     console.warn('request error', error);
   }  
