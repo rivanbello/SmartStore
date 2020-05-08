@@ -122,7 +122,7 @@ const AppNavigator = () => <Tab.Navigator
     screenOptions={MainTabScreenOptions}
     tabBarOptions={MainTabBarOptions}
     >
-      {/* <Tab.Screen name="Perfil" component={ProfileScreen} options={{ headerShown: false }}/> */}
+      <Tab.Screen name="Perfil" component={ProfileScreen} options={{ headerShown: false }}/>
       <Tab.Screen
         name="Home"
         component={HomeScreen}

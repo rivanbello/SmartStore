@@ -17,9 +17,9 @@ const ProfileScreen = ({ navigation }) => {
           <Image source={ProfileBackground2} style={styles.backgroundImage} />
         </View>
         <Text style={styles.title}>Perfil</Text>
-        <View>
+        <View style={styles.container}>
           <ProfileItem firstLabel="Nome" value={userInfo && userInfo.nome} />
-          <ProfileItem firstLabel="E-mail" value={userInfo && userInfo.email} />
+          <ProfileItem firstLabel="E-mail" value={userInfo && userInfo['e-mail']} />
           <ProfileItem firstLabel="Telefone" value={userInfo && userInfo.telefone} />
           <ProfileItem firstLabel="Nome" value={userInfo && userInfo.condo && userInfo.condo.name} />
           <TouchableOpacity onPress={() => {
@@ -27,7 +27,13 @@ const ProfileScreen = ({ navigation }) => {
             AsyncStorage.setItem(userInfo['e-mail'], { nome: userInfo.nome, telefone: userInfo.telefone, condo: userInfo.condo })
             navigation.navigate('Login');
           }}>
-            <Text>Sair da minha conta</Text>
+            <TouchableOpacity
+              style={styles.feedback}
+              onPress={() => navigation.navigate('Suggestion')}
+            >
+              <Text style={styles.feedbackText}>Envie seu feedback</Text>
+            </TouchableOpacity>
+            <Text style={{ alignSelf: 'center', marginTop: 80 }}>Sair da minha conta</Text>
           </TouchableOpacity>
         </View>
       </UnsafeScreen>
@@ -35,11 +41,15 @@ const ProfileScreen = ({ navigation }) => {
   )
 }
 
+const onChangeUserInfo = ({ indexName, newValue }) => {
+  setUserInfo({ ...userInfo, indexName: newValue });
+}
+
 const ProfileItem = ({ firstLabel, value }) => (
   <Row style={styles.profileRow}>
     <Text style={{ ...styles.profileItem, ...styles.profileItemFirstLabel }}>{firstLabel}</Text>
     <Text style={styles.profileItem}>{value || 'nome'}</Text>
-    <Ionicons style={{ ...styles.profileItem, alignSelf: 'flex-end' }} name="ios-arrow-forward" size={14} color={COLORS.lilac} />
+    <Ionicons style={{ ...styles.profileItem, alignSelf: 'flex-end', left:65 }} name="ios-arrow-forward" size={22} color={COLORS.lilac} />
   </Row>
 )
 
@@ -51,24 +61,41 @@ const styles = {
     left: -20,
     top: -25,
   },
+  feedback: {
+    paddingHorizontal: 20,
+    backgroundColor: COLORS.salmon,
+    height: 40,
+    justifyContent: 'center',
+    borderRadius: 5,
+    marginTop: 30,
+  },
+  container: {
+    marginTop: 200,
+  },
   profileItemFirstLabel: {
     fontWeight: 'bold',
     color: COLORS.lilac,
   },
   profileItem: {
     flex: 1,
-    height: 25,
-    marginTop: 5,
+    height: 32,
+    marginTop: 10,
   },
   profileRow: {
     borderBottomWidth: 1,
     borderColor: COLORS.lilac,
   },
+  feedbackText: {
+    color: COLORS.primary,
+    textAlign: 'center',
+    fontWeight: 'bold',
+  },
   title: {
     fontWeight: 'bold',
     color: '#fff',
     textAlign: 'center',
-    fontSize: 18,
+    fontSize: 26,
+    lineHeight: 32,
     zIndex: 3,
   },
 }
