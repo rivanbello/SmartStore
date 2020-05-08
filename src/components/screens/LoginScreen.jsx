@@ -34,7 +34,7 @@ const styles = {
     fontSize: 32,
     color: COLORS.textPrimary,
     marginTop: '30%',
-    marginBottom: '12%',
+    marginBottom: '4%',
   },
   image: {
     width: SCREEN_WIDTH * 1.02,

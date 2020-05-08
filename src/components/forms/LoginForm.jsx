@@ -13,6 +13,7 @@ const LoginForm = ({ navigation }) => {
   const [userInfo, setUserInfo] = useContext(UserContext);
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+  const [code, setCode] = useState('');
   const [error, setError] = useState('');
 
   useEffect(() => {
@@ -35,10 +36,11 @@ const LoginForm = ({ navigation }) => {
       <FormItem
         placeholder="Senha"
         password
+        style={{ marginBottom: 22 }}
         setFormValue={(value) => setPassword(value)}
         Icon={{
           component: FontAwesome,
-          name: "user-circle",
+          name: "key",
           size: 20
         }}
         RightIcon={{
@@ -46,6 +48,15 @@ const LoginForm = ({ navigation }) => {
           activeName: 'eye-with-line',
           name: "eye",
           size: 24,
+        }}
+      />
+      <FormItem
+        placeholder="Senha do condomínio"
+        setFormValue={(value) => setCode(value)}
+        Icon={{
+          component: FontAwesome,
+          name: "building",
+          size: 20
         }}
       />
       <Row style={styles.buttonContainer}>
@@ -58,6 +69,7 @@ const LoginForm = ({ navigation }) => {
           onPress={() => {
             if (!username.includes('@') || !username.includes('.')) { setError('Digite um email válido.'); return; }
             if (!password) { setError('Insira uma senha.'); return }
+            if (code !== 'Smart*2020') { setError('Insira um código de condomínio válido.'); return; }
             login({ email: username, password })
             .then(({
               name: nome,

@@ -43,8 +43,8 @@ const styles = {
     marginBottom: 40,
   },
   image: {
-    height: 170,
-    width: 170,
+    height: 190,
+    width: 190,
   },
   title: {
     color: COLORS.fontPrimary,
