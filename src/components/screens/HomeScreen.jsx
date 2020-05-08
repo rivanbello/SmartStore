@@ -22,7 +22,6 @@ const HomeScreen = ({ route: { params = {} } = {}, navigation }) => {
     searchActive={searchActive}
     setSearchActive={() => setSearchActive(false)}
   />
-    {console.warn(userInfo.condo.name)}
     <Screen>
       <Filter
         style={styles.filter}

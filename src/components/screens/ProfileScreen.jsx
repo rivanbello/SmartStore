@@ -11,7 +11,6 @@ const ProfileScreen = ({ navigation }) => {
   const [userInfo, setUserInfo] = useContext(UserContext);
   return (
     <>
-      {console.warn(userInfo)}
       <UnsafeScreen>
         <View>
           <Image source={ProfileBackground} style={styles.backgroundImage} />
