@@ -51,17 +51,21 @@ const RegisterScreen = ({ navigation }) => {
       fadeOpacity.setValue(1);
       setfadeOpacity(new Animated.Value(1));
     } else if (stepIndex < (steps.length - 1)) setStepIndex(stepIndex + 1);
-    else if (userInfo.condo && userInfo.condo.id) register({
-      email: userInfo['e-mail'],
-      name: userInfo.nome,
-      phoneNumber: userInfo.telefone,
-      birthDate: userInfo.nascimento,
-      condoId: userInfo.condo.id,
-      password: '123456',
-    }).then(() => {
-      setUserInfo({ ...userInfo })
-      navigation.navigate('RegisterConfirmation');
-    })
+    else if (userInfo.condo && userInfo.condo.id) {
+      const infoToSave = {
+        email: userInfo['e-mail'],
+        name: userInfo.nome,
+        phoneNumber: userInfo.telefone,
+        birthDate: userInfo.nascimento,
+        condoId: userInfo.condo.id,
+        password: '123456',
+      }
+      register(infoToSave).then(() => {
+        setUserInfo({ ...userInfo })
+        AsyncStorage.setItem(userInfo['e-mail'], infoToSave);
+        navigation.navigate('RegisterConfirmation');
+      })
+    }
   }
 
   useEffect(() => {
