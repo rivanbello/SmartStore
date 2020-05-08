@@ -5,6 +5,7 @@ import CondoCard from './CondoCard';
 const CondoList = ({ data, onPress, selectedItem }) => (
   <FlatList style={styles.container}
     data={data}
+    contentContainerStyle={styles.contentContainer}
     renderItem={({ item: { name,
       address,
       neighborhood,
@@ -23,8 +24,14 @@ const CondoList = ({ data, onPress, selectedItem }) => (
 );
 
 const styles = {
+  container: {
+    height: '65%',
+  },
   item: {
     marginBottom: 10,
+  },
+  contentContainer: {
+    height: 400,
   }
 }
 

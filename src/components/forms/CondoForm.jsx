@@ -31,7 +31,7 @@ const CondoForm = ({ data, setHideHeader, setFormValue }) => {
   }, [searchIsActive]);
   return (data &&
     <View style={{ top: searchIsActive ? 0 : 20 }}>
-      {!searchIsActive &&
+      {/* {!searchIsActive &&
       <View>
         <Text style={styles.sectionLabel}>Sugestão</Text>
         <CondoCard
@@ -43,7 +43,7 @@ const CondoForm = ({ data, setHideHeader, setFormValue }) => {
           onPress={() => setSelected(0)}
         />
         </View>
-      }
+      } */}
       <TouchableOpacity
         onPress={() => {
           setSearchIsActive(!searchIsActive)
@@ -69,7 +69,7 @@ const CondoForm = ({ data, setHideHeader, setFormValue }) => {
             autoFocus
             onBlur={() => {
               !filter && setSearchIsActive(false);
-              setHideHeader(false);
+              !filter && setHideHeader(false);
               setFilter('');
             }}
             onFocus={() => setHideHeader(true)}
@@ -83,7 +83,7 @@ const CondoForm = ({ data, setHideHeader, setFormValue }) => {
       </TouchableOpacity>
       <Text style={styles.sectionLabel}>Outros</Text>
       <CondoList
-        data={filter ? data.slice(1) : data.filter(({ name }) => name.toUpperCase().includes(filter.toUpperCase()))}
+        data={data.filter(({ name }) => name.toUpperCase().includes(filter.toUpperCase()))}
         onPress={(index) => setSelected(index + 1)}
         selectedItem={selected}
       />
