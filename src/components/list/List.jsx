@@ -8,7 +8,6 @@ import { UserContext } from '../../context';
 const screenWidth = Math.round(Dimensions.get('window').width);
 
 const List = ({ navigation, list }) => {
-  // const [list, setList] = useState([]);
   const [userInfo, setUserInfo] = useContext(UserContext);
 
   return (
@@ -48,7 +47,7 @@ const List = ({ navigation, list }) => {
               price={price}
               qty={quantity}
               onPress={() => navigation.navigate('Product', {
-                stock: quantity == 0 ? true : false,
+                stock: quantity == 0 ? false : true,
                 name: description,
                 price,
                 qty: quantity,

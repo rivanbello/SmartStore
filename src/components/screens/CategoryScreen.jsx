@@ -32,7 +32,7 @@ const CategoryScreen = ({ route, navigation }) => {
             price={price}
             qty={quantity}
             onPress={() => navigation.navigate('Product', {
-              stock: quantity == 0 ? true : false,
+              stock: quantity == 0 ? false : true,
               name: description,
               price,
               qty: quantity,

@@ -22,7 +22,7 @@ const ProductScreen = ({ route: { params = {} } = {}, navigation }) => {
       {/* <Image /> */}
       {stock ? 
       <Text style=
-      {{ ...styles.stockLabel, ...styles.onStockLabel }}>em estoque!</Text>
+      {{ ...styles.stockLabel, ...styles.onStockLabel }}>Em estoque!</Text>
       : <Text style=
       {{ ...styles.stockLabel, ...styles.noStockLabel }}>Esgotado</Text>
     }
