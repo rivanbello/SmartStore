@@ -35,9 +35,11 @@ const firebaseLogin = ({ email, password }) => {
     })
     .catch((error) => {
       if(String(error).includes('network')) {
-        console.warn('Erro de conexão. Verifique sua internet e tente novamente.');
+        throw new Error('Erro de conexão. Verifique sua internet e tente novamente.');
       // } else console.warn('Credenciais inválidas. Insira um e-mail e uma senha já cadastrados.');
-    } else console.warn(String(error))
+    } else if(String(error).includes('record')) {
+      throw new Error('Credenciais inválidas.')
+    }
   });
 }
 

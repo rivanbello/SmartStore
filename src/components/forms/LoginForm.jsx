@@ -6,6 +6,7 @@ import FormItem from './FormItem';
 import { FontAwesome, Entypo } from '@expo/vector-icons';
 import validateField from './formValidators';
 import { UserContext } from '../../context';
+import { AsyncStorage } from 'react-native';
 import { login, register } from '../../auth';
 
 const LoginForm = ({ navigation }) => {
@@ -54,15 +55,29 @@ const LoginForm = ({ navigation }) => {
         />
         <PrimaryButton
           label="Entrar"
-          onPress={() => register({ email: username, password })
-            // .then(({
-            //   name: nome,
-            //   phoneNumber: telefone,
-            //   nascimento: birthDate,
-            //   condoId,
-              
-            // } = {}) => setUserInfo({ ...{userInfo}, logged: true }))
-            // .catch(e => setError(e))
+          onPress={() => 
+            login({ email: username, password })
+            .then(({
+              name: nome,
+              phoneNumber: telefone,
+              birthDate: nascimento,
+              condoId,
+              email,
+              password: senha,
+            } = {}) => setUserInfo({
+              nome,
+              telefone,
+              nascimento,
+              condo: {
+                id: condoId,
+              },
+              email,
+              senha,
+              logged: true
+            }), (err) => {
+              setError(err.message)
+            })
+            .catch(e => setError(e))
           }
           style={styles.button}
         />

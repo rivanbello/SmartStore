@@ -30,6 +30,7 @@ const RegisterScreen = ({ navigation }) => {
   const [userInfo, setUserInfo] = useContext(UserContext);
   const [steps, setSteps] = useState(generateSteps({}));
   const [stepIndex, setStepIndex] = useState(0);
+  const [registerError, setRegisterError] = useState('');
   const [getBackFunction, setGetBackFunction] = useState(() => (currentIndex) => {
     setHideHeader(false);
     setfadeOpacity(new Animated.Value(0));
@@ -65,6 +66,10 @@ const RegisterScreen = ({ navigation }) => {
         AsyncStorage.setItem(userInfo['e-mail'], infoToSave);
         navigation.navigate('RegisterConfirmation');
       })
+      .catch((e) => {
+        setfadeOpacity(1);
+        setRegisterError(e)
+      });
     }
   }
 
@@ -74,7 +79,7 @@ const RegisterScreen = ({ navigation }) => {
         delay: 2000,
         duration: 1000,
       }).start();
-  }, [fadeOpacity])
+  }, [fadeOpacity, setRegisterError])
 
   useEffect(() => {
     setLastValue(userInfo[`${steps[stepIndex].formItems[0].placeholder.toLowerCase()}`] || '')
@@ -89,10 +94,20 @@ const RegisterScreen = ({ navigation }) => {
         style={{ opacity: fadeOpacity }}
       >
         <TopAlert 
-          secondLabel={
+          secondLabel={(() => {
             stepIndex < 4 ?
             `Digite um ${steps[stepIndex].formItems[0].placeholder.toLowerCase()} válido`
             : 'Escolha um condomínio'
+            switch (stepIndex) {
+              case 1:
+              case 2:
+                return `Digite um ${steps[stepIndex].formItems[0].placeholder.toLowerCase()} válido`
+              case 3:
+                return `Insira uma data de ${steps[stepIndex].formItems[0].placeholder.toLowerCase()} válida`
+              case 4:
+                if (registerError) return registerError;
+                else return 'Escolha um condomínio'
+            }})()
           }
           error
           style={{ top: 5 }}
