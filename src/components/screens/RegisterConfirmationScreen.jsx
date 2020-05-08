@@ -4,6 +4,7 @@ import { UserContext } from '../../context';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 
 const RegisterConfirmationScreen = ({ navigation }) => {
+  const [userInfo, setUserInfo] = useContext(UserContext);
   return (
     <ConfirmationScreen
       title='Perfeito'
@@ -14,7 +15,7 @@ const RegisterConfirmationScreen = ({ navigation }) => {
         size: 200,
         name: 'check-circle',
       }}
-      onPress={() => navigation.navigate('Navigator')}
+      onPress={() => setUserInfo({ ...userInfo, logged: true })}
     />
   );
 };

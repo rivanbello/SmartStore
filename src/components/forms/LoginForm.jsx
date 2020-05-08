@@ -6,7 +6,7 @@ import FormItem from './FormItem';
 import { FontAwesome, Entypo } from '@expo/vector-icons';
 import validateField from './formValidators';
 import { UserContext } from '../../context';
-import { login } from '../../auth';
+import { login, register } from '../../auth';
 
 const LoginForm = ({ navigation }) => {
   const [userInfo, setUserInfo] = useContext(UserContext);
@@ -54,15 +54,16 @@ const LoginForm = ({ navigation }) => {
         />
         <PrimaryButton
           label="Entrar"
-          onPress={() => login({ username, password })
-            .then(({
-              name: nome,
-              phoneNumber: telefone,
-              nascimento: birthDate,
-              condoId,
+          onPress={() => register({ email: username, password })
+            // .then(({
+            //   name: nome,
+            //   phoneNumber: telefone,
+            //   nascimento: birthDate,
+            //   condoId,
               
-            } = {}) => setUserInfo({ ...{userInfo}, logged: true }))
-            .catch(e => setError(e))}
+            // } = {}) => setUserInfo({ ...{userInfo}, logged: true }))
+            // .catch(e => setError(e))
+          }
           style={styles.button}
         />
       </Row>

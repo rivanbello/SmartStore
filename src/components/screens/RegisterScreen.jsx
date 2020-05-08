@@ -2,7 +2,7 @@ import React, { useState, useEffect, useContext } from 'react';
 import Screen from './Screen';
 import { StackHeader } from '../headers';
 import { Text, SafeAreaView, Animated, AsyncStorage } from 'react-native';
-import { register } from '../../firebase';
+import { register } from '../../auth';
 import { FormItem } from '../forms';
 import { RegisterFooter } from '../footers';
 import validateField from '../forms/formValidators';
@@ -51,17 +51,17 @@ const RegisterScreen = ({ navigation }) => {
       fadeOpacity.setValue(1);
       setfadeOpacity(new Animated.Value(1));
     } else if (stepIndex < (steps.length - 1)) setStepIndex(stepIndex + 1);
-    // else register({
-    //   email: userInfo['e-mail'],
-    //   nome: userInfo.nome,
-    //   telefone: userInfo.telefone,
-    //   password: '1234',
-    // }).then(() => {
-      else {
-        setUserInfo({ ...userInfo, logged: true })
-        navigation.navigate('RegisterConfirmation');
-      }
-    // });
+    else if (userInfo.condo && userInfo.condo.id) register({
+      email: userInfo['e-mail'],
+      name: userInfo.nome,
+      phoneNumber: userInfo.telefone,
+      birthDate: userInfo.nascimento,
+      condoId: userInfo.condo.id,
+      password: '123456',
+    }).then(() => {
+      setUserInfo({ ...userInfo })
+      navigation.navigate('RegisterConfirmation');
+    })
   }
 
   useEffect(() => {
@@ -150,45 +150,6 @@ const RegisterScreen = ({ navigation }) => {
     </Screen>
   )
 };
-
-// const condos = [
-//   {
-//     name: "Condomínio Santa Cruz",
-//     address: "R. Luiz Carlos Alvez, Mercês, 126523",
-//     neighborhood: "Mercês - Curitiba",
-//     distance: "15m",
-//   },
-//   {
-//     name: "Condomínio Água da Pedra",
-//     address: "R. Almirante José Padilha, 324",
-//     neighborhood: "Santa Felicidade - Curitiba",
-//     distance: "13km",
-//   },
-//   {
-//     name: "Condomínio 2gua da Pedra",
-//     address: "R. Almirante José Padilha, 324",
-//     neighborhood: "Santa Felicidade - Curitiba",
-//     distance: "13km",
-//   },
-//   {
-//     name: "Condomínio 3gua da Pedra",
-//     address: "R. Almirante José Padilha, 324",
-//     neighborhood: "Santa Felicidade - Curitiba",
-//     distance: "13km",
-//   },
-  // {
-  //   name: "Condomínio 4gua da Pedra",
-  //   address: "R. Almirante José Padilha, 324",
-  //   neighborhood: "Santa Felicidade - Curitiba",
-  //   distance: "13km",
-  // },
-  // {
-  //   name: "Condomínio 5gua da Pedra",
-  //   address: "R. Almirante José Padilha, 324",
-  //   neighborhood: "Santa Felicidade - Curitiba",
-  //   distance: "13km",
-  // },
-// ]
 
 const styles = {
   title: {

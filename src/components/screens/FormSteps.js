@@ -54,7 +54,7 @@ const generateSteps = (context) => [
     stepIndex: 4,
     formItems: [
       {
-        placeholder: 'Data de nascimento',
+        placeholder: 'nascimento',
         iconFamily: 'AntDesign',
         iconName: 'calendar',
       }

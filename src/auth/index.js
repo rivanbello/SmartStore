@@ -1,4 +1,4 @@
-import { firebaseLogin } from '../firebase';
+import { firebaseLogin, firebaseRegister } from '../firebase';
 
 const login = ({ email, password }) => {
   //check for Async Storage
@@ -6,21 +6,22 @@ const login = ({ email, password }) => {
     .then((userInfo) => userInfo);
 };
 
-const register = ({
+const register = async ({
   email,
   password,
   name,
   phoneNumber,
   birthDate,
+  condoId,
 }) => {
-  return firebaseRegister({
+  return await firebaseRegister({
     email,
     password,
     name,
     phoneNumber,
     birthDate,
     condoId,
-  }).then(userInfo => userInfo);
+  })
 }
 
 export { login, register };

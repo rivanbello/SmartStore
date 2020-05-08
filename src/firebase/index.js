@@ -16,19 +16,22 @@ if (!firebase.apps.length) {
   firebase.initializeApp(firebaseConfig);
 }
 
+const getUserInfo = ({ email }) => db
+  .collection("users")
+  .doc(email)
+  .get()
+  .then(doc => {
+    if (!doc.exists) throw new Error('Dados do usuário não encontrados na base.')
+    else return doc.data();
+})
+
 const db = firebase.firestore();
 const firebaseLogin = ({ email, password }) => {
   return firebase
     .auth()
     .signInWithEmailAndPassword(email, password)
     .then(() => {
-      db.collection("users")
-        .doc("willianrigowow@gmail.com")
-        .get()
-        .then(doc => {
-          if (!doc.exists) throw new Error('Dados do usuário não encontrados na base.')
-          else return doc.data();
-        })
+      return getUserInfo({ email });
     })
     .catch((error) => {
       if(String(error).includes('network')) {
@@ -39,17 +42,27 @@ const firebaseLogin = ({ email, password }) => {
 }
 
 const firebaseRegister = ({ email, password, name, phoneNumber, condoId, birthDate }) => {
-  db.collection("users")
-    .doc("willianrigowow@gmail.com")
+  return db.collection("users")
+    .doc(email)
     .get()
     .then(doc => {
       if (doc.exists) throw new Error('Email já cadastrado.')
       firebase.auth().createUserWithEmailAndPassword(email, password)
-      .then(res => {
-        // if (doc.exists) throw new Error('Email já cadastrado.')
+      .then(() => {
+        db.collection('users')
+        .doc(email)
+        .set({
+          email,
+          name,
+          phoneNumber,
+          condoId,
+          birthDate,
+        })
+        .then(() => getUserInfo({ email }))
       })
     })
   .catch(function(error) {
+    if (error.message = 'Email já cadastrado.') throw error;
     throw new Error('Erro ao realizar o cadastro. Verifique sua conexão ou tente novamente mais tarde.');
   });
 }
