@@ -55,7 +55,9 @@ const LoginForm = ({ navigation }) => {
         />
         <PrimaryButton
           label="Entrar"
-          onPress={() => 
+          onPress={() => {
+            if (!username.includes('@') || !username.includes('.')) { setError('Digite um email válido.'); return; }
+            if (!password) { setError('Insira uma senha.'); return }
             login({ email: username, password })
             .then(({
               name: nome,
@@ -78,7 +80,7 @@ const LoginForm = ({ navigation }) => {
               setError(err.message)
             })
             .catch(e => setError(e))
-          }
+          }}
           style={styles.button}
         />
       </Row>

@@ -45,36 +45,37 @@ export default function App() {
   //   })
   // })()
   useEffect(() => {
-      pointsOfSale().then(response => {
-        const condos = [];
-        response.map((pos) => {
-          const name = `Cond. ${pos.localName}`;
-          condos.push({
-            name,
-            id: pos.id,
-            address: "R. Luiz Carlos Alvez, Mercês, 126523 (fictício)",
-            neighborhood: "Mercês - Curitiba",
-            distance: "15m",
-          });
-        })
-        const newUserInfo = { ...userInfo, condos };
-        setUserInfo(newUserInfo)
-        return newUserInfo;
-      }).then(info => {
-        all({ pointOfSaleId: 1 }).then(response => {
-          let categories = [];
-          response.map(({ categoryId, categoryName }) => {
-            if (!categoryName) {
-              if (!categories.includes(`Categoria ${categoryId}`)) categories.push(`Categoria ${categoryId}`)
-            } else {
-              if (!categories.includes(categoryName)) categories.push(categoryName)
-            }
-          })
-          const newUserInfo = { ...info, availableProducts: response, categories }; 
-          setUserInfo(newUserInfo);
-        })
+    pointsOfSale().then(response => {
+      const condos = [];
+      response.map((pos) => {
+        const name = `Cond. ${pos.localName}`;
+        condos.push({
+          name,
+          id: pos.id,
+          address: "R. Luiz Carlos Alvez, Mercês, 126523 (fictício)",
+          neighborhood: "Mercês - Curitiba",
+          distance: "15m",
+        });
       })
-  }, []);
+      const newUserInfo = { ...userInfo, condos };
+      setUserInfo(newUserInfo)
+      return newUserInfo;
+  })}, []);
+  useEffect(() => {
+    if (userInfo.condo)
+    all({ pointOfSaleId: userInfo.condo.id }).then(response => {
+      let categories = [];
+      response.map(({ categoryId, categoryName }) => {
+        if (!categoryName) {
+          if (!categories.includes(`Categoria ${categoryId}`)) categories.push(`Categoria ${categoryId}`)
+        } else {
+          if (!categories.includes(categoryName)) categories.push(categoryName)
+        }
+      })
+      const newUserInfo = { ...userInfo, availableProducts: response, categories }; 
+      setUserInfo(newUserInfo);
+    })
+  }, [userInfo.condo]);
   
   return (
     // <NavigationContainer>

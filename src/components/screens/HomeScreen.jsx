@@ -14,11 +14,6 @@ const HomeScreen = ({ route: { params = {} } = {}, navigation }) => {
   const [userInfo, setUserInfo] = useContext(UserContext);
   const [searchActive, setSearchActive] = useState(false);
   const [filterValue, setFilterValue] = useState('');
-  useEffect(() => {
-    all({ pointOfSaleId: userInfo.condo.id }).then(response => {
-      setUserInfo({ ...userInfo, availableProducts: response });
-    })
-  }, []);
 
   return (<>
   <HomeHeader
@@ -38,22 +33,22 @@ const HomeScreen = ({ route: { params = {} } = {}, navigation }) => {
         placeholderTextColor={COLORS.darkestGray}
         Icon={<Ionicons name="ios-search" size={26} style={{ color: COLORS.primary }}/>}
       />
-      {searchActive
+      {userInfo.availableProducts && 
+      (searchActive
         ? <FreeList list={
-            userInfo &&
             userInfo.availableProducts
               .filter(({ description }) => {
                 if (filterValue) return description.toUpperCase().includes(filterValue.toUpperCase())
                 else return true;
               })
-          }/>
+            }
+          navigation={navigation}
+          />
         : <List
         navigation={navigation}
         filterValue={filterValue}
-        list={
-          userInfo &&
-          userInfo.availableProducts}
-        />
+        list={userInfo.availableProducts}
+        />)
       }
     </Screen>
   </>)

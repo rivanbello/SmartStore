@@ -5,7 +5,7 @@ import { Dimensions, ScrollView } from 'react-native';
 import { Row } from '../layout';
 
 const screenWidth = Math.round(Dimensions.get('window').width);
-const FreeList = ({ list = []}) => {
+const FreeList = ({ list = [], navigation }) => {
   const rows = [];
   for (let i = 4; i < (list.length + 4); i = i + 4) {
     if (list.length >= i) rows.push(list.slice(i - 4, i));
