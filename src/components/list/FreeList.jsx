@@ -26,6 +26,7 @@ const FreeList = ({ list = [], navigation }) => {
         onPress={() => navigation.navigate('Product', {
           stock: quantity == 0 ? false : true,
           name: description,
+          imageUrl,
           price,
           qty: quantity,
         })}

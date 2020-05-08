@@ -52,6 +52,7 @@ const List = ({ navigation, list }) => {
                 name: description,
                 price,
                 qty: quantity,
+                imageUrl,
               })}
             />
           )}

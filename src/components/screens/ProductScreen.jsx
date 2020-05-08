@@ -1,6 +1,6 @@
 import React from 'react';
 // import { Image } from 'react-native';
-import { Text } from 'react-native';
+import { Text, Image } from 'react-native';
 import UnsafeScreen from './UnsafeScreen';
 import { Row } from '../layout';
 import { COLORS } from '../../constants';
@@ -8,7 +8,7 @@ import { StackHeader } from '../headers';
 
 const ProductScreen = ({ route: { params = {} } = {}, navigation }) => {
   const {
-    image,
+    imageUrl,
     adult = false,
     stock = false,
     name,
@@ -19,7 +19,8 @@ const ProductScreen = ({ route: { params = {} } = {}, navigation }) => {
   <UnsafeScreen>
     <StackHeader onPress={() => navigation.goBack()} />
     <Row style={styles.imageBackground}>
-      {/* <Image /> */}
+      {console.warn(imageUrl)}
+      <Image source={imageUrl ? {ur: imageUrl} : null} />
       {stock ? 
       <Text style=
       {{ ...styles.stockLabel, ...styles.onStockLabel }}>Em estoque!</Text>
