@@ -39,8 +39,9 @@ const List = ({ navigation, list }) => {
             .slice(0, 10)}
           // contentContainerStyle={styles.content}
           keyExtractor={item => item.id}
-          renderItem={({item: { description, categoryName, price, quantity } = {}} ) => (
+          renderItem={({item: { description, categoryName, price, quantity, imageUrl } = {}} ) => (
             <Item
+              img={imageUrl}
               style={styles.item} 
               description={description}
               category={categoryName}

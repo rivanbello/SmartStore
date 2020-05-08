@@ -15,10 +15,11 @@ const FreeList = ({ list = [], navigation }) => {
     <ScrollView style={styles.container}>
     {rows.map((row) => (
     <Row style={{ justifyContent: 'flex-start' }}>
-    {row.map(({ description, price, quantity }) => (
+    {row.map(({ description, price, quantity, imageUrl }) => (
       <Item
         style={styles.item}
         description={description}
+        img={imageUrl}
         // category={category}
         price={price}
         qty={quantity}

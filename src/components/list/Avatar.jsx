@@ -3,9 +3,9 @@ import { Image, StyleSheet } from "react-native";
 import { COLORS } from '../../constants';
 
 const Avatar = ({ src, style }) => (
-    <Image 
-      style={{ ...styles.avatar, ...style}} 
-      source={src ? src : null}/>
+  <Image 
+    style={{ ...styles.avatar, ...style}} 
+    source={src ? { uri: src } : null}/>
 );
 
 const styles = StyleSheet.create({
