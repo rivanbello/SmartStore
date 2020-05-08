@@ -71,6 +71,7 @@ const LoginForm = ({ navigation }) => {
               telefone,
               nascimento,
               condo: {
+                name: userInfo && userInfo.condos && userInfo.condos.filter(({ id }) => id === condoId)[0].name,
                 id: condoId,
               },
               email,
