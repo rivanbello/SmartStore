@@ -4,7 +4,7 @@ import { StackHeader } from '../headers';
 import { COLORS } from '../../constants';
 import Screen from './Screen';
 import { Row } from '../layout';
-import { Dimensions, Text } from 'react-native';
+import { Dimensions, Text, ScrollView } from 'react-native';
 
 const screenWidth = Math.round(Dimensions.get('window').width);
 
@@ -22,6 +22,7 @@ const CategoryScreen = ({ route, navigation }) => {
       onPress={() => navigation.goBack()}
     />
     <Text style={styles.title}>{category}</Text>
+    <ScrollView>
     {rows.map((row) => (
       <Row style={{ justifyContent: 'flex-start' }}>
         {row.map(({ description, price, quantity }) => (
@@ -41,6 +42,7 @@ const CategoryScreen = ({ route, navigation }) => {
         ))}
       </Row>
     ))}
+    </ScrollView>
   </Screen>)
 };
 
