@@ -19,8 +19,7 @@ const ProductScreen = ({ route: { params = {} } = {}, navigation }) => {
   <UnsafeScreen>
     <StackHeader onPress={() => navigation.goBack()} />
     <Row style={styles.imageBackground}>
-      {console.warn(imageUrl)}
-      <Image source={imageUrl ? {ur: imageUrl} : null} />
+      <Image style={styles.image} source={imageUrl ? {uri: imageUrl} : null} />
       {stock ? 
       <Text style=
       {{ ...styles.stockLabel, ...styles.onStockLabel }}>Em estoque!</Text>
@@ -42,6 +41,10 @@ const styles = {
   imageBackground: {
     height: '40%',
     marginBottom: 40,
+  },
+  image: {
+    height: 170,
+    width: 170,
   },
   title: {
     color: COLORS.fontPrimary,
