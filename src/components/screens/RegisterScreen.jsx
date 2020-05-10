@@ -46,10 +46,10 @@ const RegisterScreen = ({ navigation }) => {
     if (stepIndex < 4 && !validateField(stepIndex, lastValue) || !lastValue) {
       fadeOpacity.setValue(1);
       setfadeOpacity(new Animated.Value(1));
-    } else if (stepIndex === 3 && typeof lastValue === 'date' && (lastValue.UTC() < 1325383200000)) {
+    } else if (stepIndex === 4 && typeof lastValue === 'date' && (lastValue.UTC() < 1325383200000)) {
       fadeOpacity.setValue(1);
       setfadeOpacity(new Animated.Value(1));
-    } else if (stepIndex === 4 && !chosenCondo) {
+    } else if (stepIndex === 5 && !chosenCondo) {
       fadeOpacity.setValue(1);
       setfadeOpacity(new Animated.Value(1));
     } else if (stepIndex < (steps.length - 1)) setStepIndex(stepIndex + 1);
@@ -119,7 +119,7 @@ const RegisterScreen = ({ navigation }) => {
             {steps[stepIndex].label}
           </>
         }
-        {stepIndex === 4 && userInfo.condos.length > 0 && <CondoForm
+        {stepIndex === 5 && userInfo.condos.length > 0 && <CondoForm
           data={userInfo.condos}
           setHideHeader={setHideHeader}
           setFormValue={(value) => {
@@ -133,7 +133,7 @@ const RegisterScreen = ({ navigation }) => {
             setLastValue(value);
           }}
         />}
-        {stepIndex < 4 && <FormItem
+        {stepIndex < 5 && <FormItem
           phoneNumber={steps[stepIndex].phoneNumber}
           focused
           savedValue={lastValue}
