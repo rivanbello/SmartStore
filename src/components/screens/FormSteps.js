@@ -105,9 +105,9 @@ const generateSteps = (context) => [
     stepIndex: 7,
     formItems: [
       {
-        placeholder: 'Nome',
+        placeholder: 'Senha do condomínio',
         iconFamily: 'FontAwesome',
-        iconName: 'user-circle',
+        iconName: 'lock',
       }
     ]
   },

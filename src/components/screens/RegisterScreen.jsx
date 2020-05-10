@@ -43,7 +43,7 @@ const RegisterScreen = ({ navigation }) => {
   const [lastValue, setLastValue] = useState('');
   const [fadeOpacity, setfadeOpacity] = useState(new Animated.Value(0));
   const nextStep = () => {
-    if (stepIndex < 4 && !validateField(stepIndex, lastValue) || !lastValue) {
+    if ((stepIndex < 4 || stepIndex === 6) && !validateField(stepIndex, lastValue) || !lastValue) {
       fadeOpacity.setValue(1);
       setfadeOpacity(new Animated.Value(1));
     } else if (stepIndex === 4 && typeof lastValue === 'date' && (lastValue.UTC() < 1325383200000)) {
@@ -60,7 +60,7 @@ const RegisterScreen = ({ navigation }) => {
         phoneNumber: userInfo.telefone,
         birthDate: userInfo.nascimento,
         condoId: userInfo.condo.id,
-        password: '123456',
+        password: userInfo.senha,
       }
       register(infoToSave).then(() => {
         setUserInfo({ ...userInfo })
@@ -133,7 +133,7 @@ const RegisterScreen = ({ navigation }) => {
             setLastValue(value);
           }}
         />}
-        {stepIndex < 5 && <FormItem
+        {(stepIndex < 5 || stepIndex === 6) && <FormItem
           phoneNumber={steps[stepIndex].phoneNumber}
           focused
           savedValue={lastValue}
@@ -162,7 +162,7 @@ const RegisterScreen = ({ navigation }) => {
           style={{
             backgroundColor: 'white',
           }}
-          totalSteps={5}
+          totalSteps={steps.length}
           onPress={() => nextStep()}
         />
       </SafeAreaView>
