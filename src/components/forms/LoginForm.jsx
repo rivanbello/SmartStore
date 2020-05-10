@@ -26,6 +26,7 @@ const LoginForm = ({ navigation }) => {
         placeholder="E-mail"
         setFormValue={(value) => validateField(stepIndex, value) && setLastValue(value)}        
         style={{ marginBottom: 22 }}
+        type="email"
         setFormValue={(value) => setUsername(value)}
         Icon={{
           component: FontAwesome,
@@ -35,7 +36,7 @@ const LoginForm = ({ navigation }) => {
       />
       <FormItem
         placeholder="Senha"
-        password
+        type="password"
         style={{ marginBottom: 22 }}
         setFormValue={(value) => setPassword(value)}
         Icon={{

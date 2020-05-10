@@ -33,7 +33,7 @@ const HomeScreen = ({ route: { params = {} } = {}, navigation }) => {
         placeholderTextColor={COLORS.darkestGray}
         Icon={<Ionicons name="ios-search" size={26} style={{ color: COLORS.primary }}/>}
       />
-      {userInfo.availableProducts && 
+      {userInfo.availableProducts &&
       (searchActive
         ? <FreeList list={
             userInfo.availableProducts

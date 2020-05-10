@@ -19,12 +19,11 @@ const ProfileScreen = ({ navigation }) => {
         <Text style={styles.title}>Perfil</Text>
         <View style={styles.container}>
           <ProfileItem firstLabel="Nome" value={userInfo && userInfo.nome} />
-          <ProfileItem firstLabel="E-mail" value={userInfo && userInfo['e-mail']} />
+          {/* <ProfileItem firstLabel="E-mail" value={userInfo && userInfo.email} /> */}
           <ProfileItem firstLabel="Telefone" value={userInfo && userInfo.telefone} />
           <ProfileItem firstLabel="Nome" value={userInfo && userInfo.condo && userInfo.condo.name} />
           <TouchableOpacity onPress={() => {
             setUserInfo({ ...userInfo, logged: false })
-            AsyncStorage.setItem(userInfo['e-mail'], { nome: userInfo.nome, telefone: userInfo.telefone, condo: userInfo.condo })
             navigation.navigate('Login');
           }}>
             <TouchableOpacity
@@ -33,7 +32,7 @@ const ProfileScreen = ({ navigation }) => {
             >
               <Text style={styles.feedbackText}>Envie seu feedback</Text>
             </TouchableOpacity>
-            <Text style={{ alignSelf: 'center', marginTop: 80 }}>Sair da minha conta</Text>
+            <Text style={{ alignSelf: 'center', marginTop: 80, fontWeight: 'bold', color: COLORS.darkGray }}>Sair da minha conta</Text>
           </TouchableOpacity>
         </View>
       </UnsafeScreen>

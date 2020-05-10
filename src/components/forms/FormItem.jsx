@@ -7,8 +7,6 @@ import {
   TouchableOpacity,
   Text,
 } from 'react-native';
-import codes from './phoneCodes';
-import { Picker } from '@react-native-community/picker';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import { COLORS } from '../../constants';
 import { floatingLabel } from './animations';
@@ -20,7 +18,7 @@ const FormItem = ({
   phoneNumber = false,
   datePicker = false,
   focused = false,
-  password = false,
+  type,
   setFormValue,
   savedValue,
   RightIcon,
@@ -196,7 +194,7 @@ const FormItem = ({
         maxLength={phoneNumber ? 15 : 50}
         keyboardType={phoneNumber ? "numeric" : "default"}
         autoFocus={focused}
-        secureTextEntry={password && !showPassword}
+        secureTextEntry={type === 'password'}
         onFocus={() => setActive(true)}
         onBlur={() => setActive(false)}
         value={phoneNumber ? maskedInputValue : savedValue}

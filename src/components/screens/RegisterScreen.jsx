@@ -31,6 +31,7 @@ const RegisterScreen = ({ navigation }) => {
   const [steps, setSteps] = useState(generateSteps({}));
   const [stepIndex, setStepIndex] = useState(0);
   const [registerError, setRegisterError] = useState('');
+  const [stepName, setStepName] = useState(steps[stepIndex].formItems[0].placeholder.toLowerCase())
   const [getBackFunction, setGetBackFunction] = useState(() => (currentIndex) => {
     setHideHeader(false);
     setfadeOpacity(new Animated.Value(0));
@@ -42,7 +43,7 @@ const RegisterScreen = ({ navigation }) => {
   const [lastValue, setLastValue] = useState('');
   const [fadeOpacity, setfadeOpacity] = useState(new Animated.Value(0));
   const nextStep = () => {
-    if (stepIndex < 3 && !validateField(stepIndex, lastValue) || !lastValue) {
+    if (stepIndex < 4 && !validateField(stepIndex, lastValue) || !lastValue) {
       fadeOpacity.setValue(1);
       setfadeOpacity(new Animated.Value(1));
     } else if (stepIndex === 3 && typeof lastValue === 'date' && (lastValue.UTC() < 1325383200000)) {
@@ -93,20 +94,18 @@ const RegisterScreen = ({ navigation }) => {
       <Animated.View
         style={{ opacity: fadeOpacity }}
       >
-        <TopAlert 
+        <TopAlert
           secondLabel={(() => {
-            stepIndex < 4 ?
-            `Digite um ${steps[stepIndex].formItems[0].placeholder.toLowerCase()} válido`
-            : 'Escolha um condomínio'
-            switch (stepIndex) {
-              case 1:
-              case 2:
-                return `Digite um ${steps[stepIndex].formItems[0].placeholder.toLowerCase()} válido`
-              case 3:
+            switch (steps[stepIndex].type) {
+              case 'datePicker':
                 return `Insira uma data de ${steps[stepIndex].formItems[0].placeholder.toLowerCase()} válida`
-              case 4:
+              case 'condo':
                 if (registerError) return registerError;
                 else return 'Escolha um condomínio'
+              case 'password':
+                return 'Digite uma senha válida'
+              default:
+                return `Digite um ${steps[stepIndex].formItems[0].placeholder.toLowerCase()} válido`
             }})()
           }
           error
@@ -138,6 +137,7 @@ const RegisterScreen = ({ navigation }) => {
           phoneNumber={steps[stepIndex].phoneNumber}
           focused
           savedValue={lastValue}
+          type={steps[stepIndex].type}
           style={styles.formItem}
           datePicker={steps[stepIndex].datePicker}
           placeholder={steps[stepIndex].formItems[0].placeholder}

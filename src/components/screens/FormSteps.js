@@ -32,6 +32,7 @@ const generateSteps = (context) => [
       }
     ],
     phoneNumber: true,
+    type: 'phoneNumber',
   },
   {
     label:
@@ -48,10 +49,33 @@ const generateSteps = (context) => [
       }
     ],
     email: true,
+    type: 'email',
+  },{
+    label:
+    <Text style={styles.stepLabel}>
+      <Text>Para manter suas compras seguras, insira uma senha com mais de 8 caracteres.</Text>
+    </Text>,
+    stepIndex: 4,
+    formItems: [
+      {
+        placeholder: 'Senha',
+        iconFamily: 'FontAwesome',
+        iconName: 'lock',
+      }
+    ],
+    formItems: [
+      {
+        placeholder: 'Confirme sua senha',
+        iconFamily: 'FontAwesome',
+        iconName: 'lock',
+      }
+    ],
+    password: true,
+    type: 'password',
   },
   {
     label: <Text style={styles.stepLabel}>Perfeito, e qual é a sua data de nascimento?</Text>,
-    stepIndex: 4,
+    stepIndex: 5,
     formItems: [
       {
         placeholder: 'nascimento',
@@ -60,15 +84,32 @@ const generateSteps = (context) => [
       }
     ],
     datePicker: true,
+    type: 'datePicker',
   },
   {
-    label: <Text style={styles.stepLabel}>Para finalizar, escolha o condomínio onde reside</Text>,
-    stepIndex: 5,
+    label: <Text style={styles.stepLabel}>Quase lá! Agora escolha o condomínio onde reside</Text>,
+    stepIndex: 6,
     formItems: [
       {
         placeholder: 'condo',
       }
     ],
+    type: 'condo',
+  },
+  {
+    label: 
+    <Text style={styles.stepLabel}>
+      <Text>Por último, insira a senha do seu condomínio</Text>
+    </Text>,
+    helpLabel: <Text>Como conseguir a senha do meu condomínio?</Text>,
+    stepIndex: 7,
+    formItems: [
+      {
+        placeholder: 'Nome',
+        iconFamily: 'FontAwesome',
+        iconName: 'user-circle',
+      }
+    ]
   },
 ]
 
@@ -79,6 +120,10 @@ const styles = {
     fontWeight: 'bold',
     marginBottom: 26,
   },
+  helpLabel: {
+    color: COLORS.gray,
+    fontSize: 16,
+  }
 };
 
 export default generateSteps;
