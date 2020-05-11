@@ -45,6 +45,7 @@ const RegisterScreen = ({ navigation }) => {
   const [lastValue, setLastValue] = useState('');
   const [fadeOpacity, setfadeOpacity] = useState(new Animated.Value(0));
   const nextStep = () => {
+    console.warn(userInfo.senha)
     if ((stepIndex < 4 || stepIndex === 6) && (!validateField(stepIndex, lastValue) || !lastValue)) {
       fadeOpacity.setValue(1);
       setfadeOpacity(new Animated.Value(1));
@@ -60,7 +61,7 @@ const RegisterScreen = ({ navigation }) => {
         email: userInfo['e-mail'],
         name: userInfo.nome,
         phoneNumber: userInfo.telefone,
-        birthDate: userInfo.nascimento,
+        birthDate: userInfo.nascimento || new Date(),
         condoId: userInfo.condo.id,
         password: userInfo.senha,
       }

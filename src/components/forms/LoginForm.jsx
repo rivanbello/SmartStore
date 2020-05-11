@@ -69,12 +69,13 @@ const LoginForm = ({ navigation }) => {
               email,
               password: senha,
             } = {}) => { 
+              // console.warn(userInfo && userInfo.condos && userInfo.condos.filter(({ id }) => id === condoId)[0].name)
               setUserInfo({
               nome,
               telefone,
               nascimento,
               condo: {
-                name: userInfo && userInfo.condos && userInfo.condos.filter(({ id }) => id === condoId)[0].name,
+                // name: userInfo && userInfo.condos && userInfo.condos.filter(({ id }) => id === condoId)[0].name,
                 id: condoId,
               },
               email,

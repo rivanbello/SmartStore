@@ -1,11 +1,9 @@
 require('./src/firebase');
-import React, { useState, useEffect, useContext } from 'react';
-import { SafeAreaView, StyleSheet, Text, View } from 'react-native';
+import React, { useState, useEffect } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import all from './src/client/list';
 import pointsOfSale from './src/client/pointsOfSale';
-import { login } from './src/auth';
 import {
   RegisterConfirmationScreen,
   RegisterScreen,
@@ -62,7 +60,6 @@ export default function App() {
       return newUserInfo;
   })}, []);
   useEffect(() => {
-    console.warn('UserInfo Condo: ', userInfo.condo)
     if (userInfo.condo)
     all({ pointOfSaleId: userInfo.condo.id }).then(response => {
       let categories = [];

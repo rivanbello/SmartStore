@@ -31,16 +31,16 @@ const firebaseLogin = ({ email, password }) => {
     .auth()
     .signInWithEmailAndPassword(email, password)
     .then(() => {
-      const info = getUserInfo({ email });
-      return info;
+      return getUserInfo({ email });
     })
     .catch((error) => {
       console.warn(error.message)
       if(String(error).includes('network')) {
         throw new Error('Erro de conexão. Verifique sua internet e tente novamente.');
-      // } else console.warn('Credenciais inválidas. Insira um e-mail e uma senha já cadastrados.');
-    } else if(String(error).includes('record')) {
+    } else if(String(error).includes('record') || String(error).includes('invalid')) {
       throw new Error('Credenciais inválidas.')
+    } else if (String(error).includes('Too many')) {
+      throw new Error('Muitas tentativas seguidas. Tente novamente em alguns minutos.')
     }
   });
 }
