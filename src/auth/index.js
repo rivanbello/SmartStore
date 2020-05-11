@@ -2,7 +2,8 @@ import { firebaseLogin, firebaseRegister } from '../firebase';
 
 const login = async ({ email, password }) => {
   //check for Async Storage
-  return await firebaseLogin({ email, password })
+  const res = await firebaseLogin({ email, password })
+  return res;
 };
 
 const register = async ({

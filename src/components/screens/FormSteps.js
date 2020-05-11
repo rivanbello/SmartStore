@@ -61,9 +61,7 @@ const generateSteps = (context) => [
         placeholder: 'Senha',
         iconFamily: 'FontAwesome',
         iconName: 'lock',
-      }
-    ],
-    formItems: [
+      },
       {
         placeholder: 'Confirme sua senha',
         iconFamily: 'FontAwesome',

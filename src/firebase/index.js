@@ -31,9 +31,11 @@ const firebaseLogin = ({ email, password }) => {
     .auth()
     .signInWithEmailAndPassword(email, password)
     .then(() => {
-      return getUserInfo({ email });
+      const info = getUserInfo({ email });
+      return info;
     })
     .catch((error) => {
+      console.warn(error.message)
       if(String(error).includes('network')) {
         throw new Error('Erro de conexão. Verifique sua internet e tente novamente.');
       // } else console.warn('Credenciais inválidas. Insira um e-mail e uma senha já cadastrados.');

@@ -58,7 +58,7 @@ export default function App() {
         });
       })
       const newUserInfo = { ...userInfo, condos };
-      setUserInfo(newUserInfo)
+      setUserInfo(newUserInfo);
       return newUserInfo;
   })}, []);
   useEffect(() => {

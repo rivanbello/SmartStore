@@ -3,7 +3,6 @@ import { Text, View, TouchableOpacity, ScrollView } from 'react-native';
 import { COLORS } from '../../constants';
 import { Row } from '../layout';
 import Screen from './Screen';
-import { StackHeader } from '../headers';
 
 const InformationScreen = ({ navigation }) => (
   <Screen>
@@ -20,16 +19,33 @@ const InformationScreen = ({ navigation }) => (
         eros quis sollicitudin tincidunt, ipsum quam tincidunt tortor, id euismod augue purus vel libero. Aliquam sollicitudin velit massa, eu laoreet lacus tempor imperdiet.
       </Text>
       <Text style={styles.title}>
-        Como comprar?
-      </Text>
-      <Text style={styles.content}>
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque consequat,
-        eros quis sollicitudin tincidunt, ipsum quam tincidunt tortor, id euismod augue purus vel libero. Aliquam sollicitudin velit massa, eu laoreet lacus tempor imperdiet.
-      </Text>
-      <Text style={styles.title}>
         F.A.Q.
       </Text>
-      <FAQItem />
+      <View style={styles.separationLine} />
+      <FAQItem
+        title="Quais as bandeiras aceitas na SmartStore?"
+        description="Aceita pagamentos em cartão de débito e cartão de crédito, sendo: Visa, MasterCard, Elo, HiperCard, Hiper e Amex."
+      />
+      <FAQItem
+        title="Por que fica aberto sem proteção dos itens?"
+        description="Acreditamos nas pessoas. Quermos levar sempre comodidade e conforto para os moradores. Os ambientes são monitorados por câmera IP de rastreamento inteligente, fornecendo maior proteção aos condôminos. Nos ajude a cuidar desse espaço, ele foi entregue com carinho e confiança a você."
+      />
+      <FAQItem
+        title="Gostaria comprar itens ainda não disponiveis na minha SmartStore, como faço?"
+        description="Como a SmartStore tem como proposta ser uma micro conveniência, o limite de espaço nos faz trabalhar com os itens mais interessantes para cada condomínio. Sempre que tiver uma sugestão de item, basta nos enviar via WhatsApp e avaliaremos com carinho a possibilidade de incluir. Alguns condomínios preferem itens do dia-a-dia, outros preferem ter a disposição petiscos, queijos e vinhos. Somente juntos e com sua sugestão chegaremos ao modelo ideal do seu condomínio =)."
+      />
+      <FAQItem
+        title="Qual é a frequência de abastecimento?"
+        description="O abastecimento é feito todos os dias as 19:30, dependendo da demanda. Em condomínios de alto fluxo de uso, em alguns dias fazemos 2 vezes para suprir o estoque. Em outros, com fluxo mais baixo a reposição é dia sim, dia não. Sempre prezando pelo pleno abastecimento no maior periodo de tempo possível."
+      />
+      <FAQItem
+        title="E se eu descer do meu apartamento e não tiver o item, perdi viagem?"
+        description={`Graças a esse link web que você está, temos o botão "Ver estoque". Nele é possível ver todo o estoque da sua SmartStore em tempo real, sem precisar sair de casa.`}
+      />
+      <FAQItem
+        title="Agora com a Pandemia do Coronavirus, como é feita a prevenção?"
+        description="Ao lado do caixa, disponibilizamos alcool gel para higienização das mãos antes e após o uso do sistema. Além disso, todos os dias durante o abastecimento é realizada a limpeza das maçanetas de geladeiras e frezzers, bem como do totem de pagamento com álcool 70%."
+      />
       <TouchableOpacity
         style={styles.feedback}
         onPress={() => navigation.navigate('Suggestion')}
@@ -41,13 +57,11 @@ const InformationScreen = ({ navigation }) => (
   </Screen>
 );
 
-const FAQItem = () => {
+const FAQItem = ({ title, description }) => {
   const [active, setActive] = useState(false);
   return (<TouchableOpacity onPress={() => setActive(!active)}>
-    <View style={styles.separationLine} 
-    />
       <Row style={{ justifyContent: 'space-between' }}>
-        <Text style={styles.FAQTitle}>Posso comprar em qualquer Smartstore?</Text>
+        <Text style={styles.FAQTitle}>{title}</Text>
         {active ? <View
           transform={[{rotateZ: '45deg'}]}
         >
@@ -64,7 +78,7 @@ const FAQItem = () => {
           
       </Row>
       {active && <Text style={styles.content}>
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque consequat, eros quis sollicitudin tincidunt, ipsum quam tincidunt tortor, id euismod augue purus vel libero.
+        {description}
       </Text>}
     <View style={styles.separationLine} />
   </TouchableOpacity>)

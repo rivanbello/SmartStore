@@ -31,6 +31,8 @@ const RegisterScreen = ({ navigation }) => {
   const [steps, setSteps] = useState(generateSteps({}));
   const [stepIndex, setStepIndex] = useState(0);
   const [registerError, setRegisterError] = useState('');
+  const [password, setPassword] = useState('');
+  const [passwordConfirmation, setPasswordConfirmation] = useState('');
   const [stepName, setStepName] = useState(steps[stepIndex].formItems[0].placeholder.toLowerCase())
   const [getBackFunction, setGetBackFunction] = useState(() => (currentIndex) => {
     setHideHeader(false);
