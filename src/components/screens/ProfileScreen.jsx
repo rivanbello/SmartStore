@@ -45,11 +45,13 @@ const onChangeUserInfo = ({ indexName, newValue }) => {
 }
 
 const ProfileItem = ({ firstLabel, value }) => (
-  <Row style={styles.profileRow}>
+  
+  value ? <Row style={styles.profileRow}>
     <Text style={{ ...styles.profileItem, ...styles.profileItemFirstLabel }}>{firstLabel}</Text>
     <Text style={styles.profileItem}>{value || 'nome'}</Text>
     <Ionicons style={{ ...styles.profileItem, alignSelf: 'flex-end', left:65 }} name="ios-arrow-forward" size={22} color={COLORS.lilac} />
   </Row>
+  : null
 )
 
 const styles = {

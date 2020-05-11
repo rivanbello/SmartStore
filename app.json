@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "app",
-    "slug": "app",
+    "name": "SmartStore",
+    "slug": "SmartStore",
     "platforms": [
       "ios",
       "android",
