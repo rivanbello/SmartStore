@@ -70,7 +70,7 @@ const RegisterScreen = ({ navigation }) => {
         navigation.navigate('RegisterConfirmation');
       })
       .catch((e) => {
-        setfadeOpacity(1);
+        setfadeOpacity(new Animated.Value(1));
         setRegisterError(e)
       });
     }

@@ -62,6 +62,7 @@ export default function App() {
       return newUserInfo;
   })}, []);
   useEffect(() => {
+    console.warn('UserInfo Condo: ', userInfo.condo)
     if (userInfo.condo)
     all({ pointOfSaleId: userInfo.condo.id }).then(response => {
       let categories = [];

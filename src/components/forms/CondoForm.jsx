@@ -17,7 +17,7 @@ const CondoForm = ({ data, setHideHeader, setFormValue }) => {
   const [selected, setSelected] = useState(-1);
   const [filter, setFilter] = useState('');
   useEffect(() => {
-    setFormValue(data.filter(({ id }) => selected === id))
+    setFormValue(data.filter(({ id }) => selected === id)[0])
   }, [selected])
   useEffect(() => {
     searchIsActive && Animated.timing(searchWidth, {
