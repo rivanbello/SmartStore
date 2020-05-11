@@ -1,6 +1,6 @@
 import React from 'react';
 // import { Image } from 'react-native';
-import { Text, Image } from 'react-native';
+import { Text, Image, View } from 'react-native';
 import UnsafeScreen from './UnsafeScreen';
 import { Row } from '../layout';
 import { COLORS } from '../../constants';
@@ -14,6 +14,7 @@ const ProductScreen = ({ route: { params = {} } = {}, navigation }) => {
     name,
     price,
     qty,
+    ageRestricted,
   } = params;
   return (
   <UnsafeScreen>
@@ -33,7 +34,12 @@ const ProductScreen = ({ route: { params = {} } = {}, navigation }) => {
         {Number(qty) < 9 ? '0' : ''}{qty}un   
       </Text>
     </Row>
-    {!adult && <Text style={styles.regularPrice}>R$ {price && price.toFixed(2).replace('.', ',')}</Text>}
+    <Text style={ageRestricted ? styles.ageRestrictedPrice : styles.regularPrice}>R$ {price && price.toFixed(2).replace('.', ',')}</Text>
+    {ageRestricted && <View style={{ color: COLORS.gray, borderTopWidth: 0.5, marginTop: 20 }}/>}
+    {ageRestricted && <Row style={{ justifyContent: 'flex-start', marginTop: 30 }}>
+      <View style={styles.ageRestrictedLabel}><Text style={{ color: '#fff', fontSize: 20 }}>+18</Text></View>
+      <Text style={{ color: COLORS.darkGray, maxWidth: '70%' }}>Produto autorizado somente para maiores de 18 anos</Text>
+    </Row>}
   </UnsafeScreen>)
 };
 
@@ -45,6 +51,21 @@ const styles = {
   image: {
     height: 190,
     width: 190,
+  },
+  ageRestrictedLabel: {
+    backgroundColor: '#000',
+    padding: 2,
+    paddingHorizontal: 4,
+    borderRadius: 5,
+    marginRight: 10,
+    color: 'white'
+  },
+  ageRestrictedPrice: {
+    fontSize: 26,
+    fontWeight: 'bold',
+    color: COLORS.gray,
+    fontStyle: 'italic',
+    marginTop: '10%'
   },
   title: {
     color: COLORS.fontPrimary,

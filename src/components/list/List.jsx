@@ -39,7 +39,7 @@ const List = ({ navigation, list }) => {
             .slice(0, 10)}
           // contentContainerStyle={styles.content}
           keyExtractor={item => item.id}
-          renderItem={({item: { description, categoryName, price, quantity, imageUrl } = {}} ) => (
+          renderItem={({item: { ageRestricted, description, categoryName, price, quantity, imageUrl } = {}} ) => (
             <Item
               img={imageUrl}
               style={styles.item} 
@@ -51,6 +51,7 @@ const List = ({ navigation, list }) => {
                 stock: quantity == 0 ? false : true,
                 name: description,
                 price,
+                ageRestricted,
                 qty: quantity,
                 imageUrl,
               })}

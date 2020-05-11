@@ -12,11 +12,16 @@ const InformationScreen = ({ navigation }) => (
     <ScrollView>
       <Text style={styles.pageTitle}>Informações</Text>
       <Text style={styles.title}>
-        Como comprar?
+        Sobre esse aplicativo:
       </Text>
       <Text style={styles.content}>
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque consequat,
-        eros quis sollicitudin tincidunt, ipsum quam tincidunt tortor, id euismod augue purus vel libero. Aliquam sollicitudin velit massa, eu laoreet lacus tempor imperdiet.
+        Seja muito bem vindo ao seu aplicativo do morador! Aqui você pode verificar preços e estoque da loja do seu condomínio, bem como fazer sugestões, receber ofertas e tirar dúvidas. E sabe o melhor? Tem muita novidade por vir, mantenha seu aplicativo sempre atualizado!
+      </Text>
+      <Text style={styles.title}>
+        Compra de bebidas
+      </Text>
+      <Text style={styles.content}>
+      Para comprar sua bebida, caso você seja maior de idade no cadastro realizado, você observará abaixo um botão "Cartão +18" basta clicar e escanear no leitor de código de barras da sua SmartStore.
       </Text>
       <Text style={styles.title}>
         F.A.Q.
