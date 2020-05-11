@@ -17,7 +17,7 @@ const CondoForm = ({ data, setHideHeader, setFormValue }) => {
   const [selected, setSelected] = useState(-1);
   const [filter, setFilter] = useState('');
   useEffect(() => {
-    setFormValue(data[selected])
+    setFormValue(data.filter(({ id }) => selected === id))
   }, [selected])
   useEffect(() => {
     searchIsActive && Animated.timing(searchWidth, {
@@ -84,7 +84,7 @@ const CondoForm = ({ data, setHideHeader, setFormValue }) => {
       <Text style={styles.sectionLabel}>Outros</Text>
       <CondoList
         data={data.filter(({ name }) => name.toUpperCase().includes(filter.toUpperCase()))}
-        onPress={(index) => setSelected(index + 1)}
+        onPress={(id) => setSelected(id)}
         selectedItem={selected}
       />
     </View>

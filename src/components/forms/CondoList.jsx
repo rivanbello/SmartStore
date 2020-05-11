@@ -6,19 +6,21 @@ const CondoList = ({ data, onPress, selectedItem }) => (
   <FlatList style={styles.container}
     data={data}
     contentContainerStyle={styles.contentContainer}
-    renderItem={({ item: { name,
+    renderItem={({ item: {
+      name,
       address,
       neighborhood,
+      id,
       distance } = {},
       index
     }) => <CondoCard
       style={styles.item}
-      selected={selectedItem === index + 1}
+      selected={selectedItem === id}
       name={name}
       address={address}
       neighborhood={neighborhood}
       distance={distance}
-      onPress={() => onPress(index)}
+      onPress={() => onPress(id)}
     />}
   />
 );

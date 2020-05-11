@@ -45,7 +45,7 @@ const RegisterScreen = ({ navigation }) => {
   const [lastValue, setLastValue] = useState('');
   const [fadeOpacity, setfadeOpacity] = useState(new Animated.Value(0));
   const nextStep = () => {
-    if ((stepIndex < 4 || stepIndex === 6) && !validateField(stepIndex, lastValue) || !lastValue) {
+    if ((stepIndex < 4 || stepIndex === 6) && (!validateField(stepIndex, lastValue) || !lastValue)) {
       fadeOpacity.setValue(1);
       setfadeOpacity(new Animated.Value(1));
     } else if (stepIndex === 4 && typeof lastValue === 'date' && (lastValue.UTC() < 1325383200000)) {
