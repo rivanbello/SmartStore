@@ -10,24 +10,26 @@ const CondoList = ({ data, onPress, selectedItem }) => (
       name,
       address,
       neighborhood,
-      id,
+      // id,
+      machineCompanyCode,
       distance } = {},
       index
     }) => <CondoCard
       style={styles.item}
-      selected={selectedItem === id}
+      // selected={selectedItem === id}
+      selected={selectedItem === machineCompanyCode}
       name={name}
       address={address}
       neighborhood={neighborhood}
       distance={distance}
-      onPress={() => onPress(id)}
+      onPress={() => onPress(machineCompanyCode)}
     />}
   />
 );
 
 const styles = {
   container: {
-    height: '65%',
+    height: '40%',
   },
   item: {
     marginBottom: 10,

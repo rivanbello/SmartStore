@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import CondoList from './CondoList';
-import CondoCard from './CondoCard';
 import {
   View,
   Text,
@@ -14,10 +13,11 @@ import { Ionicons } from '@expo/vector-icons';
 const CondoForm = ({ data, setHideHeader, setFormValue }) => {
   const [searchIsActive, setSearchIsActive] = useState(false);
   const [searchWidth] = useState(new Animated.Value(34))
-  const [selected, setSelected] = useState(-1);
+  const [selected, setSelected] = useState('');
   const [filter, setFilter] = useState('');
   useEffect(() => {
-    setFormValue(data.filter(({ id }) => selected === id)[0])
+    // setFormValue(data.filter(({ id }) => selected === id)[0])
+    setFormValue(data.filter(({ machineCompanyCode }) => selected === machineCompanyCode)[0])
   }, [selected])
   useEffect(() => {
     searchIsActive && Animated.timing(searchWidth, {
@@ -84,7 +84,8 @@ const CondoForm = ({ data, setHideHeader, setFormValue }) => {
       <Text style={styles.sectionLabel}>Outros</Text>
       <CondoList
         data={data.filter(({ name }) => name.toUpperCase().includes(filter.toUpperCase()))}
-        onPress={(id) => setSelected(id)}
+        // onPress={(id) => setSelected(id)}
+        onPress={(machineCompanyCode) => setSelected(machineCompanyCode)}
         selectedItem={selected}
       />
     </View>

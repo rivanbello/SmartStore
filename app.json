@@ -26,8 +26,9 @@
     },
     "android": {
       "package": "com.wgr.smartstore",
-      "versionCode": 1,
-      "googleServicesFile": "./google-services.json"
+      "versionCode": 3,
+      "googleServicesFile": "./google-services.json",
+      "permissions" : []
     }
     
   }

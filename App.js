@@ -49,6 +49,7 @@ export default function App() {
         const name = `Cond. ${pos.localName}`;
         condos.push({
           name,
+          machineCompanyCode: pos.machineCompanyCode,
           id: pos.id,
           address: "R. Luiz Carlos Alvez, Mercês, 126523 (fictício)",
           neighborhood: "Mercês - Curitiba",
@@ -61,7 +62,7 @@ export default function App() {
   })}, []);
   useEffect(() => {
     if (userInfo.condo)
-    all({ pointOfSaleId: userInfo.condo.id }).then(response => {
+    all({ pointOfSaleId: userInfo.condo.id, secondToken: userInfo.condo.machineCompanyCode === '1304' }).then(response => {
       let categories = [];
       response.map(({ categoryId, categoryName }) => {
         if (!categoryName) {

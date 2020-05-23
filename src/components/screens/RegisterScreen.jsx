@@ -31,9 +31,6 @@ const RegisterScreen = ({ navigation }) => {
   const [steps, setSteps] = useState(generateSteps({}));
   const [stepIndex, setStepIndex] = useState(0);
   const [registerError, setRegisterError] = useState('');
-  const [password, setPassword] = useState('');
-  const [passwordConfirmation, setPasswordConfirmation] = useState('');
-  const [stepName, setStepName] = useState(steps[stepIndex].formItems[0].placeholder.toLowerCase())
   const [getBackFunction, setGetBackFunction] = useState(() => (currentIndex) => {
     setHideHeader(false);
     setfadeOpacity(new Animated.Value(0));
@@ -45,7 +42,6 @@ const RegisterScreen = ({ navigation }) => {
   const [lastValue, setLastValue] = useState('');
   const [fadeOpacity, setfadeOpacity] = useState(new Animated.Value(0));
   const nextStep = () => {
-    console.warn(userInfo.senha)
     if ((stepIndex < 4 || stepIndex === 6) && (!validateField(stepIndex, lastValue) || !lastValue)) {
       fadeOpacity.setValue(1);
       setfadeOpacity(new Animated.Value(1));
@@ -131,6 +127,7 @@ const RegisterScreen = ({ navigation }) => {
               [`${steps[stepIndex].formItems[0].placeholder.toLowerCase()}`]: value,
             };
             setUserInfo(newUserInfo)
+            console.warn('value: ', value);
             setChosenCondo(value);
             setSteps(generateSteps(newUserInfo)); 
             setLastValue(value);
