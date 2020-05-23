@@ -18,8 +18,6 @@ const pointsOfSale = async () => {
     });
 
     const res = (await response.json()).concat(await response2.json());
-    
-    console.warn('res: ', res);
     return res;
   } catch (error) {
     console.warn('request error', error);

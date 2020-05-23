@@ -6,7 +6,7 @@ import FormItem from './FormItem';
 import { FontAwesome, Entypo } from '@expo/vector-icons';
 import validateField from './formValidators';
 import { UserContext } from '../../context';
-import { AsyncStorage } from 'react-native';
+// import { AsyncStorage } from 'react-native';
 import { login, register } from '../../auth';
 
 const LoginForm = ({ navigation }) => {
@@ -70,12 +70,13 @@ const LoginForm = ({ navigation }) => {
               password: senha,
             } = {}) => { 
               // console.warn(userInfo && userInfo.condos && userInfo.condos.filter(({ id }) => id === condoId)[0].name)
+              console.warn('userInfo: ', userInfo.condo)
               setUserInfo({
               nome,
               telefone,
               nascimento,
               condo: {
-                // name: userInfo && userInfo.condos && userInfo.condos.filter(({ id }) => id === condoId)[0] && userInfo.condos.filter(({ id }) => id === condoId)[0].name,
+                name: userInfo && userInfo.condos && userInfo.condos.filter(({ id }) => id === condoId)[0] && userInfo.condos.filter(({ id }) => id === condoId)[0].name,
                 id: condoId,
               },
               email,

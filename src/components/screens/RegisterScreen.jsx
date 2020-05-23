@@ -127,7 +127,6 @@ const RegisterScreen = ({ navigation }) => {
               [`${steps[stepIndex].formItems[0].placeholder.toLowerCase()}`]: value,
             };
             setUserInfo(newUserInfo)
-            console.warn('value: ', value);
             setChosenCondo(value);
             setSteps(generateSteps(newUserInfo)); 
             setLastValue(value);

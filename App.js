@@ -47,12 +47,32 @@ export default function App() {
       const condos = [];
       response.map((pos) => {
         const name = `Cond. ${pos.localName}`;
+        let condoInfo = {};
+        switch (pos.localName) {
+          case 'Spazio Castellon':
+            condoInfo.address ="R. Profa. Maria Pilar Bórgia, 215";
+            condoInfo.neighborhood = "Vila Carminha, Campinas - SP";
+            break;
+          case 'Topazio Ville':
+            condoInfo.address = 'Av. São José dos Campos, 150';
+            condoInfo.neighborhood = "Jardim Nova Europa, Campinas - SP";
+            break;
+          case 'Ametista Villa':
+            condoInfo.address = 'Rua Manoel Silvestre de Freitas Filho, 1277';
+            condoInfo.neighborhood = "Jardim Nova Europa, Campinas - SP";
+            break;
+          case 'Parque dos Alecrins':
+            condoInfo.address = 'Av. Carlos Diaulas Serpa';
+            condoInfo.neighborhood = 'Campinas - SP';
+            break;
+          default:
+            break;
+        }
         condos.push({
+          ...condoInfo,
           name,
           machineCompanyCode: pos.machineCompanyCode,
           id: pos.id,
-          address: "R. Luiz Carlos Alvez, Mercês, 126523 (fictício)",
-          neighborhood: "Mercês - Curitiba",
           distance: "15m",
         });
       })
@@ -74,7 +94,7 @@ export default function App() {
       const newUserInfo = { ...userInfo, availableProducts: response, categories }; 
       setUserInfo(newUserInfo);
     })
-  }, [userInfo.condo]);
+  }, [userInfo.condo, logged]);
   
   return (
     // <NavigationContainer>
