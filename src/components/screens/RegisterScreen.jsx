@@ -65,7 +65,11 @@ const RegisterScreen = ({ navigation }) => {
           setEmailAlreadyUsed(true); 
           setfadeOpacity(new Animated.Value(1))
         });
-    }}
+    }
+    else {
+      setStepIndex(stepIndex + 1);
+    }
+  }
     else if (userInfo.condo && userInfo.condo.id) {
       const infoToSave = {
         email: userInfo['e-mail'],

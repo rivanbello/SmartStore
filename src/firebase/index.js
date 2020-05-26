@@ -49,7 +49,6 @@ const firebaseRegister = ({ email, password, name, phoneNumber, condoId, birthDa
     .doc(email)
     .get()
     .then(doc => {
-      console.warn('Email já cadastrado!');
       if (doc.exists) throw new Error('Email já cadastrado.')
       firebase.auth().createUserWithEmailAndPassword(email, password)
       .then(() => {
