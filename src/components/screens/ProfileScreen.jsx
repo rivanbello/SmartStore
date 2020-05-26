@@ -22,16 +22,16 @@ const ProfileScreen = ({ navigation }) => {
           {/* <ProfileItem firstLabel="E-mail" value={userInfo && userInfo.email} /> */}
           <ProfileItem firstLabel="Telefone" value={userInfo && userInfo.telefone} />
           <ProfileItem firstLabel="Nome" value={userInfo && userInfo.condo && userInfo.condo.name} />
+          <TouchableOpacity
+            style={styles.feedback}
+            onPress={() => navigation.navigate('Suggestion')}
+          >
+            <Text style={styles.feedbackText}>Envie seu feedback</Text>
+          </TouchableOpacity>
           <TouchableOpacity onPress={() => {
             setUserInfo({ ...userInfo, logged: false })
             navigation.navigate('Login');
           }}>
-            <TouchableOpacity
-              style={styles.feedback}
-              onPress={() => navigation.navigate('Suggestion')}
-            >
-              <Text style={styles.feedbackText}>Envie seu feedback</Text>
-            </TouchableOpacity>
             <Text style={{ alignSelf: 'center', marginTop: 80, fontWeight: 'bold', color: COLORS.darkGray }}>Sair da minha conta</Text>
           </TouchableOpacity>
         </View>
