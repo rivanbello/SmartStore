@@ -70,7 +70,6 @@ const LoginForm = ({ navigation }) => {
               password: senha,
             } = {}) => { 
               // console.warn(userInfo && userInfo.condos && userInfo.condos.filter(({ id }) => id === condoId)[0].name)
-              console.warn('userInfo: ', userInfo.condo)
               setUserInfo({
               nome,
               telefone,

@@ -79,7 +79,7 @@ export default function App() {
       const newUserInfo = { ...userInfo, condos };
       setUserInfo(newUserInfo);
       return newUserInfo;
-  })}, []);
+  })}, [logged]);
   useEffect(() => {
     if (userInfo.condo)
     all({ pointOfSaleId: userInfo.condo.id, secondToken: userInfo.condo.machineCompanyCode === '1304' }).then(response => {
@@ -94,7 +94,7 @@ export default function App() {
       const newUserInfo = { ...userInfo, availableProducts: response, categories }; 
       setUserInfo(newUserInfo);
     })
-  }, [userInfo.condo, logged]);
+  }, [userInfo.condo]);
   
   return (
     // <NavigationContainer>

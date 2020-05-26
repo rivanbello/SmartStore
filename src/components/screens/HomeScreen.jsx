@@ -16,7 +16,6 @@ const HomeScreen = ({ route: { params = {} } = {}, navigation }) => {
   const [filterValue, setFilterValue] = useState('');
 
   return (<>
-  {console.warn('condo name: ', userInfo.condo)}
   <HomeHeader
     name={userInfo.nome}
     condoName={userInfo.condo && userInfo.condo.name}

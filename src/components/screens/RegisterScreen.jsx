@@ -2,7 +2,7 @@ import React, { useState, useEffect, useContext } from 'react';
 import Screen from './Screen';
 import { StackHeader } from '../headers';
 import { Text, SafeAreaView, Animated, AsyncStorage } from 'react-native';
-import { register } from '../../auth';
+import { register, checkIfEmailIsUsed } from '../../auth';
 import { FormItem } from '../forms';
 import { RegisterFooter } from '../footers';
 import validateField from '../forms/formValidators';
@@ -28,19 +28,22 @@ const icons = {
 
 const RegisterScreen = ({ navigation }) => {
   const [userInfo, setUserInfo] = useContext(UserContext);
+  const [emailAlreadyUsed, setEmailAlreadyUsed] = useState(false);
   const [steps, setSteps] = useState(generateSteps({}));
   const [stepIndex, setStepIndex] = useState(0);
   const [registerError, setRegisterError] = useState('');
-  const [getBackFunction, setGetBackFunction] = useState(() => (currentIndex) => {
-    setHideHeader(false);
-    setfadeOpacity(new Animated.Value(0));
-    if (currentIndex > 0) setStepIndex(currentIndex - 1);
-    // else navigation.navigate('login')
-  });
   const [chosenCondo, setChosenCondo] = useState(false);
   const [hideHeader, setHideHeader] = useState(false);
   const [lastValue, setLastValue] = useState('');
   const [fadeOpacity, setfadeOpacity] = useState(new Animated.Value(0));
+
+  const getBackFunction = (currentIndex) => {
+    setHideHeader(false);
+    setfadeOpacity(new Animated.Value(0));
+    if (currentIndex > 0) setStepIndex(currentIndex - 1);
+    // else navigation.navigate('login')
+  };
+
   const nextStep = () => {
     if ((stepIndex < 4 || stepIndex === 6) && (!validateField(stepIndex, lastValue) || !lastValue)) {
       fadeOpacity.setValue(1);
@@ -51,7 +54,17 @@ const RegisterScreen = ({ navigation }) => {
     } else if (stepIndex === 5 && !chosenCondo) {
       fadeOpacity.setValue(1);
       setfadeOpacity(new Animated.Value(1));
-    } else if (stepIndex < (steps.length - 1)) setStepIndex(stepIndex + 1);
+    } else if (stepIndex < (steps.length - 1)) {
+      if (stepIndex === 2) checkIfEmailIsUsed({ email: lastValue })
+        .then(() => {
+          console.warn('hi')
+          setStepIndex(stepIndex + 1);
+        })
+        .catch(() => {
+          setEmailAlreadyUsed(true); 
+          setfadeOpacity(new Animated.Value(0))
+        });
+    }
     else if (userInfo.condo && userInfo.condo.id) {
       const infoToSave = {
         email: userInfo['e-mail'],
@@ -60,7 +73,7 @@ const RegisterScreen = ({ navigation }) => {
         birthDate: userInfo.nascimento || new Date(),
         condoId: userInfo.condo.id,
         password: userInfo.senha,
-      }
+      };
       register(infoToSave).then(() => {
         setUserInfo({ ...userInfo })
         AsyncStorage.setItem(userInfo['e-mail'], infoToSave);
@@ -95,6 +108,10 @@ const RegisterScreen = ({ navigation }) => {
       >
         <TopAlert
           secondLabel={(() => {
+            if (emailAlreadyUsed) {
+              setEmailAlreadyUsed(false);
+              return 'O e-mail inserido já está sendo utiizado por outra conta.';
+            }
             switch (steps[stepIndex].type) {
               case 'datePicker':
                 return `Insira uma data de ${steps[stepIndex].formItems[0].placeholder.toLowerCase()} válida`

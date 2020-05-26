@@ -23,7 +23,7 @@ const getUserInfo = ({ email }) => db
   .then(doc => {
     if (!doc.exists) throw new Error('Dados do usuário não encontrados na base.')
     else return doc.data();
-})
+});
 
 const db = firebase.firestore();
 const firebaseLogin = ({ email, password }) => {
@@ -34,7 +34,6 @@ const firebaseLogin = ({ email, password }) => {
       return getUserInfo({ email });
     })
     .catch((error) => {
-      console.warn(error.message)
       if(String(error).includes('network')) {
         throw new Error('Erro de conexão. Verifique sua internet e tente novamente.');
     } else if(String(error).includes('record') || String(error).includes('invalid')) {
@@ -50,6 +49,7 @@ const firebaseRegister = ({ email, password, name, phoneNumber, condoId, birthDa
     .doc(email)
     .get()
     .then(doc => {
+      console.warn('Email já cadastrado!');
       if (doc.exists) throw new Error('Email já cadastrado.')
       firebase.auth().createUserWithEmailAndPassword(email, password)
       .then(() => {
@@ -71,7 +71,17 @@ const firebaseRegister = ({ email, password, name, phoneNumber, condoId, birthDa
   });
 }
 
+const checkIfEmailIsUsed = ({ email }) => {
+  return db.collection("users")
+  .doc(email)
+  .get()
+  .then(doc => {
+    if (doc.exists) throw new Error('Email já cadastrado.')
+  });
+}
+
 export {
   firebaseLogin,
   firebaseRegister,
+  checkIfEmailIsUsed,
 }

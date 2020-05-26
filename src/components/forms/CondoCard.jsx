@@ -26,7 +26,7 @@ const CondoCard = ({
         ...styles.name,
         color: selected ? 'white' : styles.name.color
       }}>{name}</Text>
-      <Entypo
+      {/* <Entypo
         name="location-pin"
         color={selected ? 'white' : COLORS.primary}
         size={14}
@@ -37,7 +37,7 @@ const CondoCard = ({
         }}>
           {distance}
         </Text>
-      </Entypo>
+      </Entypo> */}
     </Row>
     <Text style={{
       ...styles.description,
