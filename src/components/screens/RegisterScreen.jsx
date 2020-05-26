@@ -46,6 +46,7 @@ const RegisterScreen = ({ navigation }) => {
 
   const nextStep = () => {
     if ((stepIndex < 4 || stepIndex === 6) && (!validateField(stepIndex, lastValue) || !lastValue)) {
+      setEmailAlreadyUsed(false); 
       fadeOpacity.setValue(1);
       setfadeOpacity(new Animated.Value(1));
     } else if (stepIndex === 4 && typeof lastValue === 'date' && (lastValue.UTC() < 1325383200000)) {
@@ -55,16 +56,16 @@ const RegisterScreen = ({ navigation }) => {
       fadeOpacity.setValue(1);
       setfadeOpacity(new Animated.Value(1));
     } else if (stepIndex < (steps.length - 1)) {
-      if (stepIndex === 2) checkIfEmailIsUsed({ email: lastValue })
+      if (stepIndex === 2) {
+        checkIfEmailIsUsed({ email: lastValue })
         .then(() => {
-          console.warn('hi')
           setStepIndex(stepIndex + 1);
         })
         .catch(() => {
           setEmailAlreadyUsed(true); 
-          setfadeOpacity(new Animated.Value(0))
+          setfadeOpacity(new Animated.Value(1))
         });
-    }
+    }}
     else if (userInfo.condo && userInfo.condo.id) {
       const infoToSave = {
         email: userInfo['e-mail'],
@@ -109,7 +110,6 @@ const RegisterScreen = ({ navigation }) => {
         <TopAlert
           secondLabel={(() => {
             if (emailAlreadyUsed) {
-              setEmailAlreadyUsed(false);
               return 'O e-mail inserido já está sendo utiizado por outra conta.';
             }
             switch (steps[stepIndex].type) {
