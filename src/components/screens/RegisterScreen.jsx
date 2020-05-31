@@ -77,6 +77,7 @@ const RegisterScreen = ({ navigation }) => {
         phoneNumber: userInfo.telefone,
         birthDate: userInfo.nascimento || new Date(),
         condoId: userInfo.condo.id,
+        machineCompanyCode: userInfo.condo.machineCompanyCode,
         password: userInfo.senha,
       };
       register(infoToSave).then(() => {

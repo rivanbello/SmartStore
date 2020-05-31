@@ -44,7 +44,7 @@ const firebaseLogin = ({ email, password }) => {
   });
 }
 
-const firebaseRegister = ({ email, password, name, phoneNumber, condoId, birthDate }) => {
+const firebaseRegister = ({ email, password, name, phoneNumber, machineCompanyCode, birthDate, condoId }) => {
   return db.collection("users")
     .doc(email)
     .get()
@@ -59,6 +59,7 @@ const firebaseRegister = ({ email, password, name, phoneNumber, condoId, birthDa
           name,
           phoneNumber,
           condoId,
+          machineCompanyCode,
           birthDate,
         })
         .then(() => getUserInfo({ email }))

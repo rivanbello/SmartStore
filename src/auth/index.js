@@ -11,16 +11,18 @@ const register = async ({
   password,
   name,
   phoneNumber,
-  birthDate,
   condoId,
+  birthDate,
+  machineCompanyCode,
 }) => {
   return await firebaseRegister({
     email,
     password,
     name,
     phoneNumber,
-    birthDate,
     condoId,
+    birthDate,
+    machineCompanyCode,
   })
 }
 

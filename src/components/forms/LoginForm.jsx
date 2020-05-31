@@ -65,17 +65,20 @@ const LoginForm = ({ navigation }) => {
               name: nome,
               phoneNumber: telefone,
               birthDate: nascimento,
-              condoId,
+              machineCompanyCode,
               email,
+              condoId,
               password: senha,
             } = {}) => { 
-              // console.warn(userInfo && userInfo.condos && userInfo.condos.filter(({ id }) => id === condoId)[0].name)
+              // console.warn(userInfo && userInfo.condos && userInfo.condos.filter(({ machineCompanyCode: code }) => code === machineCompanyCode)[0].name)
+              // console.warn('code: ', machineCompanyCode);
               setUserInfo({
               nome,
               telefone,
               nascimento,
               condo: {
-                name: userInfo && userInfo.condos && userInfo.condos.filter(({ id }) => id === condoId)[0] && userInfo.condos.filter(({ id }) => id === condoId)[0].name,
+                name: userInfo && userInfo.condos && userInfo.condos.filter(({ machineCompanyCode: code }) => code === machineCompanyCode)[0] && userInfo.condos.filter(({ machineCompanyCode: code }) => code === machineCompanyCode)[0].name,
+                machineCompanyCode,
                 id: condoId,
               },
               email,

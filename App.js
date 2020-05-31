@@ -34,16 +34,9 @@ const Tab = createBottomTabNavigator();
 export default function App() {
   const [userInfo, setUserInfo] = useState({ condos: [] });
   const [logged, setLogged] = useState(false);
-  // (() => {
-  //   dbh.collection("users").doc("willianrigowow@gmail.com").set({
-  //     name: "Willian Rigo",
-  //     phoneNumber: "41997753978",
-  //     birthDate: "2020-05-07T03:09:03.077Z",
-  //     condoId: 1,
-  //   })
-  // })()
   useEffect(() => {
     pointsOfSale().then(response => {
+      console.warn('points of sale');
       const condos = [];
       response.map((pos) => {
         const name = `Cond. ${pos.localName}`;
@@ -78,9 +71,11 @@ export default function App() {
       })
       const newUserInfo = { ...userInfo, condos };
       setUserInfo(newUserInfo);
+      console.warn('new user info: ', newUserInfo);
       return newUserInfo;
   })}, [logged]);
   useEffect(() => {
+    console.warn('test')
     if (userInfo.condo)
     all({ pointOfSaleId: userInfo.condo.id, secondToken: userInfo.condo.machineCompanyCode === '1304' }).then(response => {
       let categories = [];
