@@ -69,22 +69,23 @@ const LoginForm = ({ navigation }) => {
               email,
               condoId,
               password: senha,
-            } = {}) => { 
-              // console.warn(userInfo && userInfo.condos && userInfo.condos.filter(({ machineCompanyCode: code }) => code === machineCompanyCode)[0].name)
-              // console.warn('code: ', machineCompanyCode);
+            } = {}) => {
               setUserInfo({
+              ...userInfo,
               nome,
               telefone,
               nascimento,
               condo: {
+                ...userInfo.condo,
                 name: userInfo && userInfo.condos && userInfo.condos.filter(({ machineCompanyCode: code }) => code === machineCompanyCode)[0] && userInfo.condos.filter(({ machineCompanyCode: code }) => code === machineCompanyCode)[0].name,
                 machineCompanyCode,
                 id: condoId,
               },
               email,
               senha,
-              logged: true
-            })}, (err) => {
+              logged: true,
+            })
+          }, (err) => {
               setError(err.message)
             })
             .catch(e => setError(e))

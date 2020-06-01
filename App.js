@@ -25,7 +25,6 @@ import {
   MaterialCommunityIcons,
 } from '@expo/vector-icons';
 import { COLORS } from './src/constants';
-import { dbh } from './src/firebase';
 
 const Stack = createStackNavigator();
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
@@ -34,9 +33,9 @@ const Tab = createBottomTabNavigator();
 export default function App() {
   const [userInfo, setUserInfo] = useState({ condos: [] });
   const [logged, setLogged] = useState(false);
+
   useEffect(() => {
     pointsOfSale().then(response => {
-      console.warn('points of sale');
       const condos = [];
       response.map((pos) => {
         const name = `Cond. ${pos.localName}`;
@@ -71,13 +70,13 @@ export default function App() {
       })
       const newUserInfo = { ...userInfo, condos };
       setUserInfo(newUserInfo);
-      console.warn('new user info: ', newUserInfo);
       return newUserInfo;
-  })}, [logged]);
+  })}, []);
   useEffect(() => {
-    console.warn('test')
+    console.warn('logged2');
     if (userInfo.condo)
-    all({ pointOfSaleId: userInfo.condo.id, secondToken: userInfo.condo.machineCompanyCode === '1304' }).then(response => {
+    all({ pointOfSaleId: userInfo.condo.id, secondToken: userInfo.condo.machineCompanyCode === '1304' })
+    .then(response => {
       let categories = [];
       response.map(({ categoryId, categoryName }) => {
         if (!categoryName) {
@@ -90,7 +89,7 @@ export default function App() {
       setUserInfo(newUserInfo);
     })
   }, [userInfo.condo]);
-  
+
   return (
     // <NavigationContainer>
     //   <UserContext.Provider value={[userInfo, setUserInfo]}>

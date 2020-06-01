@@ -140,7 +140,7 @@ const RegisterScreen = ({ navigation }) => {
             {steps[stepIndex].label}
           </>
         }
-        {stepIndex === 5 && userInfo.condos.length > 0 && <CondoForm
+        {stepIndex === 5 && userInfo.condos && userInfo.condos.length > 0 && <CondoForm
           data={userInfo.condos}
           setHideHeader={setHideHeader}
           setFormValue={(value) => {
