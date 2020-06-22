@@ -7,7 +7,7 @@ import { FontAwesome, Entypo } from '@expo/vector-icons';
 import validateField from './formValidators';
 import { UserContext } from '../../context';
 // import { AsyncStorage } from 'react-native';
-import { login, register } from '../../auth';
+import { login } from '../../auth';
 
 const LoginForm = ({ navigation }) => {
   const [userInfo, setUserInfo] = useContext(UserContext);

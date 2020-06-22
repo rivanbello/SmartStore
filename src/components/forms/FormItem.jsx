@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Row } from '../layout';
 import {
   Animated,
@@ -31,7 +31,6 @@ const FormItem = ({
   const [showPassword, setShowPassword] = useState(false);
   const [datePickerOpen, setDatePickerOpen] = useState(false);
   const [date, setDate] = useState(new Date(946692000000));
-  const [pickerClosed, setPickerClosed] = useState(true);
   const [phoneCode, setPhoneCode] = useState('+55');
   const [maskedInputValue, setMaskedInputValue] = useState('');
 
@@ -194,7 +193,7 @@ const FormItem = ({
         maxLength={phoneNumber ? 15 : 50}
         keyboardType={phoneNumber ? "numeric" : "default"}
         autoFocus={focused}
-        secureTextEntry={type === 'password'}
+        secureTextEntry={type === 'password' && !showPassword}
         onFocus={() => setActive(true)}
         onBlur={() => setActive(false)}
         value={phoneNumber ? maskedInputValue : savedValue}
