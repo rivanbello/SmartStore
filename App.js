@@ -4,6 +4,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import all from './src/client/list';
 import pointsOfSale from './src/client/pointsOfSale';
+import { AsyncStorage } from 'react-native';
 import {
   RegisterConfirmationScreen,
   RegisterScreen,
@@ -67,13 +68,16 @@ export default function App() {
           id: pos.id,
           distance: "15m",
         });
-      })
-      const newUserInfo = { ...userInfo, condos };
-      setUserInfo(newUserInfo);
-      return newUserInfo;
+      });
+      AsyncStorage.getItem('userInfo')
+        .then((storedInfo) => {
+          console.warn('storedInfo: ', storedInfo);
+          const newUserInfo = { ...userInfo, ...(JSON.parse(storedInfo)), condos };
+          setUserInfo(newUserInfo);
+          return newUserInfo;
+        })
   })}, []);
   useEffect(() => {
-    console.warn('logged2');
     if (userInfo.condo)
     all({ pointOfSaleId: userInfo.condo.id, secondToken: userInfo.condo.machineCompanyCode === '1304' })
     .then(response => {

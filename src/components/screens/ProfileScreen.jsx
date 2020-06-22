@@ -1,7 +1,7 @@
 import React, { useState, useContext } from 'react';
 import { ProfileBackground, ProfileBackground2 } from '../../assets/images';
 import { Row } from '../layout';
-import { Image, Text, View, TouchableOpacity } from 'react-native';
+import { Image, Text, View, TouchableOpacity, AsyncStorage } from 'react-native';
 import UnsafeScreen from './UnsafeScreen';
 import { Ionicons } from '@expo/vector-icons'; 
 import { COLORS } from '../../constants';
@@ -29,7 +29,8 @@ const ProfileScreen = ({ navigation }) => {
             <Text style={styles.feedbackText}>Envie seu feedback</Text>
           </TouchableOpacity>
           <TouchableOpacity onPress={() => {
-            setUserInfo({ ...userInfo, logged: false })
+            AsyncStorage.setItem('userInfo', '')
+              .then(() => setUserInfo({}))
             navigation.navigate('Login');
           }}>
             <Text style={{ alignSelf: 'center', marginTop: 80, fontWeight: 'bold', color: COLORS.darkGray }}>Sair da minha conta</Text>

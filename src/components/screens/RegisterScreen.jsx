@@ -81,9 +81,9 @@ const RegisterScreen = ({ navigation }) => {
         password: userInfo.senha,
       };
       register(infoToSave).then(() => {
-        setUserInfo({ ...userInfo })
-        AsyncStorage.setItem(userInfo['e-mail'], infoToSave);
-        navigation.navigate('RegisterConfirmation');
+        const newUserInfo = { ...userInfo, logged: true }
+        AsyncStorage.setItem('userInfo', JSON.stringify(newUserInfo))
+          .then(() => setUserInfo(newUserInfo));
       })
       .catch((e) => {
         setfadeOpacity(new Animated.Value(1));

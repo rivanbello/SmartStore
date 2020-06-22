@@ -6,7 +6,7 @@ import FormItem from './FormItem';
 import { FontAwesome, Entypo } from '@expo/vector-icons';
 import validateField from './formValidators';
 import { UserContext } from '../../context';
-// import { AsyncStorage } from 'react-native';
+import { AsyncStorage } from 'react-native';
 import { login } from '../../auth';
 
 const LoginForm = ({ navigation }) => {
@@ -70,21 +70,23 @@ const LoginForm = ({ navigation }) => {
               condoId,
               password: senha,
             } = {}) => {
-              setUserInfo({
-              ...userInfo,
-              nome,
-              telefone,
-              nascimento,
-              condo: {
-                ...userInfo.condo,
-                name: userInfo && userInfo.condos && userInfo.condos.filter(({ machineCompanyCode: code }) => code === machineCompanyCode)[0] && userInfo.condos.filter(({ machineCompanyCode: code }) => code === machineCompanyCode)[0].name,
-                machineCompanyCode,
-                id: condoId,
-              },
-              email,
-              senha,
-              logged: true,
-            })
+              const newUserInfo = {
+                ...userInfo,
+                nome,
+                telefone,
+                nascimento,
+                condo: {
+                  ...userInfo.condo,
+                  name: userInfo && userInfo.condos && userInfo.condos.filter(({ machineCompanyCode: code }) => code === machineCompanyCode)[0] && userInfo.condos.filter(({ machineCompanyCode: code }) => code === machineCompanyCode)[0].name,
+                  machineCompanyCode,
+                  id: condoId,
+                },
+                email,
+                senha,
+                logged: true,
+              };
+              AsyncStorage.setItem('userInfo', JSON.stringify(newUserInfo))
+              .then(() => setUserInfo(newUserInfo));
           }, (err) => {
               setError(err.message)
             })

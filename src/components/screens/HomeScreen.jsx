@@ -15,10 +15,6 @@ const HomeScreen = ({ route: { params = {} } = {}, navigation }) => {
   const [searchActive, setSearchActive] = useState(false);
   const [filterValue, setFilterValue] = useState('');
 
-  useEffect(() => {
-    console.warn('list: ', userInfo.availableProducts);
-  }, [userInfo.availableProducts])
-
   return (<>
   <HomeHeader
     name={userInfo.nome}
