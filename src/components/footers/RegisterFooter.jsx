@@ -25,6 +25,7 @@ const styles = {
     bottom: 0,
     justifyContent: 'space-between',
     paddingBottom: '12%',
+    maxHeight: 70,
     paddingTop: '2%',
   },
   button: {

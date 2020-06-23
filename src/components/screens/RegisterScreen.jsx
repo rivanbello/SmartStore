@@ -200,7 +200,7 @@ const styles = {
   },
   content: {
     flex: 1,
-    marginTop: '16%',
+    marginTop: '9%',
   },
 }
 

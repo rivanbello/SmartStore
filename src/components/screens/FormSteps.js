@@ -51,8 +51,7 @@ const generateSteps = (context) => [
     email: true,
     type: 'email',
   },{
-    label:
-    <Text style={styles.stepLabel}>
+    label: <Text style={styles.stepLabel}>
       <Text>Para manter suas compras seguras, insira uma senha com mais de 8 caracteres.</Text>
     </Text>,
     stepIndex: 4,
