@@ -52,8 +52,8 @@ const LoginForm = ({ navigation }) => {
       />
       <Row style={styles.buttonContainer}>
         <Link
-          label=""
-          onPress={() => navigation.navigate('ForgotPasswordScreen')}
+          label="Esqueci minha senha"
+          onPress={() => navigation.navigate('ResetPassword')}
         />
         <PrimaryButton
           label="Entrar"

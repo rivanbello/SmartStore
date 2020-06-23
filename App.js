@@ -8,7 +8,7 @@ import { AsyncStorage } from 'react-native';
 import {
   RegisterConfirmationScreen,
   RegisterScreen,
-  PasswordFeedbackScreen,
+  ResetPasswordScreen,
   InformationScreen,
   FeedbackConfirmationScreen,
   SuggestionScreen,
@@ -16,6 +16,7 @@ import {
   HomeScreen,
   ProductScreen,
   CategoryScreen,
+  PasswordFeedbackScreen,
   ProfileScreen,
 } from './src/components/screens';
 import { UserContext } from './src/context';
@@ -120,6 +121,7 @@ export default function App() {
         <Stack.Screen name="Suggestion" component={SuggestionScreen} options={{ headerShown: false }} />
         <Stack.Screen name="Info" component={InformationScreen} options={{ headerShown: false }}/>
         <Stack.Screen name="FeedbackConfirmation" component={FeedbackConfirmationScreen} options={{ headerShown: false }} />
+        <Stack.Screen name="ResetPassword" component={ResetPasswordScreen} options={{ headerShown: false }} />
         <Stack.Screen name="PasswordFeedback" component={PasswordFeedbackScreen} options={{ headerShown: false }} />
       </Stack.Navigator>
       </UserContext.Provider>

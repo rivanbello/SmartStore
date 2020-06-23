@@ -25,6 +25,8 @@ const getUserInfo = ({ email }) => db
     else return doc.data();
 });
 
+const firebaseResetPassword = ({ email }) => firebase.auth().sendPasswordResetEmail(email);
+
 const db = firebase.firestore();
 const firebaseLogin = ({ email, password }) => {
   return firebase
@@ -69,7 +71,7 @@ const firebaseRegister = ({ email, password, name, phoneNumber, machineCompanyCo
     if (error.message = 'Email já cadastrado.') throw error;
     throw new Error('Erro ao realizar o cadastro. Verifique sua conexão ou tente novamente mais tarde.');
   });
-}
+};
 
 const checkIfEmailIsUsed = ({ email }) => {
   return db.collection("users")
@@ -78,10 +80,11 @@ const checkIfEmailIsUsed = ({ email }) => {
   .then(doc => {
     if (doc.exists) throw new Error('Email já cadastrado.')
   });
-}
+};
 
 export {
   firebaseLogin,
   firebaseRegister,
+  firebaseResetPassword,
   checkIfEmailIsUsed,
 }

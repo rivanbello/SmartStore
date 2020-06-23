@@ -8,21 +8,21 @@ import CategoryScreen from './CategoryScreen';
 import FeedbackConfirmationScreen from './FeedbackConfirmationScreen';
 import InformationScreen from './InformationScreen';
 import SuggestionScreen from './SuggestionScreen';
-import PasswordFeedbackScreen from './PasswordFeedbackScreen';
+import ResetPasswordScreen from './ResetPasswordScreen';
 import ProfileScreen from './ProfileScreen';
-// import ForgotPasswordScreen from './ForgotPasswordScreen';
+import PasswordFeedbackScreen from './PasswordFeedbackScreen';
 
 export {
   CategoryScreen,
   ConfirmationScreen,
   FeedbackConfirmationScreen,
-  // ForgotPasswordScreen,
+  PasswordFeedbackScreen,
   RegisterConfirmationScreen,
   InformationScreen,
   HomeScreen,
   LoginScreen,
   RegisterScreen,
-  PasswordFeedbackScreen,
+  ResetPasswordScreen,
   ProductScreen,
   SuggestionScreen,
   ProfileScreen,

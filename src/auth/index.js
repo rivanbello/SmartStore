@@ -1,10 +1,17 @@
-import { firebaseLogin, firebaseRegister, checkIfEmailIsUsed } from '../firebase';
+import {
+  firebaseLogin,
+  firebaseRegister,
+  checkIfEmailIsUsed,
+  firebaseResetPassword,
+} from '../firebase';
 
 const login = async ({ email, password }) => {
   //check for Async Storage
   const res = await firebaseLogin({ email, password })
   return res;
 };
+
+const sendPasswordResetEmail = async({ email }) => await firebaseResetPassword({ email });
 
 const register = async ({
   email,
@@ -26,4 +33,4 @@ const register = async ({
   })
 }
 
-export { login, register, checkIfEmailIsUsed };
+export { login, register, checkIfEmailIsUsed, sendPasswordResetEmail };

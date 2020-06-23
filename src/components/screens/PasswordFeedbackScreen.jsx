@@ -1,5 +1,5 @@
 import React from 'react';
-import { ConfirmationScreen } from './ConfirmationScreen';
+import ConfirmationScreen from './ConfirmationScreen';
 import { PasswordFeedback } from '../../assets/images';
 
 const PasswordFeedbackScreen = ({ navigation }) => (
