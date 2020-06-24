@@ -10,6 +10,7 @@ import {
 import DateTimePicker from '@react-native-community/datetimepicker';
 import { COLORS } from '../../constants';
 import { floatingLabel } from './animations';
+import { phoneNumberMask } from './masks';
 
 const FormItem = ({
   Icon,
@@ -31,33 +32,11 @@ const FormItem = ({
   const [showPassword, setShowPassword] = useState(false);
   const [datePickerOpen, setDatePickerOpen] = useState(false);
   const [date, setDate] = useState(new Date(946692000000));
-  const [phoneCode, setPhoneCode] = useState('+55');
-  const [maskedInputValue, setMaskedInputValue] = useState('');
-
-  const appendToPosition = (target, position, value) => {
-    if (target.length < position) return target;
-    return [target.slice(0, position), value, target.slice(position)].join('');
-  }
 
   const onChangeText = (text) => {
     let value = text
 
-    if (phoneNumber && phoneCode === '+55') {
-      if (value.length === 1) {
-        if (Number(value[0])) value = appendToPosition(value, 0, '(')
-        else value = '';
-      }
-      if (value.length === 4) {
-        if (Number(value[3])) {
-          value = appendToPosition(value, 3, ')');
-          value = appendToPosition(value, 4, ' ');
-        } else value = value.slice(0, 3);
-      }
-      if (value.length === 11) {
-        if (Number(value[10])) value = appendToPosition(value, 10, '-');
-        else value = value.slice(0, 10);
-      }
-      setMaskedInputValue(value);
+    if (phoneNumber) {
       value = value.replace(/[)(-]/, '');
       value = value.replace(')', '');
       value = value.replace('-', '');
@@ -196,7 +175,7 @@ const FormItem = ({
         secureTextEntry={type === 'password' && !showPassword}
         onFocus={() => setActive(true)}
         onBlur={() => setActive(false)}
-        value={phoneNumber ? maskedInputValue : savedValue}
+        value={phoneNumber ? phoneNumberMask(savedValue) : savedValue}
         onChangeText={onChangeText}
       />}
       {RightIcon &&

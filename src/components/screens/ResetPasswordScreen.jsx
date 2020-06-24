@@ -8,6 +8,7 @@ import Screen from './Screen';
 import validateField from '../forms/formValidators';
 import { COLORS, SCREEN_WIDTH } from '../../constants';
 import { sendPasswordResetEmail } from '../../auth';
+import { StackHeader } from '../headers';
 
 const ResetPasswordScreen = ({
   navigation,
@@ -33,6 +34,7 @@ const ResetPasswordScreen = ({
   }, []);
   return (
     <Screen style={styles.container}>
+      <StackHeader onPress={() => navigation.goBack()} />
       {!keyboardOpen && <Image source={ResetPassword} style={styles.image} resizeMode="contain"/>}
       <Text style={styles.title}>Tudo bem, acontece</Text>
       <Text style={styles.description}>Para recuperar sua senha, insira seu endereço de e-mail, que enviaremos um link de recuperação pra lá!</Text>
