@@ -14,7 +14,11 @@ const TopAlert = ({ firstLabel, secondLabel, style, error, onPress }) => (
     <Row style={styles.content}>
       <Text style={styles.text}>{firstLabel}</Text>
         <Text
-          style={{ ...styles.link, color: error ? 'white' : COLORS.primary }}>
+          style={{
+            ...styles.link,
+            color: error ? 'white' : COLORS.primary,
+            textAlign: 'center',
+          }}>
           {secondLabel}
         </Text>
     </Row>
