@@ -10,7 +10,8 @@ const pointsOfSale = async ({ tokens = [] }) => {
           'Authorization': `Bearer ${token}`,
         },
       });
-      const pushArr = (await response.json()).filter(async (pos) => {
+      let pushArr = [];
+      for await (let pos of (await response.json())) {
         try {
           const res = await fetch(`https://touchpay-api.amlabs.com.br/api/public/MicroMarket/${pos.id}/Inventory`, {
             method: 'GET',
@@ -22,13 +23,11 @@ const pointsOfSale = async ({ tokens = [] }) => {
           })
           // if (res.status !== 500)
           console.warn('res status: ', res.status)
-          if (res.status === 200) return true;
-          return false;
+          if (res.status === 200) pushArr.push(pos);
         } catch (error) {
           return false;
         }
-      })
-      console.warn('pushArr: ', pushArr.length);
+      }
       posLists = posLists.concat(pushArr);
     }
     console.warn(posLists);

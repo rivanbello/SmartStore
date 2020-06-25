@@ -29,7 +29,7 @@ const ProfileScreen = ({ navigation }) => {
             <Text style={styles.feedbackText}>Envie seu feedback</Text>
           </TouchableOpacity>
           <TouchableOpacity onPress={() => {
-            AsyncStorage.setItem('userInfo', '')
+            AsyncStorage.setItem('userInfo', { condos: userInfo.condos })
               .then(() => setUserInfo({}))
             navigation.navigate('Login');
           }}>

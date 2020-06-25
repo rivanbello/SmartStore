@@ -69,8 +69,7 @@ const RegisterScreen = ({ navigation }) => {
     else {
       setStepIndex(stepIndex + 1);
     }
-  }
-    else if (userInfo.condo && userInfo.condo.id) {
+  } else if (userInfo.condo && userInfo.condo.id) {
       const infoToSave = {
         email: userInfo['e-mail'],
         name: userInfo.nome,
@@ -107,7 +106,7 @@ const RegisterScreen = ({ navigation }) => {
   return (
     <Screen>
       <StackHeader
-        onPress={stepIndex === 0 ? () => navigation.goBack() : () => getBackFunction(stepIndex)}
+        onPress={stepIndex === 0 ? () => navigation.navigate('Login') : () => getBackFunction(stepIndex)}
       />
       <Animated.View
         style={{ opacity: fadeOpacity }}
@@ -140,6 +139,7 @@ const RegisterScreen = ({ navigation }) => {
             {steps[stepIndex].label}
           </>
         }
+        {console.warn('condos: ', userInfo.condos)}
         {stepIndex === 5 && userInfo.condos && userInfo.condos.length > 0 && <CondoForm
           data={userInfo.condos}
           setHideHeader={setHideHeader}
