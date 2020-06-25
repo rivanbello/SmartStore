@@ -3,6 +3,7 @@ import React, { useState, useEffect } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import all from './src/client/list';
+import { getTokens } from './src/firebase';
 import pointsOfSale from './src/client/pointsOfSale';
 import { AsyncStorage } from 'react-native';
 import {
@@ -37,7 +38,8 @@ export default function App() {
   const [logged, setLogged] = useState(false);
 
   useEffect(() => {
-    pointsOfSale().then(response => {
+    getTokens().then(tokens =>
+    pointsOfSale({ tokens }).then(response => {
       const condos = [];
       response.map((pos) => {
         const name = `Cond. ${pos.localName}`;
@@ -77,7 +79,7 @@ export default function App() {
           setUserInfo(newUserInfo);
           return newUserInfo;
         })
-  })}, []);
+  }))}, []);
   useEffect(() => {
     if (userInfo.condo)
     all({ pointOfSaleId: userInfo.condo.id, secondToken: userInfo.condo.machineCompanyCode === '1304' })

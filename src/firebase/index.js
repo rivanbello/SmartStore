@@ -25,6 +25,12 @@ const getUserInfo = ({ email }) => db
     else return doc.data();
 });
 
+const getTokens = async () => {
+  const db = firebase.firestore();
+  const collection = await db.collection('tokens').get();
+  return collection.docs.map(i => i.data().token);
+};
+
 const firebaseResetPassword = ({ email }) => firebase.auth().sendPasswordResetEmail(email);
 
 const db = firebase.firestore();
@@ -87,4 +93,5 @@ export {
   firebaseRegister,
   firebaseResetPassword,
   checkIfEmailIsUsed,
+  getTokens,
 }
