@@ -70,6 +70,13 @@ const LoginForm = ({ navigation }) => {
               condoId,
               password: senha,
             } = {}) => {
+              console.warn('CONDOS: ', userInfo.condos)
+              console.warn('LOGIN: ',
+              {
+                ...userInfo.condo,
+                condos: userInfo.condos.filter(({ machineCompanyCode: code }) => code === machineCompanyCode)[0],
+                name: userInfo && userInfo.condos && userInfo.condos.filter(({ machineCompanyCode: code }) => code === machineCompanyCode)[0] && userInfo.condos.filter(({ machineCompanyCode: code }) => code === machineCompanyCode)[0].name,
+              });
               const newUserInfo = {
                 ...userInfo,
                 nome,

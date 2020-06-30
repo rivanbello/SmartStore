@@ -29,8 +29,8 @@ const ProfileScreen = ({ navigation }) => {
             <Text style={styles.feedbackText}>Envie seu feedback</Text>
           </TouchableOpacity>
           <TouchableOpacity onPress={() => {
-            AsyncStorage.setItem('userInfo', { condos: userInfo.condos })
-              .then(() => setUserInfo({}))
+            AsyncStorage.setItem('userInfo', JSON.stringify({ ...userInfo, logged: false, password: '', email: '' }))
+              .then(() => setUserInfo({ ...userInfo, logged: false, password: '', email: '' }))
             navigation.navigate('Login');
           }}>
             <Text style={{ alignSelf: 'center', marginTop: 80, fontWeight: 'bold', color: COLORS.darkGray }}>Sair da minha conta</Text>
