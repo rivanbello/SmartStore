@@ -1,6 +1,6 @@
 import React from 'react';
 import { Text } from 'react-native'
-import { COLORS } from '../../constants';
+import { COLORS, SCREEN_HEIGHT } from '../../constants';
 const generateSteps = (context) => [
   {
     label: 
@@ -113,9 +113,9 @@ const generateSteps = (context) => [
 const styles = {
   stepLabel: {
     color: COLORS.textPrimary,
-    fontSize: 24,
+    fontSize: (1/25) * SCREEN_HEIGHT,
     fontWeight: 'bold',
-    marginBottom: 26,
+    marginBottom: (1/25) * SCREEN_HEIGHT,
   },
   helpLabel: {
     color: COLORS.gray,

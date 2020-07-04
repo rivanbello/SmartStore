@@ -70,13 +70,12 @@ const LoginForm = ({ navigation }) => {
               condoId,
               password: senha,
             } = {}) => {
-              console.warn('CONDOS: ', userInfo.condos)
-              console.warn('LOGIN: ',
-              {
-                ...userInfo.condo,
-                condos: userInfo.condos.filter(({ machineCompanyCode: code }) => code === machineCompanyCode)[0],
-                name: userInfo && userInfo.condos && userInfo.condos.filter(({ machineCompanyCode: code }) => code === machineCompanyCode)[0] && userInfo.condos.filter(({ machineCompanyCode: code }) => code === machineCompanyCode)[0].name,
-              });
+              // console.warn('LOGIN: ',
+              // {
+              //   ...userInfo.condo,
+              //   condos: userInfo.condos.filter(({ machineCompanyCode: code }) => code === machineCompanyCode)[0],
+              //   name: userInfo && userInfo.condos && userInfo.condos.filter(({ machineCompanyCode: code }) => code === machineCompanyCode)[0] && userInfo.condos.filter(({ machineCompanyCode: code }) => code === machineCompanyCode)[0].name,
+              // });
               const newUserInfo = {
                 ...userInfo,
                 nome,
@@ -109,7 +108,6 @@ const LoginForm = ({ navigation }) => {
 
 const styles = {
   buttonContainer: {
-    marginTop: 30,
     marginBottom: 19,
     paddingHorizontal: 8,
     justifyContent: 'space-between',

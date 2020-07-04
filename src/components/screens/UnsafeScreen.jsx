@@ -1,13 +1,19 @@
 import React from 'react';
-import { View } from 'react-native';
+import { View, ScrollView } from 'react-native';
 
-const UnsafeScreen = ({ children, style }) => (
-  <View style={{ 
+const UnsafeScreen = ({ children, style, scrollview }) => (
+  !scrollview ? <View style={{ 
     ...styles.container,
     ...style,
   }}>
     {children}
   </View>
+  : <ScrollView style={{ 
+    ...styles.container,
+    ...style,
+  }}>
+    {children}
+  </ScrollView>
 );
 
 const styles = {

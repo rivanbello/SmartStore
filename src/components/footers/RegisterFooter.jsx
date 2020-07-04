@@ -2,7 +2,7 @@ import React from 'react';
 import { View, Text } from 'react-native';
 import { Row } from '../layout';
 import { PrimaryButton } from '../buttons';
-import { COLORS } from '../../constants';
+import { COLORS, SCREEN_HEIGHT } from '../../constants';
 
 const RegisterFooter = ({ style, step = 0, totalSteps = 0, onPress = (() => {}) }) => (
   <Row style={{ ...styles.container, ...style }}>
@@ -24,7 +24,7 @@ const styles = {
     position: 'absolute',
     bottom: 0,
     justifyContent: 'space-between',
-    paddingBottom: '12%',
+    paddingBottom: 14 * (SCREEN_HEIGHT / 600),
     maxHeight: 70,
     paddingTop: '2%',
   },

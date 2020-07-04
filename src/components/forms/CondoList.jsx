@@ -1,7 +1,6 @@
 import React from 'react';
 import { FlatList } from 'react-native';
 import CondoCard from './CondoCard';
-import * as Random from 'expo-random';
 
 const CondoList = ({ data, onPress, selectedItem }) => {
   return (<FlatList style={styles.container}

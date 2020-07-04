@@ -1,7 +1,7 @@
 import React, { useState, useContext } from 'react';
 import { ProfileBackground, ProfileBackground2 } from '../../assets/images';
 import { Row } from '../layout';
-import { Image, Text, View, TouchableOpacity, AsyncStorage } from 'react-native';
+import { Image, Text, View, TouchableOpacity, AsyncStorage, ScrollView } from 'react-native';
 import UnsafeScreen from './UnsafeScreen';
 import { Ionicons } from '@expo/vector-icons'; 
 import { COLORS } from '../../constants';
@@ -11,13 +11,15 @@ const ProfileScreen = ({ navigation }) => {
   const [userInfo, setUserInfo] = useContext(UserContext);
   return (
     <>
-      <UnsafeScreen>
+      <UnsafeScreen
+        // scrollview
+      >
         <View>
           <Image source={ProfileBackground} style={styles.backgroundImage} />
           <Image source={ProfileBackground2} style={styles.backgroundImage} />
         </View>
         <Text style={styles.title}>Perfil</Text>
-        <View style={styles.container}>
+        <ScrollView style={styles.container}>
           <ProfileItem firstLabel="Nome" value={userInfo && userInfo.nome} />
           {/* <ProfileItem firstLabel="E-mail" value={userInfo && userInfo.email} /> */}
           <ProfileItem firstLabel="Telefone" value={userInfo && userInfo.telefone} />
@@ -33,9 +35,9 @@ const ProfileScreen = ({ navigation }) => {
               .then(() => setUserInfo({ ...userInfo, logged: false, password: '', email: '' }))
             navigation.navigate('Login');
           }}>
-            <Text style={{ alignSelf: 'center', marginTop: 80, fontWeight: 'bold', color: COLORS.darkGray }}>Sair da minha conta</Text>
+            <Text style={{ alignSelf: 'center', marginVertical: 40, fontWeight: 'bold', color: COLORS.darkGray }}>Sair da minha conta</Text>
           </TouchableOpacity>
-        </View>
+        </ScrollView>
       </UnsafeScreen>
     </>
   )
@@ -59,6 +61,7 @@ const styles = {
   backgroundImage: {
     position: 'absolute',
     width: '112%',
+    maxHeight: 200,
     // zIndex: 1,
     left: -20,
     top: -25,

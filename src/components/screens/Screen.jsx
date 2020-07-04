@@ -13,7 +13,6 @@ const Screen = ({ children, style }) => (
 const styles = {
   container: {
     width: '100%',
-    paddingTop: 25,
     backgroundColor: '#fff',
     flex: 1,
     paddingHorizontal: 18,

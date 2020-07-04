@@ -74,7 +74,6 @@ export default function App() {
       });
       AsyncStorage.getItem('userInfo')
         .then((storedInfo) => {
-          console.warn('storedInfo: ', storedInfo);
           const newUserInfo = { ...userInfo, ...(JSON.parse(storedInfo)), condos };
           setUserInfo(newUserInfo);
           return newUserInfo;

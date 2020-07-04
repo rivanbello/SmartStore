@@ -6,6 +6,7 @@ import { register, checkIfEmailIsUsed } from '../../auth';
 import { FormItem } from '../forms';
 import { RegisterFooter } from '../footers';
 import validateField from '../forms/formValidators';
+import { SCREEN_HEIGHT } from '../../constants';
 import generateSteps from './formSteps';
 import {
   FontAwesome,
@@ -139,7 +140,6 @@ const RegisterScreen = ({ navigation }) => {
             {steps[stepIndex].label}
           </>
         }
-        {console.warn('condos: ', userInfo.condos)}
         {stepIndex === 5 && userInfo.condos && userInfo.condos.length > 0 && <CondoForm
           data={userInfo.condos}
           setHideHeader={setHideHeader}
@@ -196,11 +196,12 @@ const styles = {
     fontSize: 14,
     color: '#D1D0DE',
     fontWeight: 'bold',
-    marginBottom: 10,
+    // marginBottom: 10,
+    marginBottom: SCREEN_HEIGHT > 600 && 10 || 0,
   },
   content: {
     flex: 1,
-    marginTop: '9%',
+    marginTop: '6%',
   },
 }
 

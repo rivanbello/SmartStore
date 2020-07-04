@@ -22,7 +22,6 @@ const pointsOfSale = async ({ tokens = [] }) => {
             },
           })
           // if (res.status !== 500)
-          console.warn('res status: ', res.status)
           if (res.status === 200) pushArr.push(pos);
         } catch (error) {
           return false;
@@ -30,7 +29,6 @@ const pointsOfSale = async ({ tokens = [] }) => {
       }
       posLists = posLists.concat(pushArr);
     }
-    console.warn(posLists);
     return posLists;
   } catch (error) {
     console.warn('request error', error);
