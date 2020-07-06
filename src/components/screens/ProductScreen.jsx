@@ -1,11 +1,12 @@
-import React from 'react';
+import React, { useState } from 'react';
 // import { Image } from 'react-native';
-import { Text, Image, View } from 'react-native';
+import { Text, Image, View, ScrollView } from 'react-native';
 import UnsafeScreen from './UnsafeScreen';
 import { Row } from '../layout';
 import { COLORS } from '../../constants';
 import { StackHeader } from '../headers';
 import Spinner from '../misc/Spinner';
+import { PrimaryButton } from '../buttons';
 
 const ProductScreen = ({ route: { params = {} } = {}, navigation }) => {
   const {
@@ -17,9 +18,11 @@ const ProductScreen = ({ route: { params = {} } = {}, navigation }) => {
     qty,
     ageRestricted,
   } = params;
+  const [qtyToAdd, setQtyToAdd] = useState(1);
   return (
   <UnsafeScreen>
     <StackHeader onPress={() => navigation.goBack()} />
+    <ScrollView>
     <Row style={styles.imageBackground}>
       <Image style={styles.image} source={imageUrl ? {uri: imageUrl} : null} />
       {stock ? 
@@ -37,22 +40,27 @@ const ProductScreen = ({ route: { params = {} } = {}, navigation }) => {
     </Row>
     <Text style={ageRestricted ? styles.ageRestrictedPrice : styles.regularPrice}>R$ {price && price.toFixed(2).replace('.', ',')}</Text>
     {ageRestricted && <View style={{ color: COLORS.gray, borderTopWidth: 0.5, marginTop: 20 }}/>}
-    {ageRestricted && <Row style={{ justifyContent: 'flex-start', marginTop: 30 }}>
+    {ageRestricted && <Row style={{ justifyContent: 'flex-start' }}>
       <View style={styles.ageRestrictedLabel}><Text style={{ color: '#fff', fontSize: 20 }}>+18</Text></View>
       <Text style={{ color: COLORS.darkGray, maxWidth: '70%' }}>Produto autorizado somente para maiores de 18 anos</Text>
     </Row>}
-    {qty > 0 &&<Spinner stockQty={qty}/> }
+    <View style={{ flex: 1, justifyContent: 'flex-end', marginBottom: 20 }}>
+      {qty > 0 &&<Spinner stockQty={qty} value={qtyToAdd} setValue={(value) => setQtyToAdd(value) }/> }
+      <PrimaryButton disabled={qty <= 0} label={qty > 0 ? "Adicionar à sacola" : "Fora de estoque"} />
+    </View>
+    </ScrollView>
   </UnsafeScreen>)
 };
 
 const styles = {
   imageBackground: {
-    height: '40%',
+    height: '35%',
     marginBottom: 40,
   },
   image: {
-    height: 190,
-    width: 190,
+    resizeMode: 'contain',
+    height: 180,
+    width: 180,
   },
   ageRestrictedLabel: {
     backgroundColor: '#000',
@@ -67,7 +75,7 @@ const styles = {
     fontWeight: 'bold',
     color: COLORS.gray,
     fontStyle: 'italic',
-    marginTop: '10%'
+    marginTop: '5%'
   },
   title: {
     color: COLORS.fontPrimary,

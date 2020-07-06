@@ -8,12 +8,15 @@ const UnsafeScreen = ({ children, style, scrollview }) => (
   }}>
     {children}
   </View>
-  : <ScrollView style={{ 
+  : 
+  <View style={{ 
     ...styles.container,
     ...style,
   }}>
+    <ScrollView>
     {children}
   </ScrollView>
+  </View>
 );
 
 const styles = {
