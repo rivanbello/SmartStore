@@ -5,6 +5,7 @@ import UnsafeScreen from './UnsafeScreen';
 import { Row } from '../layout';
 import { COLORS } from '../../constants';
 import { StackHeader } from '../headers';
+import Spinner from '../misc/Spinner';
 
 const ProductScreen = ({ route: { params = {} } = {}, navigation }) => {
   const {
@@ -40,6 +41,7 @@ const ProductScreen = ({ route: { params = {} } = {}, navigation }) => {
       <View style={styles.ageRestrictedLabel}><Text style={{ color: '#fff', fontSize: 20 }}>+18</Text></View>
       <Text style={{ color: COLORS.darkGray, maxWidth: '70%' }}>Produto autorizado somente para maiores de 18 anos</Text>
     </Row>}
+    {qty > 0 &&<Spinner stockQty={qty}/> }
   </UnsafeScreen>)
 };
 
@@ -70,7 +72,7 @@ const styles = {
   title: {
     color: COLORS.fontPrimary,
     textWeight: 'bold',
-    fontSize: 26,
+    fontSize: 24,
     maxWidth: '80%'
   },
   regularPrice: {

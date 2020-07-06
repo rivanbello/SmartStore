@@ -11,6 +11,16 @@ const screenWidth = Math.round(Dimensions.get('window').width);
 const List = ({ navigation, list }) => {
   const [userInfo, setUserInfo] = useContext(UserContext);
 
+  const filterListAndSlice = (list) => {
+    let filteredList = list
+      .filter(({ categoryId, categoryName}) => 
+        category === `Categoria ${categoryId}`
+        || category === categoryName
+      );
+      if (filteredList.length > 4) filteredList = filteredList.slice(0, 5);
+    return filteredList;
+  }
+
   return (
     <ScrollView style={styles.container}>
       {userInfo.categories && userInfo.categories.map((category) => <> 
@@ -37,7 +47,7 @@ const List = ({ navigation, list }) => {
                 category === `Categoria ${categoryId}`
                 || category === categoryName
               )
-            .slice(0, 10)}
+            .slice(0, 3)}
           // contentContainerStyle={styles.content}
           keyExtractor={item => item.id}
           renderItem={({item: { ageRestricted, description, categoryName, price, quantity, imageUrl } = {}} ) => (
