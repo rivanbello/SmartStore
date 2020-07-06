@@ -1,11 +1,12 @@
 import React from 'react';
 import { View, StyleSheet, Text, TouchableHighlight } from 'react-native';
 import { Entypo } from '@expo/vector-icons';
+import { COLORS } from '../../constants';
 
-const ShoppingBag = ({ quantity }) => (
+const ShoppingBag = ({ quantity, header = false }) => (
     <TouchableHighlight>
         <>
-            <Entypo color="#fff" size={26} name="shopping-bag" />
+            <Entypo color={header ? COLORS.primary : "#fff"} size={26} name="shopping-bag" />
             {quantity > 0 && <View style={styles.shoppingBagInfo}>
                 <Text style={styles.shoppingBagInfoText}>{quantity}</Text>
             </View>}

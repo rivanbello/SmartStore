@@ -11,7 +11,6 @@ import { PrimaryButton } from '../buttons';
 const ProductScreen = ({ route: { params = {} } = {}, navigation }) => {
   const {
     imageUrl,
-    adult = false,
     stock = false,
     name,
     price,
@@ -54,13 +53,13 @@ const ProductScreen = ({ route: { params = {} } = {}, navigation }) => {
 
 const styles = {
   imageBackground: {
-    height: '35%',
+    height: '38%',
     marginBottom: 40,
   },
   image: {
     resizeMode: 'contain',
-    height: 180,
-    width: 180,
+    height: 145,
+    width: 145,
   },
   ageRestrictedLabel: {
     backgroundColor: '#000',
