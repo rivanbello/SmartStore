@@ -34,7 +34,7 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 const Tab = createBottomTabNavigator();
 
 export default function App() {
-  const [userInfo, setUserInfo] = useState({ condos: [] });
+  const [userInfo, setUserInfo] = useState({ condos: [], cart: { items: [] } });
   const [logged, setLogged] = useState(false);
 
   useEffect(() => {

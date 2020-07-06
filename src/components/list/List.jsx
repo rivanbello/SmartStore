@@ -1,9 +1,10 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useContext } from 'react';
 import { FlatList, ScrollView, StyleSheet } from "react-native";
 import { Dimensions } from 'react-native';
 import ListHeader from './ListHeader';
 import Item from './Item';
 import { UserContext } from '../../context';
+import { SCREEN_WIDTH } from '../../constants';
 
 const screenWidth = Math.round(Dimensions.get('window').width);
 
@@ -76,6 +77,6 @@ const styles = StyleSheet.create({
     marginBottom: 16,
   },
   item: {
-    marginRight: (screenWidth - (74 * 4) - 40) / 3,
+    marginRight: screenWidth > 550 ? (screenWidth - (74 * 4) - 40) / 3 : 0,
   }
 });
