@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect, useRef } from 'react';
 // import { Image } from 'react-native';
 import { Text, Image, View, ScrollView } from 'react-native';
 import UnsafeScreen from './UnsafeScreen';
@@ -21,6 +21,30 @@ const ProductScreen = ({ route: { params = {} } = {}, navigation }) => {
   } = params;
   const [qtyToAdd, setQtyToAdd] = useState(1);
   const [userInfo, setUserInfo] = useContext(UserContext);
+  const quantityInCart = useRef(userInfo.cart.items.filter(({ id: id2 }) => id2 === id ).length);
+  const addToCart = (updatedQty) => {
+    const itemToAdd = {
+        imageUrl,
+        name,
+        price,
+        stockQty: qty,
+        qty: qtyToAdd,
+        ageRestricted,
+        id,
+      };
+    let itemsUpdated = userInfo.cart.items;
+    let index = undefined;
+    itemsUpdated.forEach((item, i) => { if(item.id === id) index = i; console.warn(index) })
+    if (index != undefined) itemsUpdated[index] = { ...itemToAdd, qty: updatedQty }
+    else itemsUpdated = itemsUpdated.concat(itemToAdd);
+    setUserInfo({
+        ...userInfo,
+        cart: {
+          ...userInfo.cart,
+          items: itemsUpdated,
+        },
+    });
+}
   return (
   <UnsafeScreen>
     <StackHeader 
@@ -40,7 +64,7 @@ const ProductScreen = ({ route: { params = {} } = {}, navigation }) => {
     <Row style={{ justifyContent: 'space-between' }}>
       <Text style={styles.title}>{name}</Text>
       <Text style={styles.quantity}>
-        {Number(qty) < 9 ? '0' : ''}{qty}un   
+        {Number(qty) < 9 ? '0' : ''}{qty}un
       </Text>
     </Row>
     <Text style={ageRestricted ? styles.ageRestrictedPrice : styles.regularPrice}>R$ {price && price.toFixed(2).replace('.', ',')}</Text>
@@ -50,25 +74,14 @@ const ProductScreen = ({ route: { params = {} } = {}, navigation }) => {
       <Text style={{ color: COLORS.darkGray, maxWidth: '70%' }}>Produto autorizado somente para maiores de 18 anos</Text>
     </Row>}
     <View style={{ flex: 1, justifyContent: 'flex-end', marginBottom: 20 }}>
-      {qty > 0 &&<Spinner stockQty={qty} value={qtyToAdd} setValue={(value) => setQtyToAdd(value) }/> }
+      {qty > 0 &&<Spinner stockQty={qty - quantityInCart.current} value={qtyToAdd} setValue={(value) => setQtyToAdd(value) }/> }
       <PrimaryButton
         disabled={qty <= 0}
         label={qty > 0 ? "Adicionar à sacola" : "Fora de estoque"}
-        onPress={() => setUserInfo({
-          ...userInfo,
-          cart: {
-            ...userInfo.cart,
-            items: userInfo.cart.items.concat({
-              imageUrl,
-              name,
-              price,
-              stockQty: qty,
-              qty: qtyToAdd,
-              ageRestricted,
-              id,
-            }),
-          },
-      })}
+        onPress={() => {
+          addToCart(qtyToAdd);
+          quantityInCart.current += qtyToAdd;
+        }}
       />
     </View>
     </ScrollView>

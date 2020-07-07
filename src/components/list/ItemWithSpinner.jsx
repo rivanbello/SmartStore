@@ -27,8 +27,8 @@ const ItemWithSpinner = ({ id, ageRestricted, imageUrl, name, stockQty, qty, pri
           };
         let itemsUpdated = userInfo.cart.items;
         let index;
-        if (userInfo.cart.items.forEach((item, i) => { if(item.id === id) index = i }))
-          itemsUpdated[index] = { ...itemToAdd, qty: updatedQty }
+        itemsUpdated.forEach((item, i) => { if(item.id === id) index = i })
+        if (index) itemsUpdated[index] = { ...itemToAdd, qty: updatedQty }
         else itemsUpdated = itemsUpdated.concat(itemToAdd);
         setUserInfo({
             ...userInfo,
