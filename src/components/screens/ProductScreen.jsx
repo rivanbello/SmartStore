@@ -22,7 +22,7 @@ const ProductScreen = ({ route: { params = {} } = {}, navigation }) => {
   const [qtyToAdd, setQtyToAdd] = useState(1);
   const [userInfo, setUserInfo] = useContext(UserContext);
   const quantityInCart = useRef(
-    userInfo.cart.items.filter(({ id: id2 }) => id2 === id )
+    userInfo.cart.items.filter(({ id: id2 }) => id2 === id )[0]
     && userInfo.cart.items.filter(({ id: id2 }) => id2 === id )[0].qty
     || 0
   );
@@ -49,7 +49,7 @@ const ProductScreen = ({ route: { params = {} } = {}, navigation }) => {
           items: itemsUpdated,
         },
     });
-}
+  }
   return (
   <UnsafeScreen>
     <StackHeader 

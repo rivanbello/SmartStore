@@ -6,7 +6,7 @@ import ShoppingBag from '../icons/ShoppingBag';
 import { COLORS } from '../../constants';
 import { UserContext } from '../../context';
 
-const StackHeader = ({ handleGoBack = (() => {}), style, fontStyle, showShoppingBag = true }) => {
+const StackHeader = ({ handleGoBack = (() => {}), style, fontStyle, showShoppingBag = true, handleOnPress = (() => {}) }) => {
 
   const [userInfo] = useContext(UserContext);
   return (
@@ -29,7 +29,7 @@ const StackHeader = ({ handleGoBack = (() => {}), style, fontStyle, showShopping
       {showShoppingBag && <ShoppingBag
         header
         quantity={userInfo.cart.items.length}
-        handleOnPress={() => navigation.navigate('ShoppingBag')}
+        handleOnPress={() => handleOnPress()}
       />}
     </Header>
   );
