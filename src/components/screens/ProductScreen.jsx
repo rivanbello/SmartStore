@@ -21,8 +21,12 @@ const ProductScreen = ({ route: { params = {} } = {}, navigation }) => {
   } = params;
   const [qtyToAdd, setQtyToAdd] = useState(1);
   const [userInfo, setUserInfo] = useContext(UserContext);
-  const quantityInCart = useRef(userInfo.cart.items.filter(({ id: id2 }) => id2 === id ).length);
-  const addToCart = (updatedQty) => {
+  const quantityInCart = useRef(
+    userInfo.cart.items.filter(({ id: id2 }) => id2 === id )
+    && userInfo.cart.items.filter(({ id: id2 }) => id2 === id )[0].qty
+    || 0
+  );
+  const addToCart = () => {
     const itemToAdd = {
         imageUrl,
         name,
@@ -34,7 +38,8 @@ const ProductScreen = ({ route: { params = {} } = {}, navigation }) => {
       };
     let itemsUpdated = userInfo.cart.items;
     let index = undefined;
-    itemsUpdated.forEach((item, i) => { if(item.id === id) index = i; console.warn(index) })
+    let updatedQty = qtyToAdd;
+    itemsUpdated.forEach((item, i) => { if(item.id === id) { index = i; updatedQty += item.qty }})
     if (index != undefined) itemsUpdated[index] = { ...itemToAdd, qty: updatedQty }
     else itemsUpdated = itemsUpdated.concat(itemToAdd);
     setUserInfo({
@@ -74,10 +79,14 @@ const ProductScreen = ({ route: { params = {} } = {}, navigation }) => {
       <Text style={{ color: COLORS.darkGray, maxWidth: '70%' }}>Produto autorizado somente para maiores de 18 anos</Text>
     </Row>}
     <View style={{ flex: 1, justifyContent: 'flex-end', marginBottom: 20 }}>
-      {qty > 0 &&<Spinner stockQty={qty - quantityInCart.current} value={qtyToAdd} setValue={(value) => setQtyToAdd(value) }/> }
+      {qty > 0 && quantityInCart.current !== qty &&<Spinner stockQty={qty - quantityInCart.current} value={qtyToAdd} setValue={(value) => setQtyToAdd(value) }/> }
       <PrimaryButton
-        disabled={qty <= 0}
-        label={qty > 0 ? "Adicionar à sacola" : "Fora de estoque"}
+        disabled={qty <= 0 || quantityInCart.current === qty}
+        label={qty <= 0 ? "Fora de estoque"
+          : quantityInCart.current === qty
+            ? 'Voce ja adicionou todo estoque'
+            : 'Adicionar à sacola'
+      }
         onPress={() => {
           addToCart(qtyToAdd);
           quantityInCart.current += qtyToAdd;
