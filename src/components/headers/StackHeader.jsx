@@ -6,14 +6,14 @@ import ShoppingBag from '../icons/ShoppingBag';
 import { COLORS } from '../../constants';
 import { UserContext } from '../../context';
 
-const StackHeader = ({ onPress = (() => {}), style, fontStyle }) => {
+const StackHeader = ({ handleGoBack = (() => {}), style, fontStyle, showShoppingBag = true }) => {
 
-  const [userInfo] = useContext(UserContext);  
+  const [userInfo] = useContext(UserContext);
   return (
     <Header style={{ ...styles.container, ...style }}>
       <TouchableOpacity
         style={styles.wrapper}
-        onPress={onPress}
+        onPress={handleGoBack}
       >
         <Feather
           name="arrow-left"
@@ -26,10 +26,11 @@ const StackHeader = ({ onPress = (() => {}), style, fontStyle }) => {
         />
         <Text style={{ color: COLORS.textPrimary, ...fontStyle }}>Voltar</Text>
       </TouchableOpacity>
-      <ShoppingBag
+      {showShoppingBag && <ShoppingBag
         header
         quantity={userInfo.cart.items.length}
-      />
+        handleOnPress={() => navigation.navigate('ShoppingBag')}
+      />}
     </Header>
   );
 };

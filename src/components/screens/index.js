@@ -11,6 +11,7 @@ import SuggestionScreen from './SuggestionScreen';
 import ResetPasswordScreen from './ResetPasswordScreen';
 import ProfileScreen from './ProfileScreen';
 import PasswordFeedbackScreen from './PasswordFeedbackScreen';
+import ShoppingBagScreen from './ShoppingBagScreen';
 
 export {
   CategoryScreen,
@@ -24,6 +25,7 @@ export {
   RegisterScreen,
   ResetPasswordScreen,
   ProductScreen,
+  ShoppingBagScreen,
   SuggestionScreen,
   ProfileScreen,
 }

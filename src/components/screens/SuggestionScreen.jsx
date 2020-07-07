@@ -9,7 +9,10 @@ const SuggestionScreen = ({ navigation }) => {
   const [value, setValue] = useState('');
   return (
     <Screen>
-      <StackHeader onPress={() => navigation.goBack()} />
+      <StackHeader
+        onPress={() => navigation.goBack()}
+        handleOnPress={() => navigation.navigate('ShoppingBag')}
+      />
         <View style={{ justifyContent: 'space-between', flex: 1 }}>
         <View>
           <TextInput

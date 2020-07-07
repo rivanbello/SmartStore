@@ -50,7 +50,7 @@ const List = ({ navigation, list }) => {
             .slice(0, 3)}
           // contentContainerStyle={styles.content}
           keyExtractor={item => item.id}
-          renderItem={({item: { ageRestricted, description, categoryName, price, quantity, imageUrl } = {}} ) => (
+          renderItem={({item: { id, ageRestricted, description, categoryName, price, quantity, imageUrl } = {}} ) => (
             <Item
               img={imageUrl}
               style={styles.item} 
@@ -65,6 +65,7 @@ const List = ({ navigation, list }) => {
                 ageRestricted,
                 qty: quantity,
                 imageUrl,
+                id,
               })}
             />
           )}

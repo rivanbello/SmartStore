@@ -7,7 +7,7 @@ import { SCREEN_WIDTH } from '../../constants';
 import { UserContext } from '../../context';
 import ShoppingBag from '../icons/ShoppingBag';
 
-const HomeHeader = ({ balance, name, condoName, searchActive = false, setSearchActive = (() => {}) }) => {
+const HomeHeader = ({ navigation, name, condoName, searchActive = false, setSearchActive = (() => {}) }) => {
   
   const [userInfo, setUserInfo] = useContext(UserContext);
 
@@ -19,7 +19,6 @@ const HomeHeader = ({ balance, name, condoName, searchActive = false, setSearchA
         ? styles.regularLabel
         : styles.smallScreenLabel
       }>
-        {console.warn(userInfo)}
         <Text style={{ color: '#FFA5AD', fontSize: 20 }}>
           Olá
           <Text style={{ color: '#fff', fontWeight: 'bold' }}> {name}</Text>
@@ -27,15 +26,16 @@ const HomeHeader = ({ balance, name, condoName, searchActive = false, setSearchA
         <Row>
           <Text style={styles.condoName}> {condoName} </Text>
           <ShoppingBag
-            // quantity={userInfo.cart.items.length}
-            quantity={2}
+            quantity={userInfo.cart.items.length}
+            handleOnPress={() => navigation.navigate('ShoppingBag')}
           />
         </Row>
       </Row>
     : <StackHeader
         style={styles.stackHeader}
         fontStyle={{ color: 'white' }}
-        onPress={() => setSearchActive(false)}
+        handleOnPress={() => navigation.navigate('ShoppingBag')}
+        handleGoBack={() => setSearchActive(false)}
       />
     }
   </View>)

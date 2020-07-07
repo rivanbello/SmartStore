@@ -19,7 +19,8 @@ const CategoryScreen = ({ route, navigation }) => {
   return (
   <Screen>
     <StackHeader
-      onPress={() => navigation.goBack()}
+      handleGoBack={() => navigation.goBack()}
+      handleOnPress={() => navigation.navigate('ShoppingBag')}
     />
     <Text style={styles.title}>{category}</Text>
     <ScrollView>

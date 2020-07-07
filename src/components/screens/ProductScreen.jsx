@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 // import { Image } from 'react-native';
 import { Text, Image, View, ScrollView } from 'react-native';
 import UnsafeScreen from './UnsafeScreen';
@@ -7,6 +7,7 @@ import { COLORS } from '../../constants';
 import { StackHeader } from '../headers';
 import Spinner from '../misc/Spinner';
 import { PrimaryButton } from '../buttons';
+import { UserContext } from '../../context';
 
 const ProductScreen = ({ route: { params = {} } = {}, navigation }) => {
   const {
@@ -16,11 +17,16 @@ const ProductScreen = ({ route: { params = {} } = {}, navigation }) => {
     price,
     qty,
     ageRestricted,
+    id,
   } = params;
   const [qtyToAdd, setQtyToAdd] = useState(1);
+  const [userInfo, setUserInfo] = useContext(UserContext);
   return (
   <UnsafeScreen>
-    <StackHeader onPress={() => navigation.goBack()} />
+    <StackHeader 
+      handleGoBack={() => navigation.goBack()}
+      handleOnPress={() => navigation.navigate('ShoppingBag')}
+    />
     <ScrollView>
     <Row style={styles.imageBackground}>
       <Image style={styles.image} source={imageUrl ? {uri: imageUrl} : null} />
@@ -45,7 +51,25 @@ const ProductScreen = ({ route: { params = {} } = {}, navigation }) => {
     </Row>}
     <View style={{ flex: 1, justifyContent: 'flex-end', marginBottom: 20 }}>
       {qty > 0 &&<Spinner stockQty={qty} value={qtyToAdd} setValue={(value) => setQtyToAdd(value) }/> }
-      <PrimaryButton disabled={qty <= 0} label={qty > 0 ? "Adicionar à sacola" : "Fora de estoque"} />
+      <PrimaryButton
+        disabled={qty <= 0}
+        label={qty > 0 ? "Adicionar à sacola" : "Fora de estoque"}
+        onPress={() => setUserInfo({
+          ...userInfo,
+          cart: {
+            ...userInfo.cart,
+            items: userInfo.cart.items.concat({
+              imageUrl,
+              name,
+              price,
+              stockQty: qty,
+              qty: qtyToAdd,
+              ageRestricted,
+              id,
+            }),
+          },
+      })}
+      />
     </View>
     </ScrollView>
   </UnsafeScreen>)

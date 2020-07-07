@@ -34,7 +34,9 @@ const ResetPasswordScreen = ({
   }, []);
   return (
     <Screen style={styles.container}>
-      <StackHeader onPress={() => navigation.goBack()} />
+      <StackHeader
+        handleGoBack={() => navigation.goBack()}
+      />
       {!keyboardOpen && <Image source={ResetPassword} style={styles.image} resizeMode="contain"/>}
       <Text style={styles.title}>Tudo bem, acontece</Text>
       <Text style={styles.description}>Para recuperar sua senha, insira seu endereço de e-mail, que enviaremos um link de recuperação pra lá!</Text>

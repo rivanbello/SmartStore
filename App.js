@@ -19,6 +19,7 @@ import {
   CategoryScreen,
   PasswordFeedbackScreen,
   ProfileScreen,
+  ShoppingBagScreen,
 } from './src/components/screens';
 import { UserContext } from './src/context';
 import {
@@ -123,6 +124,7 @@ export default function App() {
         <Stack.Screen name="Info" component={InformationScreen} options={{ headerShown: false }}/>
         <Stack.Screen name="FeedbackConfirmation" component={FeedbackConfirmationScreen} options={{ headerShown: false }} />
         <Stack.Screen name="ResetPassword" component={ResetPasswordScreen} options={{ headerShown: false }} />
+        <Stack.Screen name="ShoppingBag" component={ShoppingBagScreen} options={{ headerShown: false }} />
         <Stack.Screen name="PasswordFeedback" component={PasswordFeedbackScreen} options={{ headerShown: false }} />
       </Stack.Navigator>
       </UserContext.Provider>
