@@ -17,7 +17,7 @@ const LoginForm = ({ navigation }) => {
 
   useEffect(() => {
     if(userInfo.logged) navigation.navigate('Navigator', { username, password });
-  }, [userInfo])
+  }, [userInfo.logged])
 
   return (
     <>

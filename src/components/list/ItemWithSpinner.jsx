@@ -11,35 +11,12 @@ import { Column, Row } from '../layout';
 import Spinner from '../misc/Spinner';
 import { UserContext } from '../../context';
 
-const ItemWithSpinner = ({ id, ageRestricted, imageUrl, name, stockQty, qty, price, style, onPress }) => {
+const ItemWithSpinner = ({ id, ageRestricted, imageUrl, name, stockQty, qty, price, style, addToCart, }) => {
     
     const [qtyToAdd, setQtyToAdd] = useState(qty);
     const [userInfo, setUserInfo] = useContext(UserContext);
-    const addToCart = (updatedQty) => {
-        const itemToAdd = {
-            imageUrl,
-            name,
-            price,
-            stockQty: qty,
-            qty: qtyToAdd,
-            ageRestricted,
-            id,
-          };
-        let itemsUpdated = userInfo.cart.items;
-        let index;
-        itemsUpdated.forEach((item, i) => { if(item.id === id) index = i })
-        if (index) itemsUpdated[index] = { ...itemToAdd, qty: updatedQty }
-        else itemsUpdated = itemsUpdated.concat(itemToAdd);
-        setUserInfo({
-            ...userInfo,
-            cart: {
-              ...userInfo.cart,
-              items: itemsUpdated,
-            },
-        });
-    }
     return (
-        <View onPress={onPress} style={{...styles.container, ...style}}>
+        <View style={{...styles.container, ...style}}>
             <Row style={styles.content}>
                 <Avatar style={styles.avatar} src={imageUrl}/>
                 <Text style={{ ...styles.description, ...styles.text }} numberOfLines={3}>{name}</Text>
@@ -51,7 +28,16 @@ const ItemWithSpinner = ({ id, ageRestricted, imageUrl, name, stockQty, qty, pri
                         value={qtyToAdd}
                         setValue={(value) => {
                             setQtyToAdd(value)
-                            addToCart(value);
+                            addToCart({
+                                updatedQty: value,
+                                imageUrl,
+                                name,
+                                price,
+                                qty,
+                                qtyToAdd,
+                                ageRestricted,
+                                id,
+                            });
                         }}
                     />
                 </Column>
