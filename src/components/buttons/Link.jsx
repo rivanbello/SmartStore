@@ -2,7 +2,7 @@ import React from 'react';
 import { TouchableOpacity, Text } from 'react-native';
 import { COLORS } from '../../constants';
 
-const Link = ({ style, label, onPress }) => (
+const Link = ({ style, label, onPress, labelStyle }) => (
   <TouchableOpacity
     style={{
       ...styles.container,
@@ -10,7 +10,7 @@ const Link = ({ style, label, onPress }) => (
     }}
     onPress={() => onPress && onPress()}
   >
-    <Text style={styles.text}>{label}</Text>
+    <Text style={{ ...styles.text, ...labelStyle }}>{label}</Text>
   </TouchableOpacity>
 );
 

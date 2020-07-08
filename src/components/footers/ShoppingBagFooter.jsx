@@ -1,5 +1,5 @@
 import React from 'react';
-import { Text } from 'react-native';
+import { Text, View } from 'react-native';
 import { Column, Row } from '../layout';
 import { Link } from '../buttons';
 import { PrimaryButton } from '../buttons';
@@ -11,15 +11,17 @@ const ShoppingBagFooter = ({ style, step = 0, totalSteps = 0, onPress = (() => {
         <Text style={styles.text}>Subtotal:</Text>
         <Text style={styles.price}>R$ {price}</Text>
     </Row>
-    <Row>
-        <Link label="Continuar comprando" />
-    </Row>
-    <Row>
-        <PrimaryButton
-            label="Realizar o pagamento"
-            onPress={onPress}
-        />
-    </Row>
+    <View style={{ alignItems: 'flex-end' }}>
+      <Column>
+        <Link label="Continuar comprando" style={styles.link} labelStyle={styles.linkLabel} />
+        <Row>
+            <PrimaryButton
+              label="Realizar o pagamento"
+              onPress={onPress}
+            />
+        </Row>
+      </Column>
+    </View>
   </Column>
 );
 
@@ -28,7 +30,6 @@ const styles = {
       flex: 1,
       justifyContent: 'space-between',
       paddingBottom: 14 * (SCREEN_HEIGHT / 600),
-      maxHeight: 70,
       paddingTop: '2%',
     },
     price: {
@@ -41,6 +42,12 @@ const styles = {
       height: 44,
       backgroundColor: COLORS.lightLilac,
       justifyContent: 'center',
+    },
+    link: {
+      marginBottom: 20,
+    },
+    linkLabel: {
+      fontSize: 18,
     },
     text: {
       color: COLORS.textPrimary,

@@ -71,7 +71,7 @@ const styles = StyleSheet.create({
     },
     divider: {
         borderWidth: 1,
-        marginVertical: 14,
+        marginVertical: 10,
         width: '100%',
         borderColor: COLORS.lightGray,
     },
