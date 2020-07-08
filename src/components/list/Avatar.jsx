@@ -2,11 +2,11 @@ import React from 'react';
 import { Image, StyleSheet, View, Text } from "react-native";
 import { COLORS } from '../../constants';
 
-const Avatar = ({ src, style, product = false }) => (
+const Avatar = ({ src, style, product = false, overlayImage = false }) => (
   product ?
   <View>
     <Image
-      style={{ ...styles.avatar, ...style}} 
+      style={{ ...styles.avatar, ...style, }} 
       source={src ? { uri: src } : null}
     />
     {/* <View style={styles.plusSign}> */}

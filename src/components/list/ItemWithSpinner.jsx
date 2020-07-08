@@ -18,13 +18,14 @@ const ItemWithSpinner = ({ id, ageRestricted, imageUrl, name, stockQty, qty, pri
     return (
         <View style={{...styles.container, ...style}}>
             <Row style={styles.content}>
-                <Avatar style={styles.avatar} src={imageUrl}/>
-                <Text style={{ ...styles.description, ...styles.text }} numberOfLines={3}>{name}</Text>
+                <Avatar overlayImage src={imageUrl}/>
+                <Text style={[styles.description, styles.text, qty === 0 && styles.canceledName]} numberOfLines={3}>{name}</Text>
                 <Column style={{ flex: 1, justifyContent: 'flex-end' }}>
-                    <Text style={{ ...styles.price, ...styles.text }}>R$ {price}</Text>
+                    <Text style={[styles.price, styles.text, qty === 0 && styles.canceledName]}>R$ {price}</Text>
                     <Spinner
                         small
                         stockQty={stockQty}
+                        minQty={0}
                         value={qtyToAdd}
                         setValue={(value) => {
                             setQtyToAdd(value)
@@ -68,6 +69,9 @@ const styles = StyleSheet.create({
     },
     disabledSign: {
         color: COLORS.gray,
+    },
+    canceledName: {
+        textDecorationLine: 'line-through',
     },
     divider: {
         borderWidth: 1,

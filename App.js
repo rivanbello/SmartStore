@@ -17,6 +17,7 @@ import {
   HomeScreen,
   ProductScreen,
   CategoryScreen,
+  CheckoutScreen,
   PasswordFeedbackScreen,
   ProfileScreen,
   ShoppingBagScreen,
@@ -120,6 +121,7 @@ export default function App() {
         {/* <Stack.Screen name="RegisterConfirmation" component={ConfirmationScreen} options={{ headerShown: false }} /> */}
         <Stack.Screen name="RegisterConfirmation" component={RegisterConfirmationScreen} options={{ headerShown: false }} />
         <Stack.Screen name="Category" component={CategoryScreen} options={{ headerShown: false }} />
+        <Stack.Screen name="Checkout" component={CheckoutScreen} options={{ headerShown: false }} />
         <Stack.Screen name="Suggestion" component={SuggestionScreen} options={{ headerShown: false }} />
         <Stack.Screen name="Info" component={InformationScreen} options={{ headerShown: false }}/>
         <Stack.Screen name="FeedbackConfirmation" component={FeedbackConfirmationScreen} options={{ headerShown: false }} />

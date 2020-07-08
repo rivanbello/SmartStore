@@ -5,23 +5,18 @@ import { Link } from '../buttons';
 import { PrimaryButton } from '../buttons';
 import { COLORS, SCREEN_HEIGHT } from '../../constants';
 
-const ShoppingBagFooter = ({ style, step = 0, totalSteps = 0, onPress = (() => {}), price = '10.00', onPressLink }) => (
+const CheckoutFooter = ({ style, step = 0, totalSteps = 0, onPress = (() => {}), price = '10.00', onPressLink }) => (
   <Column style={{ ...styles.container, ...style }}>
-    <Row style={{ justifyContent: 'flex-end' }}>
-        <Text style={styles.text}>Subtotal:</Text>
-        <Text style={styles.price}>R$ {price}</Text>
-    </Row>
-    <View style={{ alignItems: 'flex-end' }}>
-      <Column>
-        <Link
-          label="Continuar comprando"
-          style={styles.link}
-          labelStyle={styles.linkLabel}
-          onPress={() => onPressLink()}  
-        />
+    <View></View>
+    <View>
+        <Column>
+        <Row style={{ marginBottom: 20 }}>
+            <Text style={styles.text}>Total: </Text>
+            <Text style={styles.price}>R$ {price}</Text>
+        </Row>
         <Row>
             <PrimaryButton
-              label="Realizar o pagamento"
+              label="Pagar"
               onPress={onPress}
             />
         </Row>
@@ -40,6 +35,7 @@ const styles = {
     price: {
         color: COLORS.primary,
         fontWeight: 'bold',
+        fontSize: 24,
     },
     stepBox: {
       width: '18%',
@@ -48,18 +44,18 @@ const styles = {
       backgroundColor: COLORS.lightLilac,
       justifyContent: 'center',
     },
-    link: {
-      marginBottom: 20,
+    total: {
+        marginBottom: 20,
+        fontSize: 18,
     },
     linkLabel: {
       fontSize: 18,
     },
     text: {
       color: COLORS.textPrimary,
-      fontSize: 14,
-      textAlign: 'center',
-      marginRight: 15,
+      fontSize: 24,
+      fontWeight: 'bold',
     },
   }
   
-  export default ShoppingBagFooter;
+  export default CheckoutFooter;

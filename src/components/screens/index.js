@@ -5,6 +5,7 @@ import ConfirmationScreen from './ConfirmationScreen';
 import RegisterConfirmationScreen from './RegisterConfirmationScreen';
 import ProductScreen from './ProductScreen';
 import CategoryScreen from './CategoryScreen';
+import CheckoutScreen from './CheckoutScreen';
 import FeedbackConfirmationScreen from './FeedbackConfirmationScreen';
 import InformationScreen from './InformationScreen';
 import SuggestionScreen from './SuggestionScreen';
@@ -16,6 +17,7 @@ import ShoppingBagScreen from './ShoppingBagScreen';
 export {
   CategoryScreen,
   ConfirmationScreen,
+  CheckoutScreen,
   FeedbackConfirmationScreen,
   PasswordFeedbackScreen,
   RegisterConfirmationScreen,

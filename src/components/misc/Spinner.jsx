@@ -3,28 +3,28 @@ import { View, Text, StyleSheet, TouchableHighlight } from 'react-native';
 import { COLORS } from '../../constants';
 import { Row } from '../layout';
 
-const Spinner = ({ onUpdateValue, stockQty, value, setValue, small = false }) => {
+const Spinner = ({ onUpdateValue, stockQty, value, setValue, small = false, minQty = 1 }) => {
     const handleOnPressAdd = () => {
         if (value + 1 <= stockQty) setValue(value + 1)
     }
     const handleOnPressSubtract = () => {
-        if (value - 1 >= 1) setValue(value - 1)
+        if (value - 1 >= minQty) setValue(value - 1)
     }
     return(<Row style={{ marginBottom: 10 }}>
         <TouchableHighlight style={[
             styles.button,
-            value <= 1 && styles.disabledButton,
+            value <= minQty && styles.disabledButton,
             small && {
                 height: 20,
                 width: 20
             },
         ]}
             onPress={() => handleOnPressSubtract()}
-            disabled={value <= 1}
+            disabled={value <= minQty}
         >
             <Text style={[
                 styles.sign,
-                value <= 1 && styles.disabledSign,
+                value <= minQty && styles.disabledSign,
                 small && {
                     fontSize: 22,
                     lineHeight: 25,
@@ -69,6 +69,9 @@ const styles = StyleSheet.create({
         backgroundColor: COLORS.primary,
         alignItems: 'center',
         justifyContent: 'center',
+    },
+    canceledText: {
+        textDecorationLine: 'line-through',
     },
     sign: {
         fontSize: 36,
