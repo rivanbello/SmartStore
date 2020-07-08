@@ -42,15 +42,16 @@ const ItemWithSpinner = ({ id, ageRestricted, imageUrl, name, stockQty, qty, pri
                     />
                 </Column>
             </Row>
+            <View style={styles.divider} />
         </View>
     );
 };
 
 const styles = StyleSheet.create({
     container: {
-        flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'flex-start',
+        flex: 1,
         // maxWidth: '80%',
         maxHeight: 250,
       },
@@ -67,6 +68,12 @@ const styles = StyleSheet.create({
     },
     disabledSign: {
         color: COLORS.gray,
+    },
+    divider: {
+        borderWidth: 1,
+        marginVertical: 14,
+        width: '100%',
+        borderColor: COLORS.lightGray,
     },
     description: {
         fontSize: 14,

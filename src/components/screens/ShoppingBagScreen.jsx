@@ -1,6 +1,8 @@
 import React, { useContext } from 'react';
+import { ScrollView } from 'react-native';
 import Screen from '../screens/Screen';
 import ItemWithSpinner from '../list/ItemWithSpinner';
+import { ShoppingBagFooter } from '../footers';
 import { UserContext } from '../../context';
 import { StackHeader } from '../headers';
 
@@ -44,6 +46,9 @@ const ShoppingBagScreen = ({ navigation }) => {
                 showShoppingBag={false}
                 handleGoBack={() => navigation.goBack()}
             />
+            <ScrollView
+                style={{ maxHeight: '60%', flexGrow: 0 }}
+            >
             {userInfo.cart.items.map(({
                 imageUrl,
                 name,
@@ -65,6 +70,8 @@ const ShoppingBagScreen = ({ navigation }) => {
                     addToCart={addToCart}
                 />
             )}
+            </ScrollView>
+            <ShoppingBagFooter />
         </Screen>
     );
 };
