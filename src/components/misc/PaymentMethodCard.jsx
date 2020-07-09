@@ -5,7 +5,7 @@ import { Row, Column } from '../layout';
 import { Link } from '../buttons';
 import { AntDesign } from '@expo/vector-icons';
 
-const PaymentMethodCard = ({ card }) => {
+const PaymentMethodCard = ({ card, setDrawerIsOpened }) => {
     return (
         card && <Row style={styles.container}>
             <AntDesign
@@ -24,7 +24,7 @@ const PaymentMethodCard = ({ card }) => {
             />
         </Row>
         || <TouchableOpacity
-            onPress={() => setDrawerOpen(!drawerOpen)}
+            onPress={() => setDrawerIsOpened()}
         >
             <Row style={{ ...styles.container, justifyContent: 'flex-start' }}>
                 <AntDesign

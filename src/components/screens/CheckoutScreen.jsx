@@ -1,5 +1,5 @@
-import React, { useContext, useState } from 'react';
-import { ScrollView, Text, StyleSheet, View } from 'react-native';
+import React, { useContext, useState, useEffect, useRef } from 'react';
+import { ScrollView, Text, StyleSheet, View, BackHandler, TouchableWithoutFeedback } from 'react-native';
 import Screen from '../screens/Screen';
 import ItemWithoutSpinner from '../list/ItemWithoutSpinner';
 import { CheckoutFooter } from '../footers';
@@ -11,13 +11,21 @@ import BottomDrawer from '../drawers/BottomDrawer';
 const CheckoutScreen = ({ navigation }) => {
     const [userInfo, setUserInfo] = useContext(UserContext);
     const [drawerIsOpened, setDrawerIsOpened] = useState(false);
+    useEffect(() => { if (drawerIsOpened) BackHandler.addEventListener('hardwareBackPress', function() {
+        setDrawerIsOpened(false);
+        return true; //disable default BackHandler behavior
+    })
+    else BackHandler.addEventListener('hardwareBackPress', function() { navigation.goBack(); BackHandler.removeEventListener('hardwareBackPress'); } )
+}, [drawerIsOpened])
     return (
         <Screen>
-            {drawerIsOpened && <View style={{
+            {drawerIsOpened && <TouchableWithoutFeedback
+                onPress={() => setDrawerIsOpened(!drawerIsOpened)}
+            ><View style={{
                 ...StyleSheet.absoluteFill,
                 backgroundColor: 'rgba(251, 57, 75, 0.6)',
                 zIndex: 5,
-            }}/>}
+            }}/></TouchableWithoutFeedback>}
             <StackHeader
                 showShoppingBag={false}
                 handleGoBack={() => navigation.goBack()}
@@ -45,7 +53,7 @@ const CheckoutScreen = ({ navigation }) => {
             <CheckoutFooter setDrawerIsOpened={() => {
                 setDrawerIsOpened(!drawerIsOpened);
             }}/>
-            <BottomDrawer />
+            {drawerIsOpened && <BottomDrawer />}
         </Screen>
     );
 };
