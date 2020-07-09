@@ -1,16 +1,23 @@
-import React, { useContext } from 'react';
-import { ScrollView, Text } from 'react-native';
+import React, { useContext, useState } from 'react';
+import { ScrollView, Text, StyleSheet, View } from 'react-native';
 import Screen from '../screens/Screen';
 import ItemWithoutSpinner from '../list/ItemWithoutSpinner';
 import { CheckoutFooter } from '../footers';
 import { UserContext } from '../../context';
 import { StackHeader } from '../headers';
 import { COLORS } from '../../constants';
+import BottomDrawer from '../drawers/BottomDrawer';
 
 const CheckoutScreen = ({ navigation }) => {
     const [userInfo, setUserInfo] = useContext(UserContext);
+    const [drawerIsOpened, setDrawerIsOpened] = useState(false);
     return (
         <Screen>
+            {drawerIsOpened && <View style={{
+                ...StyleSheet.absoluteFill,
+                backgroundColor: 'rgba(251, 57, 75, 0.6)',
+                zIndex: 5,
+            }}/>}
             <StackHeader
                 showShoppingBag={false}
                 handleGoBack={() => navigation.goBack()}
@@ -35,7 +42,10 @@ const CheckoutScreen = ({ navigation }) => {
                 />
             )}
             </ScrollView>
-            <CheckoutFooter />
+            <CheckoutFooter setDrawerIsOpened={() => {
+                setDrawerIsOpened(!drawerIsOpened);
+            }}/>
+            <BottomDrawer />
         </Screen>
     );
 };

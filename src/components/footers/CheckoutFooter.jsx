@@ -1,13 +1,13 @@
 import React from 'react';
 import { Text, View } from 'react-native';
 import { Column, Row } from '../layout';
-import { Link } from '../buttons';
 import { PrimaryButton } from '../buttons';
 import { COLORS, SCREEN_HEIGHT } from '../../constants';
+import { PaymentMethodCard } from '../misc';
 
-const CheckoutFooter = ({ style, step = 0, totalSteps = 0, onPress = (() => {}), price = '10.00', onPressLink }) => (
+const CheckoutFooter = ({ style, step = 0, totalSteps = 0, onPress = (() => {}), price = '10.00', onPressLink, setDrawerIsOpened }) => (
   <Column style={{ ...styles.container, ...style }}>
-    <View></View>
+    <PaymentMethodCard setDrawerIsOpened={setDrawerIsOpened} />
     <View>
         <Column>
         <Row style={{ marginBottom: 20 }}>
