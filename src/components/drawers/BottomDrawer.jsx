@@ -1,13 +1,13 @@
 import React from 'react';
-import { View, StyleSheet, Text } from 'react-native';
+import { Animated, StyleSheet, Text } from 'react-native';
 import { SCREEN_WIDTH } from '../../constants';
 import CreditCardForm from '../forms/CreditCardForm';
 
-const BottomDrawer = ({ children }) => {
+const BottomDrawer = ({ children, height }) => {
     return (
-        <View style={styles.container}>
+        <Animated.View style={{ ...styles.container, height: height }}>
             <CreditCardForm />
-        </View>
+        </Animated.View>
     );
 };
 

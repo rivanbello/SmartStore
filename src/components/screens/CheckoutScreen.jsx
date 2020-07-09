@@ -1,5 +1,5 @@
-import React, { useContext, useState, useEffect, useRef } from 'react';
-import { ScrollView, Text, StyleSheet, View, BackHandler, TouchableWithoutFeedback } from 'react-native';
+import React, { useContext, useState, useEffect } from 'react';
+import { ScrollView, Text, StyleSheet, View, Animated, BackHandler, TouchableWithoutFeedback } from 'react-native';
 import Screen from '../screens/Screen';
 import ItemWithoutSpinner from '../list/ItemWithoutSpinner';
 import { CheckoutFooter } from '../footers';
@@ -11,11 +11,19 @@ import BottomDrawer from '../drawers/BottomDrawer';
 const CheckoutScreen = ({ navigation }) => {
     const [userInfo, setUserInfo] = useContext(UserContext);
     const [drawerIsOpened, setDrawerIsOpened] = useState(false);
-    useEffect(() => { if (drawerIsOpened) BackHandler.addEventListener('hardwareBackPress', function() {
-        setDrawerIsOpened(false);
-        return true; //disable default BackHandler behavior
-    })
-    else BackHandler.addEventListener('hardwareBackPress', function() { navigation.goBack(); BackHandler.removeEventListener('hardwareBackPress'); } )
+    const [height] = useState(new Animated.Value(0));
+    useEffect(() => {
+        if (drawerIsOpened) {
+            BackHandler.addEventListener('hardwareBackPress', function() {
+                setDrawerIsOpened(false);
+                return true; //disable default BackHandler behavior
+            });
+            Animated.timing(height, { toValue: 300, duration: 300 }).start()
+        } else { 
+            BackHandler.addEventListener('hardwareBackPress', function() { navigation.goBack(); BackHandler.removeEventListener('hardwareBackPress'); } )
+            height.setValue(0);
+        }
+    
 }, [drawerIsOpened])
     return (
         <Screen>
@@ -53,7 +61,7 @@ const CheckoutScreen = ({ navigation }) => {
             <CheckoutFooter setDrawerIsOpened={() => {
                 setDrawerIsOpened(!drawerIsOpened);
             }}/>
-            {drawerIsOpened && <BottomDrawer />}
+            {drawerIsOpened && <BottomDrawer height={height} />}
         </Screen>
     );
 };
