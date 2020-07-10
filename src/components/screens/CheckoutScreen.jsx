@@ -13,16 +13,16 @@ const CheckoutScreen = ({ navigation }) => {
     const [drawerIsOpened, setDrawerIsOpened] = useState(false);
     const [height] = useState(new Animated.Value(0));
     useEffect(() => {
-        if (drawerIsOpened) {
-            BackHandler.addEventListener('hardwareBackPress', function() {
-                setDrawerIsOpened(false);
-                return true; //disable default BackHandler behavior
-            });
-            Animated.timing(height, { toValue: 300, duration: 300 }).start()
-        } else { 
-            BackHandler.addEventListener('hardwareBackPress', function() { navigation.goBack(); BackHandler.removeEventListener('hardwareBackPress'); } )
-            height.setValue(0);
-        }
+        // if (drawerIsOpened) {
+        //     BackHandler.addEventListener('hardwareBackPress', function() {
+        //         setDrawerIsOpened(false);
+        //         return true; //disable default BackHandler behavior
+        //     });
+        //     Animated.timing(height, { toValue: 300, duration: 300 }).start()
+        // } else { 
+        //     BackHandler.addEventListener('hardwareBackPress', function() { navigation.goBack(); BackHandler.removeEventListener('hardwareBackPress'); } )
+        //     height.setValue(0);
+        // }
     
 }, [drawerIsOpened])
     return (

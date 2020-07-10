@@ -43,6 +43,7 @@ export default function App() {
     getTokens().then(tokens =>
     pointsOfSale({ tokens }).then(response => {
       const condos = [];
+      console.warn(response)
       response.map((pos) => {
         const name = `Cond. ${pos.localName}`;
         let condoInfo = {};
@@ -64,10 +65,13 @@ export default function App() {
             condoInfo.neighborhood = 'Campinas - SP';
             break;
           default:
+            condoInfo.address = 'Av. Carlos Diaulas Serpa';
+            condoInfo.neighborhood = 'Campinas - SP';
             break;
         }
         condos.push({
           ...condoInfo,
+          token: pos.token,
           name,
           machineCompanyCode: pos.machineCompanyCode,
           id: pos.id,
@@ -83,7 +87,7 @@ export default function App() {
   }))}, []);
   useEffect(() => {
     if (userInfo.condo)
-    all({ pointOfSaleId: userInfo.condo.id, secondToken: userInfo.condo.machineCompanyCode === '1304' })
+    all({ pointOfSaleId: userInfo.condo.id, secondToken: userInfo.condo.machineCompanyCode === '1304', token: userInfo.condo.token })
     .then(response => {
       let categories = [];
       response.map(({ categoryId, categoryName }) => {
