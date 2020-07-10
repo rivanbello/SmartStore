@@ -1,4 +1,4 @@
-import React, { useContext, useState, useEffect } from 'react';
+import React, { useContext, useState, useEffect, useCallback } from 'react';
 import { ScrollView, Text, StyleSheet, View, Animated, BackHandler, TouchableWithoutFeedback } from 'react-native';
 import Screen from '../screens/Screen';
 import ItemWithoutSpinner from '../list/ItemWithoutSpinner';
@@ -7,18 +7,20 @@ import { UserContext } from '../../context';
 import { StackHeader } from '../headers';
 import { COLORS } from '../../constants';
 import BottomDrawer from '../drawers/BottomDrawer';
+import * as SecureStore from 'expo-secure-store';
 
 const CheckoutScreen = ({ navigation }) => {
     const [userInfo, setUserInfo] = useContext(UserContext);
     const [drawerIsOpened, setDrawerIsOpened] = useState(false);
     const [height] = useState(new Animated.Value(0));
+    
     useEffect(() => {
         // if (drawerIsOpened) {
-        //     BackHandler.addEventListener('hardwareBackPress', function() {
-        //         setDrawerIsOpened(false);
-        //         return true; //disable default BackHandler behavior
-        //     });
-        //     Animated.timing(height, { toValue: 300, duration: 300 }).start()
+            // BackHandler.addEventListener('hardwareBackPress', function() {
+            //     setDrawerIsOpened(false);
+            //     return true; //disable default BackHandler behavior
+            // });
+            Animated.timing(height, { toValue: 300, duration: 300 }).start()
         // } else { 
         //     BackHandler.addEventListener('hardwareBackPress', function() { navigation.goBack(); BackHandler.removeEventListener('hardwareBackPress'); } )
         //     height.setValue(0);
