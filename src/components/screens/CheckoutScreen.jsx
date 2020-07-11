@@ -63,7 +63,7 @@ const CheckoutScreen = ({ navigation }) => {
             <CheckoutFooter setDrawerIsOpened={() => {
                 setDrawerIsOpened(!drawerIsOpened);
             }}/>
-            {drawerIsOpened && <BottomDrawer height={height} />}
+            {drawerIsOpened && <BottomDrawer height={height} onFormSubmit={() => setDrawerIsOpened(false)} />}
         </Screen>
     );
 };

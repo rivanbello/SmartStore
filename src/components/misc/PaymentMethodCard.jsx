@@ -19,7 +19,7 @@ const PaymentMethodCard = ({ card, setDrawerIsOpened }) => {
             </Column>
             <Link
                 onPress={() => {}}
-                label="Trocar"
+                label="Remover"
                 labelStyle={{ color: COLORS.primary, fontSize: 14 }}
             />
         </Row>
