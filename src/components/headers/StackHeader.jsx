@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect, useState, useRef } from 'react';
 import Header from './Header';
 import { TouchableOpacity, Text } from 'react-native';
 import { Feather } from '@expo/vector-icons';
@@ -9,6 +9,17 @@ import { UserContext } from '../../context';
 const StackHeader = ({ handleGoBack = (() => {}), style, fontStyle, showShoppingBag = true, handleOnPress = (() => {}) }) => {
 
   const [userInfo] = useContext(UserContext);
+  // const countTotalItems = () => {
+  //   let count = 0;
+  //   userInfo.cart.items.forEach(({qty}) => count += qty);
+  //   return count;
+  // };
+  // const [totalItems, setTotalItems] = useState(countTotalItems());
+  // useEffect(() => {
+  //   let count = 0;
+  //   userInfo.cart.items.forEach(({qty}) => count += qty);
+  //   setTotalItems(count);
+  // }, [userInfo.cart.items.length])
   return (
     <Header style={{ ...styles.container, ...style }}>
       <TouchableOpacity
@@ -28,7 +39,7 @@ const StackHeader = ({ handleGoBack = (() => {}), style, fontStyle, showShopping
       </TouchableOpacity>
       {showShoppingBag && <ShoppingBag
         header
-        quantity={userInfo.cart.items.length}
+        quantity={userInfo.cart.items.totalItems}
         handleOnPress={() => handleOnPress()}
       />}
     </Header>

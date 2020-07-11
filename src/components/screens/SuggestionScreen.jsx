@@ -12,6 +12,7 @@ const SuggestionScreen = ({ navigation }) => {
       <StackHeader
         onPress={() => navigation.goBack()}
         handleOnPress={() => navigation.navigate('ShoppingBag')}
+        showShoppingBag={false}
       />
         <View style={{ justifyContent: 'space-between', flex: 1 }}>
         <View>
