@@ -7,7 +7,6 @@ import { UserContext } from '../../context';
 import { StackHeader } from '../headers';
 import { COLORS } from '../../constants';
 import BottomDrawer from '../drawers/BottomDrawer';
-import * as SecureStore from 'expo-secure-store';
 
 const CheckoutScreen = ({ navigation }) => {
     const [userInfo, setUserInfo] = useContext(UserContext);

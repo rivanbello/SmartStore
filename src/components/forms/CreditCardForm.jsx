@@ -16,7 +16,7 @@ const CreditCardForm = ({ onSubmit }) => {
     const handleSubmit = () => {
         let i = 0;
         console.warn(completedRef.current)
-        if (completedRef.current.length !== 10) return false;
+        if (completedRef.current.length !== 11) return false;
         for (i = 0; i < completedRef.current.length; i++) if (!completedRef.current[i]) { console.warn('false'); return false;}
         if (i === completedRef.current.length) return true;
     };
@@ -24,9 +24,9 @@ const CreditCardForm = ({ onSubmit }) => {
     return (
         <>
             <Text style={styles.title}>Adicionar um cartão</Text>
-            {formItems.slice(step * 4, step * 4 + 4).map(({ placeholder, error, validator }, i) =>
+            {formItems.slice(step * 3, step * 3 + 3).map(({ placeholder, error, validator }, i) =>
                 <CreditCardFormItem
-                    onComplete={(value, index) => setItemCompleted(value, i + step * 4)}
+                    onComplete={(value, index) => setItemCompleted(value, i + step * 3)}
                     index={i}
                     placeholder={placeholder}
                     error={error}
@@ -42,12 +42,23 @@ const CreditCardForm = ({ onSubmit }) => {
                         console.warn(handleSubmit())
                         if (handleSubmit())
                             onSubmit({
-                                cardInfo,
+                                number: cardInfo.name,
+                                cvv: cardInfo.cvv,
+                                expMonth: cardInfo.month,
+                                expYear: cardInfo.year,
+                                name: cardInfo.name,
+                                street: cardInfo.street,
+                                document: cardInfo.document,
+                                addressNumber: cardInfo.addressNumber,
+                                district: cardInfo.district,
+                                city: cardInfo.city,
+                                state: cardInfo.state,
                             });
                     }
                     if (
-                        (step === 0 && completedRef.current.length === 4 && completedRef.current[3])
-                        || (step === 1 && completedRef.current.length === 8 && completedRef.current[7])
+                        (step === 0 && completedRef.current.length === 3 && completedRef.current[3])
+                        || (step === 1 && completedRef.current.length === 6 && completedRef.current[5])
+                        || (step === 1 && completedRef.current.length === 9 && completedRef.current[8])
                     ) setStep(step + 1);
                 }}
                 label={step > 1 ? "Adicionar o cartão" : 'Próximo'}
@@ -128,15 +139,10 @@ const formItems = [
         validator: (v) => v,
     },
     {
-        key: 'number',
+        key: 'addressNumber',
         placeholder: 'Número',
         error: 'Insira um número válido',
         validator: (v) => /^[0-9]/.test(v) ,
-    },
-    {
-        key: 'complement',
-        placeholder: 'Complemento',
-        validator: () => true,
     },
     {
         key: 'district',
