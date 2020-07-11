@@ -32,7 +32,6 @@ const ShoppingBagFooter = ({ style, step = 0, totalSteps = 0, onPress = (() => {
 
 const styles = {
     container: {
-      flex: 1,
       justifyContent: 'space-between',
       paddingBottom: 14 * (SCREEN_HEIGHT / 600),
       paddingTop: '2%',
