@@ -23,6 +23,7 @@ const ShoppingBagFooter = ({ style, step = 0, totalSteps = 0, onPress = (() => {
             <PrimaryButton
               label="Realizar o pagamento"
               onPress={onPress}
+              disabled={total == 0}
             />
         </Row>
       </Column>

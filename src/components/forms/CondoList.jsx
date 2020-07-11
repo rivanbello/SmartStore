@@ -37,7 +37,7 @@ const styles = {
     marginBottom: 10,
   },
   contentContainer: {
-    height: 400,
+    minHeight: 400,
   }
 }
 

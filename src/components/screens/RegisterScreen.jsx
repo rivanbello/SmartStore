@@ -107,8 +107,9 @@ const RegisterScreen = ({ navigation }) => {
   return (
     <Screen>
       <StackHeader
-        handleGetBack={stepIndex === 0 ? () => navigation.navigate('Login') : () => getBackFunction(stepIndex)}
+        handleGoBack={stepIndex === 0 ? () => navigation.navigate('Login') : () => getBackFunction(stepIndex)}
         handleOnPress={() => navigation.navigate('ShoppingBag')}
+        showShoppingBag={false}
       />
       <Animated.View
         style={{ opacity: fadeOpacity }}
