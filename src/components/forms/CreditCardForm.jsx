@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef } from 'react';
 import { View, StyleSheet, TextInput, Text } from 'react-native';
 import { COLORS } from '../../constants';
 import { validCreditCard } from './cardFormValidators';
@@ -56,12 +56,12 @@ const CreditCardForm = ({ onSubmit }) => {
                             });
                     }
                     if (
-                        (step === 0 && completedRef.current.length === 3 && completedRef.current[3])
+                        (step === 0 && completedRef.current.length === 3 && completedRef.current[2])
                         || (step === 1 && completedRef.current.length === 6 && completedRef.current[5])
-                        || (step === 1 && completedRef.current.length === 9 && completedRef.current[8])
+                        || (step === 2 && completedRef.current.length === 9 && completedRef.current[8])
                     ) setStep(step + 1);
                 }}
-                label={step > 1 ? "Adicionar o cartão" : 'Próximo'}
+                label={step > 2 ? "Adicionar o cartão" : 'Próximo'}
             />
         </>
     );
@@ -125,6 +125,23 @@ const formItems = [
         placeholder: 'Código de segurança',
         error: 'Insira o código de segurança',
         validator: (v) => /^[0-9]/.test(v),
+    },
+    {
+        key: 'month',
+        placeholder: 'Mês de vencimento (dois dígitos)',
+        error: 'Insira dois dígitos do mês de vencimento',
+        validator: (v) => v.length === 2
+        && /^[0-9]/.test(v)
+        && Number(v) < 13
+        && Number(v) > 0,
+    },
+    {
+        key: 'year',
+        placeholder: 'Ano de vencimento (quatro dígitos)',
+        error: 'Insira quatro dígitos do ano de vencimento',
+        validator: (v) => v.length === 4
+        && /^[0-9]/.test(v)
+        && Number(v) > 2019,
     },
     {
         key: 'document',
