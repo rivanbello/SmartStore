@@ -56,7 +56,7 @@ const CheckoutScreen = ({ navigation }) => {
             //     setDrawerIsOpened(false);
             //     return true; //disable default BackHandler behavior
             // });
-            Animated.timing(height, { toValue: 300, duration: 300 }).start()
+            Animated.timing(height, { toValue: 280, duration: 300 }).start()
         // } else { 
         //     BackHandler.addEventListener('hardwareBackPress', function() { navigation.goBack(); BackHandler.removeEventListener('hardwareBackPress'); } )
         //     height.setValue(0);

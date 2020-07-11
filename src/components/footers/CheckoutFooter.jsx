@@ -23,6 +23,7 @@ const CheckoutFooter = ({ style, step = 0, totalSteps = 0, onPress = (() => {}),
             <PrimaryButton
               label="Pagar"
               onPress={onPress}
+              disabled={!card.name}
             />
         </Row>
       </Column>
@@ -36,6 +37,7 @@ const styles = {
       justifyContent: 'space-between',
       paddingBottom: 14 * (SCREEN_HEIGHT / 600),
       paddingTop: '2%',
+      minHeight: 200,
     },
     price: {
         color: COLORS.primary,
