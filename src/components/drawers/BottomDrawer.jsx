@@ -2,35 +2,9 @@ import React, { useCallback, useEffect } from 'react';
 import { Animated, StyleSheet, Text } from 'react-native';
 import { SCREEN_WIDTH } from '../../constants';
 import CreditCardForm from '../forms/CreditCardForm';
-import * as SecureStore from 'expo-secure-store';
 
-const BottomDrawer = ({ children, height, onFormSubmit }) => {
+const BottomDrawer = ({ children, height, onFormSubmit, saveCard }) => {
     
-const saveCard = useCallback(async ({ number, cvv, expMonth, expYear, name, document, brand, street, addressNumber, district, city, state }) => {
-    let savedCards = JSON.parse(await SecureStore.getItemAsync('qwe'));
-    if (!savedCards || !savedCards.length) savedCards = [];
-    savedCards.push({
-        number,
-        cvv,
-        document,
-        expMonth,
-        expYear,
-        name,
-        brand,
-        street,
-        addressNumber,
-        district,
-        city,
-        state,
-    });
-
-    console.warn('savedCards', savedCards)
-    await SecureStore.setItemAsync('qwe', JSON.stringify(savedCards));
-    console.warn(await SecureStore.getItemAsync('qwe'))
-} , []);
-
-useEffect(() => { SecureStore.getItemAsync('qwe').then(v => console.warn(v)) }, [])
-
     return (
         <Animated.View style={{ ...styles.container, height: height }}>
             <CreditCardForm onSubmit={(card) => { saveCard(card); onFormSubmit()} }/>

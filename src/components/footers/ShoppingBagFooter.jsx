@@ -5,11 +5,11 @@ import { Link } from '../buttons';
 import { PrimaryButton } from '../buttons';
 import { COLORS, SCREEN_HEIGHT } from '../../constants';
 
-const ShoppingBagFooter = ({ style, step = 0, totalSteps = 0, onPress = (() => {}), price = '10.00', onPressLink }) => (
+const ShoppingBagFooter = ({ style, step = 0, totalSteps = 0, onPress = (() => {}), total = '10.00', onPressLink }) => (
   <Column style={{ ...styles.container, ...style }}>
     <Row style={{ justifyContent: 'flex-end' }}>
         <Text style={styles.text}>Subtotal:</Text>
-        <Text style={styles.price}>R$ {price}</Text>
+        <Text style={styles.price}>R$ {total.toFixed(2)}</Text>
     </Row>
     <View style={{ alignItems: 'flex-end' }}>
       <Column>

@@ -5,22 +5,23 @@ import { Row, Column } from '../layout';
 import { Link } from '../buttons';
 import { AntDesign } from '@expo/vector-icons';
 
-const PaymentMethodCard = ({ card, setDrawerIsOpened }) => {
+const PaymentMethodCard = ({ card: { number, name } = {}, setDrawerIsOpened, removeCard }) => {
     return (
-        card && <Row style={styles.container}>
+        number && <Row style={styles.container}>
             <AntDesign
                 name={'creditcard'}
                 size={30}
                 color={COLORS.primary}
             />
             <Column style={styles.textsContainer}>
-                <Text style={styles.cardName}>Nome Sobrenome</Text>
-                <Text style={styles.cardNumber}>•••• 4856</Text>
+                <Text style={styles.cardName}>{name}</Text>
+                <Text style={styles.cardNumber}>•••• {number.substring(number.length - 4)}</Text>
             </Column>
             <Link
                 onPress={() => {}}
                 label="Remover"
                 labelStyle={{ color: COLORS.primary, fontSize: 14 }}
+                onPress={() => removeCard()}
             />
         </Row>
         || <TouchableOpacity

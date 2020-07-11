@@ -1,18 +1,23 @@
-import React from 'react';
+import React, { useCallback, useState, useEffect } from 'react';
 import { Text, View } from 'react-native';
 import { Column, Row } from '../layout';
 import { PrimaryButton } from '../buttons';
 import { COLORS, SCREEN_HEIGHT } from '../../constants';
 import { PaymentMethodCard } from '../misc';
 
-const CheckoutFooter = ({ style, step = 0, totalSteps = 0, onPress = (() => {}), total, onPressLink, setDrawerIsOpened }) => (
-  <Column style={{ ...styles.container, ...style }}>
-    <PaymentMethodCard setDrawerIsOpened={setDrawerIsOpened} />
+const CheckoutFooter = ({ style, step = 0, totalSteps = 0, onPress = (() => {}), total, onPressLink, setDrawerIsOpened, removeCard, card }) => {
+
+  return (<Column style={{ ...styles.container, ...style }}>
+    <PaymentMethodCard
+      setDrawerIsOpened={setDrawerIsOpened}
+      card={card}
+      removeCard={() => removeCard()}
+    />
     <View>
         <Column>
         <Row style={{ marginBottom: 20 }}>
             <Text style={styles.text}>Total: </Text>
-            <Text style={styles.price}>R$ {total}</Text>
+            <Text style={styles.price}>R$ {total.toFixed(2)}</Text>
         </Row>
         <Row>
             <PrimaryButton
@@ -22,8 +27,8 @@ const CheckoutFooter = ({ style, step = 0, totalSteps = 0, onPress = (() => {}),
         </Row>
       </Column>
     </View>
-  </Column>
-);
+  </Column>)
+};
 
 const styles = {
     container: {

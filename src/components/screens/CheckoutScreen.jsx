@@ -7,11 +7,41 @@ import { UserContext } from '../../context';
 import { StackHeader } from '../headers';
 import { COLORS } from '../../constants';
 import BottomDrawer from '../drawers/BottomDrawer';
+import * as SecureStore from 'expo-secure-store';
 
 const CheckoutScreen = ({ navigation }) => {
     const [userInfo, setUserInfo] = useContext(UserContext);
     const [drawerIsOpened, setDrawerIsOpened] = useState(false);
     const [height] = useState(new Animated.Value(0));
+    const [card, setCard] = useState({});
+    const getCard = useCallback(async () => {
+        const card = (await SecureStore.getItemAsync('qwe'));
+        setCard(JSON.parse(card));
+    }, []);
+
+    const removeCard = useCallback(async () => {
+        setCard({});
+    }, []);
+    const saveCard = useCallback(async ({ number, cvv, expMonth, expYear, name, document, brand, street, addressNumber, district, city, state }) => {
+        const cardToSave = {
+            number,
+            cvv,
+            document,
+            expMonth,
+            expYear,
+            name,
+            brand,
+            street,
+            addressNumber,
+            district,
+            city,
+            state,
+        };
+        await SecureStore.setItemAsync('qwe', JSON.stringify(cardToSave));
+        setCard(cardToSave)
+    } , []);
+  useEffect(() => { getCard() }, [])
+
     const getTotalAmount = () => 
         userInfo.cart.items
             .filter(({ qty }) => qty > 0)
@@ -35,6 +65,7 @@ const CheckoutScreen = ({ navigation }) => {
 }, [drawerIsOpened])
     return (
         <Screen>
+            {console.warn(card)}
             {drawerIsOpened && <TouchableWithoutFeedback
                 onPress={() => setDrawerIsOpened(!drawerIsOpened)}
             ><View style={{
@@ -70,12 +101,16 @@ const CheckoutScreen = ({ navigation }) => {
                 />
             )}
             </ScrollView>
-            <CheckoutFooter setDrawerIsOpened={() => {
+            <CheckoutFooter
+            getCard={() => getCard()}
+            card={card}
+            removeCard={() => removeCard()}
+            setDrawerIsOpened={() => {
                     setDrawerIsOpened(!drawerIsOpened);
                 }}
                 total={getTotalAmount()}
             />
-            {drawerIsOpened && <BottomDrawer height={height} onFormSubmit={() => setDrawerIsOpened(false)} />}
+            {drawerIsOpened && <BottomDrawer height={height} saveCard={saveCard} onFormSubmit={() => setDrawerIsOpened(false)} />}
         </Screen>
     );
 };

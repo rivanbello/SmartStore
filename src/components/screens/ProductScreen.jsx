@@ -126,7 +126,7 @@ const styles = {
   },
   title: {
     color: COLORS.fontPrimary,
-    textWeight: 'bold',
+    fontWeight: 'bold',
     fontSize: 24,
     maxWidth: '80%'
   },

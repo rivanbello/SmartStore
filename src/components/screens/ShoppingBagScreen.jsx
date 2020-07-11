@@ -43,6 +43,13 @@ const ShoppingBagScreen = ({ navigation }) => {
             },
         });
     }
+    const getTotalAmount = () => 
+        userInfo.cart.items
+            .filter(({ qty }) => qty > 0)
+            .reduce((a, {
+                price,
+                qty,
+            }) => a + (price * qty), 0)
     return (
         <Screen>
             <StackHeader
@@ -79,6 +86,7 @@ const ShoppingBagScreen = ({ navigation }) => {
                 <ShoppingBagFooter
                     onPress={() => navigation.navigate('Checkout')}
                     onPressLink={() => navigation.goBack()}
+                    total={getTotalAmount()}
                 />
             </>
             }
