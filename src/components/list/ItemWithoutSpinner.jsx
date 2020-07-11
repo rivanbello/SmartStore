@@ -17,6 +17,7 @@ const ItemWithoutSpinner = ({ id, ageRestricted, imageUrl, name, stockQty, qty, 
                 <Text style={{ ...styles.description, ...styles.text }} numberOfLines={3}>{name}</Text>
                 <Column style={{ flex: 1, justifyContent: 'flex-end' }}>
                     <Text style={{ ...styles.price, ...styles.text }}>R$ {price}</Text>
+                    <Text style={{ ...styles.price, ...styles.text }}>{qty} {qty > 1 ? 'unidades' : 'unidade'}</Text>
                 </Column>
             </Row>
             <View style={styles.divider} />

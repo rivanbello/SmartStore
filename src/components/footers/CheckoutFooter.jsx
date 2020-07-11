@@ -5,14 +5,14 @@ import { PrimaryButton } from '../buttons';
 import { COLORS, SCREEN_HEIGHT } from '../../constants';
 import { PaymentMethodCard } from '../misc';
 
-const CheckoutFooter = ({ style, step = 0, totalSteps = 0, onPress = (() => {}), price = '10.00', onPressLink, setDrawerIsOpened }) => (
+const CheckoutFooter = ({ style, step = 0, totalSteps = 0, onPress = (() => {}), total, onPressLink, setDrawerIsOpened }) => (
   <Column style={{ ...styles.container, ...style }}>
     <PaymentMethodCard setDrawerIsOpened={setDrawerIsOpened} />
     <View>
         <Column>
         <Row style={{ marginBottom: 20 }}>
             <Text style={styles.text}>Total: </Text>
-            <Text style={styles.price}>R$ {price}</Text>
+            <Text style={styles.price}>R$ {total}</Text>
         </Row>
         <Row>
             <PrimaryButton

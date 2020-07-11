@@ -22,8 +22,8 @@ const ProductScreen = ({ route: { params = {} } = {}, navigation }) => {
   const [qtyToAdd, setQtyToAdd] = useState(1);
   const [userInfo, setUserInfo] = useContext(UserContext);
   const quantityInCart = useRef(
-    userInfo.cart.items.filter(({ id: id2 }) => id2 === id )[0]
-    && userInfo.cart.items.filter(({ id: id2 }) => id2 === id )[0].qty
+    userInfo.cart.items.filter(({ id: id2, qty }) => id2 === id && qty > 0 )[0]
+    && userInfo.cart.items.filter(({ id: id2, qty }) => id2 === id && qty > 0 )[0].qty
     || 0
   );
   const addToCart = () => {
@@ -43,7 +43,6 @@ const ProductScreen = ({ route: { params = {} } = {}, navigation }) => {
     if (index != undefined) itemsUpdated[index] = { ...itemToAdd, qty: updatedQty }
     else itemsUpdated = itemsUpdated.concat(itemToAdd);
     const totalItems = itemsUpdated.reduce((a, { qty: b }) => a + b, 0);
-    itemsUpdated.totalItems = totalItems;
     setUserInfo({
         ...userInfo,
         cart: {

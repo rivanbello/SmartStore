@@ -12,7 +12,14 @@ const CheckoutScreen = ({ navigation }) => {
     const [userInfo, setUserInfo] = useContext(UserContext);
     const [drawerIsOpened, setDrawerIsOpened] = useState(false);
     const [height] = useState(new Animated.Value(0));
-    
+    const getTotalAmount = () => 
+        userInfo.cart.items
+            .filter(({ qty }) => qty > 0)
+            .reduce((a, {
+                price,
+                qty,
+            }) => a + (price * qty), 0)
+
     useEffect(() => {
         // if (drawerIsOpened) {
             // BackHandler.addEventListener('hardwareBackPress', function() {
@@ -43,25 +50,31 @@ const CheckoutScreen = ({ navigation }) => {
             <ScrollView
                 style={{ maxHeight: '60%', flexGrow: 0 }}
             >
-            {userInfo.cart.items.map(({
+            {userInfo.cart.items
+            .filter(({ qty }) => qty > 0)
+            .map(({
                 imageUrl,
                 name,
                 price,
+                qty,
                 ageRestricted,
                 id,
             }) =>
                 <ItemWithoutSpinner
                     imageUrl={imageUrl}
                     name={name}
-                    price={price}
+                    qty={qty}
+                    price={price * qty}
                     ageRestricted={ageRestricted}
                     id={id}
                 />
             )}
             </ScrollView>
             <CheckoutFooter setDrawerIsOpened={() => {
-                setDrawerIsOpened(!drawerIsOpened);
-            }}/>
+                    setDrawerIsOpened(!drawerIsOpened);
+                }}
+                total={getTotalAmount()}
+            />
             {drawerIsOpened && <BottomDrawer height={height} onFormSubmit={() => setDrawerIsOpened(false)} />}
         </Screen>
     );

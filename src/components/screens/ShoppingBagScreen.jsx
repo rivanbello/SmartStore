@@ -33,11 +33,13 @@ const ShoppingBagScreen = ({ navigation }) => {
         itemsUpdated.forEach((item, i) => { if(item.id === id) index = i })
         if (index !== undefined) itemsUpdated[index] = { ...itemToAdd, qty: updatedQty }
         else itemsUpdated = itemsUpdated.concat(itemToAdd);
+        const totalItems = itemsUpdated.reduce((a, { qty: b }) => a + b, 0);
         setUserInfo({
             ...userInfo,
             cart: {
               ...userInfo.cart,
               items: itemsUpdated,
+              totalItems,
             },
         });
     }

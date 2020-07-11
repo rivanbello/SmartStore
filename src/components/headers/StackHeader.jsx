@@ -39,7 +39,7 @@ const StackHeader = ({ handleGoBack = (() => {}), style, fontStyle, showShopping
       </TouchableOpacity>
       {showShoppingBag && <ShoppingBag
         header
-        quantity={userInfo.cart.items.totalItems}
+        quantity={userInfo.cart.totalItems}
         handleOnPress={() => handleOnPress()}
       />}
     </Header>

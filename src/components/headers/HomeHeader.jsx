@@ -26,7 +26,7 @@ const HomeHeader = ({ navigation, name, condoName, searchActive = false, setSear
         <Row>
           <Text style={styles.condoName}> {condoName} </Text>
           <ShoppingBag
-            quantity={userInfo.cart.items.length}
+            quantity={userInfo.cart.totalItems}
             handleOnPress={() => navigation.navigate('ShoppingBag')}
           />
         </Row>
