@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, useEffect } from 'react';
 import { Animated, StyleSheet, Text } from 'react-native';
 import { SCREEN_WIDTH } from '../../constants';
 import CreditCardForm from '../forms/CreditCardForm';
@@ -23,9 +23,13 @@ const saveCard = useCallback(async ({ number, cvv, expMonth, expYear, name, docu
         city,
         state,
     });
+
+    console.warn('savedCards', savedCards)
     await SecureStore.setItemAsync('qwe', JSON.stringify(savedCards));
     console.warn(await SecureStore.getItemAsync('qwe'))
 } , []);
+
+useEffect(() => { SecureStore.getItemAsync('qwe').then(v => console.warn(v)) }, [])
 
     return (
         <Animated.View style={{ ...styles.container, height: height }}>

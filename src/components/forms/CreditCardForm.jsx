@@ -7,6 +7,7 @@ import { PrimaryButton } from '../buttons';
 const CreditCardForm = ({ onSubmit }) => {
     const [cardInfo, setCardInfo] = useState({});
     const completedRef = useRef([]);
+    const cardInfoRef = useRef({});
     const setItemCompleted = (value, index) => {
         const aux = completedRef.current;
         aux[index] = value;
@@ -24,25 +25,27 @@ const CreditCardForm = ({ onSubmit }) => {
     return (
         <>
             <Text style={styles.title}>Adicionar um cartão</Text>
-            {formItems.slice(step * 3, step * 3 + 3).map(({ placeholder, error, validator }, i) =>
+            {formItems.slice(step * 3, step * 3 + 3).map(({ placeholder, error, validator, key }, i) =>
                 <CreditCardFormItem
-                    onComplete={(value, index) => setItemCompleted(value, i + step * 3)}
+                    onComplete={(value, index) => {
+                        setItemCompleted(value, i + step * 3)
+                    }}
                     index={i}
                     placeholder={placeholder}
                     error={error}
                     onChange={(value) => {
-                        if(value) setCardInfo({ ...cardInfo, [`${step.key}`]: value })
+                        if(value) setCardInfo({ ...cardInfo, [`${key}`]: value })
                     }}
+                    //     if (value) cardInfoRef.current = { ...cardInfoRef.current, value };
                     validator={validator}
                 />
                 )}
             <PrimaryButton
                 onPress={() => {
                     if (step > 1) {
-                        console.warn(handleSubmit())
                         if (handleSubmit())
                             onSubmit({
-                                number: cardInfo.name,
+                                number: cardInfo.number,
                                 cvv: cardInfo.cvv,
                                 expMonth: cardInfo.month,
                                 expYear: cardInfo.year,
@@ -67,10 +70,11 @@ const CreditCardForm = ({ onSubmit }) => {
     );
 };
 
-const CreditCardFormItem = ({ error, placeholder, validator, onComplete, index }) => {
+const CreditCardFormItem = ({ error, placeholder, validator, onComplete, index, onChange }) => {
     const [showError, setShowError] = useState(false);
     const handleOnChangeValue = (v) => {
         setShowError(!validator(v));
+        onChange(v)
         onComplete(validator(v), index);
     };
 
