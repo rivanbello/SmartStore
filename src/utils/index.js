@@ -1,0 +1,3 @@
+const getBirthDate = (date) => {
+    
+}

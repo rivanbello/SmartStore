@@ -1,4 +1,4 @@
-import React, { useCallback, useState, useEffect } from 'react';
+import React, { useCallback } from 'react';
 import { Text, View } from 'react-native';
 import { Column, Row } from '../layout';
 import { PrimaryButton } from '../buttons';

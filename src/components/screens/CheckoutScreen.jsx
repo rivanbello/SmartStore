@@ -8,6 +8,7 @@ import { StackHeader } from '../headers';
 import { COLORS } from '../../constants';
 import BottomDrawer from '../drawers/BottomDrawer';
 import * as SecureStore from 'expo-secure-store';
+import pay from '../../client/pay';
 
 const CheckoutScreen = ({ navigation }) => {
     const [userInfo, setUserInfo] = useContext(UserContext);
@@ -63,6 +64,36 @@ const CheckoutScreen = ({ navigation }) => {
         // }
     
 }, [drawerIsOpened])
+
+const handleOnPress = useCallback(async () => {
+    try {
+        const res = await pay({
+            amount: getTotalAmount(),
+            birthDate: getBirthDate(),
+            cardCvv: userInfo.card(card.cvv),
+            cardExpirationMonth: card.month,
+            cardExpirationYear: card.year,
+            documentNumber: card.documentNumber,
+            documentType: 'CPF',
+            cardHolderCPF: card.document,
+            cardHolderName: card.name,
+            cardNumber: card.number,
+            city: card.city,
+            district: card.district,
+            number: card.addressNumber,
+            phoneAreaCode: userInfo.phoneAreaCode.slice(0, 2),
+            phoneNumber: userInfo.phoneNumber.slice(2),
+            postalCode: card.postalCode,
+            senderEmail: userInfo.email,
+            senderName: card.name,
+            state: card.state,
+            street: card.street,
+        })
+    } catch (e) {
+
+    }
+}, [])
+
     return (
         <Screen>
             {console.warn(card)}
