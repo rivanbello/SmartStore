@@ -7,7 +7,6 @@ import { PrimaryButton } from '../buttons';
 const CreditCardForm = ({ onSubmit }) => {
     const [cardInfo, setCardInfo] = useState({});
     const completedRef = useRef([]);
-    const cardInfoRef = useRef({});
     const setItemCompleted = (value, index) => {
         const aux = completedRef.current;
         aux[index] = value;
@@ -16,20 +15,21 @@ const CreditCardForm = ({ onSubmit }) => {
     const [step, setStep] = useState(0);
     const handleSubmit = () => {
         let i = 0;
-        console.warn(completedRef.current)
-        if (completedRef.current.length !== 11) return false;
-        for (i = 0; i < completedRef.current.length; i++) if (!completedRef.current[i]) { console.warn('false'); return false;}
+        if (completedRef.current.length !== 12) return false;
+        for (i = 0; i < completedRef.current.length; i++) if (!completedRef.current[i]) return false
         if (i === completedRef.current.length) return true;
     };
     // useEffect(() => console.warn(completedRef.current), [completedRef.current.length]);
     return (
         <>
             <Text style={styles.title}>Adicionar um cartão</Text>
-            {formItems.slice(step * 3, step * 3 + 3).map(({ placeholder, error, validator, key }, i) =>
+            {formItems.slice(step * 3, step * 3 + 3).map(({ placeholder, error, validator, key, maxLength, transform }, i) =>
                 <CreditCardFormItem
                     onComplete={(value, index) => {
                         setItemCompleted(value, i + step * 3)
                     }}
+                    maxLength={maxLength}
+                    transform={transform}
                     index={i}
                     placeholder={placeholder}
                     error={error}
@@ -70,11 +70,14 @@ const CreditCardForm = ({ onSubmit }) => {
     );
 };
 
-const CreditCardFormItem = ({ error, placeholder, validator, onComplete, index, onChange }) => {
+const CreditCardFormItem = ({ error, placeholder, validator, onComplete, index, onChange, maxLength, transform }) => {
     const [showError, setShowError] = useState(false);
+    const [value, setValue] = useState('');
     const handleOnChangeValue = (v) => {
+        if (typeof transform === 'function') v = transform(v);
         setShowError(!validator(v));
         onChange(v)
+        setValue(v)
         onComplete(validator(v), index);
     };
 
@@ -85,6 +88,8 @@ const CreditCardFormItem = ({ error, placeholder, validator, onComplete, index, 
                 placeholder={placeholder}
                 onChangeText={(v) => handleOnChangeValue(v)}
                 style={styles.input}
+                value={value}
+                maxLength={maxLength}
             />
             <View style={styles.divider} />
             <Text style={styles.error}>{showError && error}</Text>
@@ -117,27 +122,32 @@ const formItems = [
         key: 'number',
         error: 'Insira um número válido',
         validator: (v) => validCreditCard(v),
+        maxLength: 22,
     },
     {
         placeholder: 'Nome impresso',
         key: 'name',
+        transform: v => v.toUpperCase(),
         error: 'Insira o nome impresso no cartão',
-        validator: (v) => (/[a-zA-Z]/).test(v),
+        validator: (v) => (/^[a-zA-Z ]+$/).test(v),
+        maxLength: 30,
     },
     {
         key: 'cvv',
         placeholder: 'Código de segurança',
         error: 'Insira o código de segurança',
-        validator: (v) => /^[0-9]/.test(v),
+        validator: (v) => /^[0-9]+$/.test(v),
+        maxLength: 4,
     },
     {
         key: 'month',
         placeholder: 'Mês de vencimento (dois dígitos)',
         error: 'Insira dois dígitos do mês de vencimento',
         validator: (v) => v.length === 2
-        && /^[0-9]/.test(v)
-        && Number(v) < 13
-        && Number(v) > 0,
+            && /^[0-9]/.test(v)
+            && Number(v) < 13
+            && Number(v) > 0,
+        maxLength: 2,
     },
     {
         key: 'year',
@@ -145,44 +155,59 @@ const formItems = [
         error: 'Insira quatro dígitos do ano de vencimento',
         validator: (v) => v.length === 4
         && /^[0-9]/.test(v)
-        && Number(v) > 2019,
+        && Number(v) > 2019
+        && Number(v) < 2040,
+        maxLength: 4,
     },
     {
         key: 'document',
-        placeholder: 'CPF ou CNPJ',
+        placeholder: 'CPF',
         error: 'Insira um documento válido',
-        validator: v => true
+        maxLength: 11,
+        validator: (v) => v.length === 11
     },
     {
         key: 'street',
         placeholder: 'Rua',
         error: 'Insira o nome da rua',
         validator: (v) => v,
+        maxLength: 30,
+    },
+    {
+        key: 'postalCode',
+        placeholder: 'CEP',
+        error: 'Insira o CEP',
+        validator: (v) => v,
+        maxLength: 8,
     },
     {
         key: 'addressNumber',
         placeholder: 'Número',
         error: 'Insira um número válido',
         validator: (v) => /^[0-9]/.test(v) ,
+        maxLength: 10,
     },
     {
         key: 'district',
         placeholder: 'Bairro',
         error: 'Insira um bairro',
         validator: (v) => v,
+        maxLength: 30,
     },
     {
         key: 'city',
         placeholder: 'Cidade',
         error: 'Insira a cidade',
         validator: (v) => v,
+        maxLength: 30,
     },
     {
         key: 'state',
         placeholder: 'Estado',
         error: 'Insira o estado',
-        validator: (v) => v,
-
+        transform: v => v.toUpperCase(),
+        validator: (v) => (/^[a-zA-Z]+$/).test(v),
+        maxLength: 2,
     },
 ]
 

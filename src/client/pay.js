@@ -21,6 +21,8 @@ const pay = async ({
       city,
       state,
       postalCode,
+      pointOfSaleId,
+      pointOfSaleToken,z
  }) => {
     try {
       let posLists = [];
@@ -51,6 +53,8 @@ const pay = async ({
             city,
             state,
             postalCode,
+            pointOfSaleId,
+            pointOfSaleToken,
           },
         });
         let pushArr = [];

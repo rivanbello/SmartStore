@@ -96,7 +96,6 @@ const handleOnPress = useCallback(async () => {
 
     return (
         <Screen>
-            {console.warn(card)}
             {drawerIsOpened && <TouchableWithoutFeedback
                 onPress={() => setDrawerIsOpened(!drawerIsOpened)}
             ><View style={{

@@ -15,7 +15,7 @@ const FreeList = ({ list = [], navigation }) => {
     <ScrollView style={styles.container}>
     {rows.map((row) => (
     <Row style={{ justifyContent: 'flex-start' }}>
-    {row.map(({ description, price, quantity, imageUrl }) => (
+    {row.map(({ description, price, quantity, imageUrl, ageRestricted, id }) => (
       <Item
         style={styles.item}
         description={description}
@@ -26,9 +26,11 @@ const FreeList = ({ list = [], navigation }) => {
         onPress={() => navigation.navigate('Product', {
           stock: quantity == 0 ? false : true,
           name: description,
-          imageUrl,
           price,
+          ageRestricted,
           qty: quantity,
+          imageUrl,
+          id,
         })}
       />
     ))}

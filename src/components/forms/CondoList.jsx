@@ -1,9 +1,10 @@
 import React from 'react';
-import { FlatList } from 'react-native';
+import { FlatList, View } from 'react-native';
 import CondoCard from './CondoCard';
 
 const CondoList = ({ data, onPress, selectedItem }) => {
-  return (<FlatList style={styles.container}
+  return (
+  <FlatList style={styles.container}
     data={data}
     contentContainerStyle={styles.contentContainer}
     keyExtractor={(item, index) => item.name}
@@ -26,18 +27,20 @@ const CondoList = ({ data, onPress, selectedItem }) => {
       distance={distance}
       onPress={() => onPress(machineCompanyCode)}
     />}
-  />)
+  />
+  )
 };
 
 const styles = {
   container: {
-    height: '40%',
+    height: '70%',
   },
   item: {
     marginBottom: 10,
   },
   contentContainer: {
     minHeight: 400,
+    paddingBottom: 100,
   }
 }
 

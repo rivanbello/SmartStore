@@ -39,7 +39,7 @@ const ProductScreen = ({ route: { params = {} } = {}, navigation }) => {
     let itemsUpdated = userInfo.cart.items;
     let index = undefined;
     let updatedQty = qtyToAdd;
-    itemsUpdated.forEach((item, i) => { if(item.id === id) { index = i; updatedQty += item.qty }})
+    itemsUpdated.forEach((item, i) => { if(item.id === id) { console.warn(id); index = i; updatedQty += item.qty }})
     if (index != undefined) itemsUpdated[index] = { ...itemToAdd, qty: updatedQty }
     else itemsUpdated = itemsUpdated.concat(itemToAdd);
     const totalItems = itemsUpdated.reduce((a, { qty: b }) => a + b, 0);

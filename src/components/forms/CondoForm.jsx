@@ -99,6 +99,7 @@ const styles = {
     fontSize: 10,
     color: COLORS.lilac,
     marginBottom: 10,
+    flexDirection: 'column',
   },
   searchField: {
     backgroundColor: COLORS.salmon,

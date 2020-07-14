@@ -20,11 +20,11 @@ const CheckoutFooter = ({ style, step = 0, totalSteps = 0, onPress = (() => {}),
             <Text style={styles.price}>R$ {total.toFixed(2)}</Text>
         </Row>
         <Row>
-            <PrimaryButton
-              label="Pagar"
-              onPress={onPress}
-              disabled={!card.name}
-            />
+          <PrimaryButton
+            label="Pagar"
+            onPress={onPress}
+            disabled={!card || !card.name}
+          />
         </Row>
       </Column>
     </View>

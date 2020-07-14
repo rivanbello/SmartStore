@@ -26,7 +26,7 @@ const CategoryScreen = ({ route, navigation }) => {
     <ScrollView>
     {rows.map((row) => (
       <Row style={{ justifyContent: 'flex-start' }}>
-        {row.map(({ description, price, quantity, imageUrl }) => (
+        {row.map(({ description, price, quantity, imageUrl, id, ageRestricted  }) => (
           <Item
             img={imageUrl}
             style={styles.item}
@@ -37,9 +37,11 @@ const CategoryScreen = ({ route, navigation }) => {
             onPress={() => navigation.navigate('Product', {
               stock: quantity == 0 ? false : true,
               name: description,
-              imageUrl,
               price,
+              ageRestricted,
               qty: quantity,
+              imageUrl,
+              id,
             })}
           />
         ))}

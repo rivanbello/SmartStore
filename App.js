@@ -43,7 +43,6 @@ export default function App() {
     getTokens().then(tokens =>
     pointsOfSale({ tokens }).then(response => {
       const condos = [];
-      console.warn(response)
       response.map((pos) => {
         const name = `Cond. ${pos.localName}`;
         let condoInfo = {};

@@ -63,7 +63,7 @@ const firebaseRegister = ({ email, password, name, phoneNumber, machineCompanyCo
         db.collection('users')
         .doc(email)
         .set({
-          email,
+          email: email.toLowerCase(),
           name,
           phoneNumber,
           condoId,

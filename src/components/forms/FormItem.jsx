@@ -170,7 +170,7 @@ const FormItem = ({
           ...styles.input,
         }}
         maxLength={phoneNumber ? 15 : 50}
-        keyboardType={phoneNumber ? "numeric" : "default"}
+        // keyboardType={phoneNumber ? "numeric" : "default"}
         autoFocus={focused}
         secureTextEntry={type === 'password' && !showPassword}
         onFocus={() => setActive(true)}
