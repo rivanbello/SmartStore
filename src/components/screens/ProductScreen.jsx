@@ -9,7 +9,7 @@ import Spinner from '../misc/Spinner';
 import { PrimaryButton } from '../buttons';
 import { UserContext } from '../../context';
 
-const ProductScreen = ({ route: { params = {} } = {}, navigation }) => {
+const ProductScreen = ({ route: { params = {}, routeName } = {}, navigation, state }) => {
   const {
     imageUrl,
     stock = false,
@@ -51,7 +51,17 @@ const ProductScreen = ({ route: { params = {} } = {}, navigation }) => {
           totalItems,
         },
     });
-  }
+  };
+  const goBackCounter = useRef(0);
+  useEffect(() => {
+    const unsubscribe = navigation.addListener('focus', () => {
+      const item = userInfo.cart.items.filter(({ id: id2 }) => id === id2)
+      && userInfo.cart.items.filter(({ id: id2 }) => id === id2)[0];
+      // if (item) setQtyToAdd(item.qty);
+      if (item) quantityInCart.current = item.qty;
+    });
+  } ,[]);
+  
   return (
   <UnsafeScreen>
     <StackHeader 
@@ -86,7 +96,7 @@ const ProductScreen = ({ route: { params = {} } = {}, navigation }) => {
         disabled={qty <= 0 || quantityInCart.current === qty}
         label={qty <= 0 ? "Fora de estoque"
           : quantityInCart.current === qty
-            ? 'Voce ja adicionou todo estoque'
+            ? 'Você adicionou todo estoque'
             : 'Adicionar à sacola'
       }
         onPress={() => {
