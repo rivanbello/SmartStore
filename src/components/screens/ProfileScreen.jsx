@@ -47,13 +47,12 @@ const ProfileScreen = ({ navigation }) => {
 
 const onChangeUserInfo = ({ indexName, newValue }) => {
   setUserInfo({ ...userInfo, indexName: newValue });
-}
+};
 
 const ProfileItem = ({ firstLabel, value }) => (
   
-  value ? 
-  
-  <TouchableOpacity onPress={() => console.warn('hi')}>
+  value ?
+  <TouchableOpacity>
   <Row style={styles.profileRow}>
     <Text style={{ ...styles.profileItem, ...styles.profileItemFirstLabel }}>{firstLabel}</Text>
     <Text style={styles.profileItem}>{value || 'nome'}</Text>

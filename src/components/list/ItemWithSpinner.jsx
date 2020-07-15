@@ -33,7 +33,7 @@ const ItemWithSpinner = ({ id, ageRestricted, imageUrl, name, stockQty, qty, pri
                                 updatedQty: value,
                                 imageUrl,
                                 name,
-                                qty,
+                                qty: stockQty,
                                 price,
                                 qtyToAdd,
                                 ageRestricted,

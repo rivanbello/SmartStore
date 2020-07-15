@@ -70,7 +70,8 @@ const ShoppingBagScreen = ({ navigation }) => {
                     ageRestricted,
                     id,
                 }) =>
-                    <ItemWithSpinner
+                {
+                    return <ItemWithSpinner
                         imageUrl={imageUrl}
                         ageRestricted={ageRestricted}
                         name={name}
@@ -81,6 +82,7 @@ const ShoppingBagScreen = ({ navigation }) => {
                         id={id}
                         addToCart={addToCart}
                     />
+                }
                 )}
                 </ScrollView>
                 <ShoppingBagFooter

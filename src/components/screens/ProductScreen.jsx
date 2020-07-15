@@ -39,7 +39,7 @@ const ProductScreen = ({ route: { params = {}, routeName } = {}, navigation, sta
     let itemsUpdated = userInfo.cart.items;
     let index = undefined;
     let updatedQty = qtyToAdd;
-    itemsUpdated.forEach((item, i) => { if(item.id === id) { console.warn(id); index = i; updatedQty += item.qty }})
+    itemsUpdated.forEach((item, i) => { if(item.id === id) { index = i; updatedQty += item.qty }})
     if (index != undefined) itemsUpdated[index] = { ...itemToAdd, qty: updatedQty }
     else itemsUpdated = itemsUpdated.concat(itemToAdd);
     const totalItems = itemsUpdated.reduce((a, { qty: b }) => a + b, 0);
@@ -58,7 +58,9 @@ const ProductScreen = ({ route: { params = {}, routeName } = {}, navigation, sta
       const item = userInfo.cart.items.filter(({ id: id2 }) => id === id2)
       && userInfo.cart.items.filter(({ id: id2 }) => id === id2)[0];
       // if (item) setQtyToAdd(item.qty);
-      if (item) quantityInCart.current = item.qty;
+      if (item) {
+        quantityInCart.current = item.qty;
+      }
     });
   } ,[]);
   
@@ -91,7 +93,8 @@ const ProductScreen = ({ route: { params = {}, routeName } = {}, navigation, sta
       <Text style={{ color: COLORS.darkGray, maxWidth: '70%' }}>Produto autorizado somente para maiores de 18 anos</Text>
     </Row>}
     <View style={{ flex: 1, justifyContent: 'flex-end', marginBottom: 20 }}>
-      {qty > 0 && quantityInCart.current !== qty &&<Spinner stockQty={qty - quantityInCart.current} value={qtyToAdd} setValue={(value) => setQtyToAdd(value) }/> }
+      {qty > 0 && quantityInCart.current !== qty
+      && <Spinner stockQty={qty - quantityInCart.current} value={qtyToAdd} setValue={(value) => setQtyToAdd(value) }/> }
       <PrimaryButton
         disabled={qty <= 0 || quantityInCart.current === qty}
         label={qty <= 0 ? "Fora de estoque"

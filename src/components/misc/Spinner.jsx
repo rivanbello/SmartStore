@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { View, Text, StyleSheet, TouchableHighlight } from 'react-native';
 import { COLORS } from '../../constants';
 import { Row } from '../layout';
@@ -6,6 +6,7 @@ import { Row } from '../layout';
 const Spinner = ({ onUpdateValue, stockQty, value, setValue, small = false, minQty = 1 }) => {
     const handleOnPressAdd = () => {
         if (value + 1 <= stockQty) setValue(value + 1)
+        else setValue(stockQty)
     }
     const handleOnPressSubtract = () => {
         if (value - 1 >= minQty) setValue(value - 1)
