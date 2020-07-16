@@ -35,9 +35,9 @@ const CreditCardForm = ({ onSubmit }) => {
                     placeholder={placeholder}
                     error={error}
                     onChange={(value) => {
+                        if (key === 'postalCode') console.warn('Postal Code: ', value)
                         if(value) setCardInfo({ ...cardInfo, [`${key}`]: value })
                     }}
-                    //     if (value) cardInfoRef.current = { ...cardInfoRef.current, value };
                     validator={validator}
                 />
                 )}
@@ -65,7 +65,7 @@ const CreditCardForm = ({ onSubmit }) => {
                         || (step === 1 && completedRef.current.length === 8 && completedRef.current[7])
                         || (step === 2 && completedRef.current.length === 12 && completedRef.current[11])
                     ) setStep(step + 1);
-                    console.warn('steps: ', completedRef.current.length)
+                    // console.warn('steps: ', completedRef.current.length)
                 }}
                 label={step > 2 ? "Adicionar o cartão" : 'Próximo'}
             />
@@ -83,8 +83,6 @@ const CreditCardFormItem = ({ error, placeholder, validator, onComplete, index, 
         setValue(v)
         onComplete(validator(v), index);
     };
-
-    // console.warn(validator(v))
     return (
         <View>
             <TextInput

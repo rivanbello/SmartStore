@@ -24,7 +24,7 @@ const CheckoutScreen = ({ navigation }) => {
     const removeCard = useCallback(async () => {
         setCard({});
     }, []);
-    const saveCard = useCallback(async ({ number, cvv, expMonth, expYear, name, document, brand, street, addressNumber, district, city, state }) => {
+    const saveCard = useCallback(async ({ number, cvv, expMonth, expYear, name, document, brand, street, addressNumber, district, city, state, postalCode }) => {
         const cardToSave = {
             number,
             cvv,
@@ -35,6 +35,7 @@ const CheckoutScreen = ({ navigation }) => {
             brand,
             street,
             addressNumber,
+            postalCode,
             district,
             city,
             state,
@@ -58,7 +59,7 @@ const CheckoutScreen = ({ navigation }) => {
             //     setDrawerIsOpened(false);
             //     return true; //disable default BackHandler behavior
             // });
-            Animated.timing(height, { toValue: 280, duration: 300 }).start()
+            Animated.timing(height, { toValue: 320, duration: 300 }).start()
         // } else { 
         //     BackHandler.addEventListener('hardwareBackPress', function() { navigation.goBack(); BackHandler.removeEventListener('hardwareBackPress'); } )
         //     height.setValue(0);
@@ -89,17 +90,20 @@ const handleOnPress = useCallback(async ({
     street,
 }) => {
     try {
-        const items = userInfo.cart.items.map(({ price, qty: quantity, id: productId }) => ({
+        const items = userInfo.cart.items
+        .filter(({ qty }) => qty > 0)
+        .map(({ price, qty: quantity, id: productId }) => ({
             productId,
             quantity,
-            price: 0.10,
+            price,
         }));
         const res = await pay({
-            amount: 0.20,
+            amount,
             pointOfSaleId: userInfo.condo.id,
             pointOfSaleToken: userInfo.condo.token,
-            items,
             birthDate,
+            // birthDate: '30/05/1996',
+            items,
             cardCvv,
             cardExpirationMonth,
             cardExpirationYear,
@@ -112,7 +116,9 @@ const handleOnPress = useCallback(async ({
             district,
             number,
             phoneAreaCode,
+            // phoneAreaCode: "41",
             phoneNumber,
+            // phoneNumber: '997753978',
             postalCode,
             senderEmail,
             senderName,

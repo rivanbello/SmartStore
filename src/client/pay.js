@@ -24,44 +24,12 @@ const pay = async ({
       pointOfSaleId,
       pointOfSaleToken,
  }) => {
-    try {
-        const response = await fetch(`https://painel.tahnamao.com.br/smartstore/pay`, {
-          method: 'POST',
-          body: {
-            amount,
-            cardNumber,
-            cardCvv,
-            items,
-            cardExpirationMonth,
-            cardExpirationYear,
-            cardHolderCPF,
-            cardHolderName,
-            documentType,
-            documentNumber,
-            phoneAreaCode,
-            phoneNumber,
-            birthDate,
-            senderName,
-            senderEmail,
-            street,
-            number,
-            // complement: "1",
-            district,
-            city,
-            state,
-            postalCode,
-            pointOfSaleId,
-            pointOfSaleToken,
-          },
-        });
-      if (response.status !== 200) throw Error();
-       return response;
-    } catch (error) {
-      console.warn('request error', JSON.stringify());
-      console.warn({
-        amount,
+
+    const body = {
+      amount,
       cardNumber,
       cardCvv,
+      items,
       cardExpirationMonth,
       cardExpirationYear,
       cardHolderCPF,
@@ -72,7 +40,6 @@ const pay = async ({
       phoneNumber,
       birthDate,
       senderName,
-      items,
       senderEmail,
       street,
       number,
@@ -82,8 +49,23 @@ const pay = async ({
       state,
       postalCode,
       pointOfSaleId,
-      pointOfSaleToken,
-      })
+      pointOfSaleToken
+    };
+    console.warn("body: ", body);
+    try {
+        const response = await fetch(`https://painel.tahnamao.com.br/smartstore/pay`, {
+          method: 'POST',
+          headers: {
+            Accept: 'application/json',
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(body),
+        });
+      console.warn('RESPONSE STATUS: ', response.status);
+      if (response.status !== 200) throw Error();
+       return response;
+    } catch (error) {
+      console.warn('request error', JSON.stringify());
       throw error;
     } 
   }

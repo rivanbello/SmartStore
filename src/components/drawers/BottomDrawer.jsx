@@ -7,7 +7,9 @@ const BottomDrawer = ({ children, height, onFormSubmit, saveCard }) => {
     
     return (
         <Animated.View style={{ ...styles.container, height: height }}>
-            <CreditCardForm onSubmit={(card) => { saveCard(card); onFormSubmit()} }/>
+            <CreditCardForm
+                onSubmit={(card) => { saveCard(card); onFormSubmit()} }
+            />
         </Animated.View>
     );
 };
