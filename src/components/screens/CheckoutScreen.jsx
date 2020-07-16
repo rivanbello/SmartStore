@@ -166,7 +166,6 @@ const handleOnPress = useCallback(async ({
                 />
             )}
             </ScrollView>
-            {console.warn('card', card)}
             <CheckoutFooter
                 getCard={() => getCard()}
                 onPress={() => card && handleOnPress({

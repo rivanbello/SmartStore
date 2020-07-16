@@ -61,7 +61,6 @@ const ShoppingBagScreen = ({ navigation }) => {
                 <ScrollView
                     style={{ maxHeight: '60%', flexGrow: 0 }}
                 >
-                    {console.warn(userInfo)}
                 {userInfo.cart.items.map(({
                     imageUrl,
                     name,

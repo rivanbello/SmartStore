@@ -51,7 +51,6 @@ const pay = async ({
       pointOfSaleId,
       pointOfSaleToken
     };
-    console.warn("body: ", body);
     try {
         const response = await fetch(`https://painel.tahnamao.com.br/smartstore/pay`, {
           method: 'POST',
@@ -61,7 +60,6 @@ const pay = async ({
           },
           body: JSON.stringify(body),
         });
-      console.warn('RESPONSE STATUS: ', response.status);
       if (response.status !== 200) throw Error();
        return response;
     } catch (error) {

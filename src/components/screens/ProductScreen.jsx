@@ -59,7 +59,6 @@ const ProductScreen = ({ route: { params = {} } = {}, navigation, state }) => {
       const item = userInfo.cart.items.filter(({ id: id2 }) => id === id2)
       && userInfo.cart.items.filter(({ id: id2 }) => id === id2)[0];
       // if (item) setQtyToAdd(item.qty);
-      console.warn('userInfo items: ', userInfo.cart.items.length)
       if (item) quantityInCart.current = item.qty;
       setRefreshTrigger(refreshTrigger + 1);
     });
