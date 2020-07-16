@@ -53,17 +53,37 @@ export default function App() {
             condoInfo.address ="R. Profa. Maria Pilar Bórgia, 215";
             condoInfo.neighborhood = "Vila Carminha, Campinas - SP";
             break;
+          case 'Spazio Castellon PDV2':
+            condoInfo.address ="R. Profa. Maria Pilar Bórgia, 215";
+            condoInfo.neighborhood = "Vila Carminha, Campinas - SP";
+            break;
           case 'Topazio Ville':
             condoInfo.address = 'Av. São José dos Campos, 150';
+            condoInfo.neighborhood = "Jardim Nova Europa, Campinas - SP";
+            break;
+          case 'Topazio Ville PDV1':
+            condoInfo.address = 'Av. São José dos Campos, 150';
+            condoInfo.neighborhood = "Jardim Nova Europa, Campinas - SP";
+            break;
+          case 'Bairro Jardim Nova Europa':
+            condoInfo.address = 'R. Manuel Sylvestre de Freitas Filho, 75',
             condoInfo.neighborhood = "Jardim Nova Europa, Campinas - SP";
             break;
           case 'Ametista Villa':
             condoInfo.address = 'Rua Manoel Silvestre de Freitas Filho, 1277';
             condoInfo.neighborhood = "Jardim Nova Europa, Campinas - SP";
             break;
+          case 'Ametista Villa PDV2':
+            condoInfo.address = 'Rua Manoel Silvestre de Freitas Filho, 1277';
+            condoInfo.neighborhood = "Jardim Nova Europa, Campinas - SP";
+            break;
           case 'Parque dos Alecrins':
             condoInfo.address = 'Av. Carlos Diaulas Serpa';
             condoInfo.neighborhood = 'Campinas - SP';
+            break;
+          case 'Alta Vista':
+            condoInfo.address = 'R. Vitória Randi, 135';
+            condoInfo.neighborhood = 'Valinhos - SP';
             break;
           default:
             condoInfo.address = 'Av. Carlos Diaulas Serpa';

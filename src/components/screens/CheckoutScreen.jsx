@@ -102,7 +102,6 @@ const handleOnPress = useCallback(async ({
             pointOfSaleId: userInfo.condo.id,
             pointOfSaleToken: userInfo.condo.token,
             birthDate,
-            // birthDate: '30/05/1996',
             items,
             cardCvv,
             cardExpirationMonth,
@@ -116,16 +115,14 @@ const handleOnPress = useCallback(async ({
             district,
             number,
             phoneAreaCode,
-            // phoneAreaCode: "41",
             phoneNumber,
-            // phoneNumber: '997753978',
             postalCode,
             senderEmail,
             senderName,
             state,
             street,
-        })
-        // console.warn('pay res: ', res);
+        });
+        setUserInfo({ ...userInfo, cart: { items: [] } });
         navigation.navigate('PaymentConfirmed')
     } catch (e) {
         navigation.navigate('PaymentError');

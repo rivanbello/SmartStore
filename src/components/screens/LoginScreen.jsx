@@ -1,5 +1,5 @@
 import React, { useEffect, useState, } from 'react';
-import { LoginBackground, LoginLogo, } from '../../assets/images';
+import { LoginBackground, LoginLogo, LogoLogin } from '../../assets/images';
 import { Image, View, Keyboard } from 'react-native';
 import { TopAlert } from '../misc';
 import { LoginForm } from '../forms';
@@ -29,7 +29,7 @@ const LoginScreen = ({ navigation }) => {
       />}
       {!keyboardOpen
         && <Image
-        source={LoginLogo}
+        source={LogoLogin}
         style={styles.logoImage} />
       }
       </View>
@@ -59,12 +59,11 @@ const styles = {
     height: 150,
     alignSelf: 'center',
     resizeMode: 'contain',
-    left: '-8%',
+    // left: '-8%',
     marginBottom: '4%',
   },
   logoImage: {
-    maxWidth: '80%',
-    // backgroundColor: 'red',
+    maxHeight: '60%',
     resizeMode: 'contain',
     alignSelf: 'center',
   },
