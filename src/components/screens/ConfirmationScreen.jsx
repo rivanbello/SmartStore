@@ -1,7 +1,7 @@
 import React from 'react';
 import Screen from './Screen';
 import { Image, Text } from 'react-native';
-import { PrimaryButton } from '../buttons';
+import { PrimaryButton, Link } from '../buttons';
 import { COLORS } from '../../constants';
 
 const ConfirmationScreen = ({
@@ -10,8 +10,10 @@ const ConfirmationScreen = ({
   title,
   description,
   buttonLabel,
+  linkLabel,
   navigation,
   onPress,
+  onPressLink,
 }) => (
   <Screen style={styles.container}>
     {!Icon && 
@@ -30,8 +32,9 @@ const ConfirmationScreen = ({
       style={styles.button}
       onPress={() => { if(navigation) navigation.navigate('Navigator'); else onPress()}}
     />
+    {linkLabel && <Link onPress={() => onPressLink && onPressLink()}>{linkLabel}</Link>}
   </Screen>
-)
+);
 
 const styles = {
   container: {

@@ -5,7 +5,7 @@ import { PrimaryButton } from '../buttons';
 import { COLORS, SCREEN_HEIGHT } from '../../constants';
 import { PaymentMethodCard } from '../misc';
 
-const CheckoutFooter = ({ style, step = 0, totalSteps = 0, onPress = (() => {}), total, onPressLink, setDrawerIsOpened, removeCard, card }) => {
+const CheckoutFooter = ({ style, step = 0, totalSteps = 0, onPress, total, onPressLink, setDrawerIsOpened, removeCard, card }) => {
 
   return (<Column style={{ ...styles.container, ...style }}>
     <PaymentMethodCard

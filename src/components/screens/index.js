@@ -13,6 +13,8 @@ import ResetPasswordScreen from './ResetPasswordScreen';
 import ProfileScreen from './ProfileScreen';
 import PasswordFeedbackScreen from './PasswordFeedbackScreen';
 import ShoppingBagScreen from './ShoppingBagScreen';
+import PaymentConfirmedScreen from './PaymentConfirmedScreen';
+import PaymentErrorScreen from './PaymentErrorScreen';
 
 export {
   CategoryScreen,
@@ -30,4 +32,6 @@ export {
   ShoppingBagScreen,
   SuggestionScreen,
   ProfileScreen,
-}
+  PaymentConfirmedScreen,
+  PaymentErrorScreen,
+};

@@ -21,6 +21,8 @@ import {
   PasswordFeedbackScreen,
   ProfileScreen,
   ShoppingBagScreen,
+  PaymentErrorScreen,
+  PaymentConfirmedScreen,
 } from './src/components/screens';
 import { UserContext } from './src/context';
 import {
@@ -131,6 +133,8 @@ export default function App() {
         <Stack.Screen name="ResetPassword" component={ResetPasswordScreen} options={{ headerShown: false }} />
         <Stack.Screen name="ShoppingBag" component={ShoppingBagScreen} options={{ headerShown: false }} />
         <Stack.Screen name="PasswordFeedback" component={PasswordFeedbackScreen} options={{ headerShown: false }} />
+        <Stack.Screen name="PaymentConfirmed" component={PaymentConfirmedScreen} options={{ headerShown: false }} />
+        <Stack.Screen name="PaymentError" component={PaymentErrorScreen} options={{ headerShown: false }} />
       </Stack.Navigator>
       </UserContext.Provider>
     </NavigationContainer>

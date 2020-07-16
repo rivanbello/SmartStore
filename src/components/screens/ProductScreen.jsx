@@ -9,7 +9,7 @@ import Spinner from '../misc/Spinner';
 import { PrimaryButton } from '../buttons';
 import { UserContext } from '../../context';
 
-const ProductScreen = ({ route: { params = {}, routeName } = {}, navigation, state }) => {
+const ProductScreen = ({ route: { params = {} } = {}, navigation, state }) => {
   const {
     imageUrl,
     stock = false,

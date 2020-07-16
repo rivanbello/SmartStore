@@ -22,13 +22,10 @@ const pay = async ({
       state,
       postalCode,
       pointOfSaleId,
-      pointOfSaleToken,z
+      pointOfSaleToken,
  }) => {
     try {
-      let posLists = [];
-      tokens = tokens.slice(0, 4);
-      for await (let token of tokens) {
-        const response = await fetch(`painel.tahnamao.com.br/smartstore-api`, {
+        const response = await fetch(`https://painel.tahnamao.com.br/smartstore/pay`, {
           method: 'POST',
           body: {
             amount,
@@ -57,29 +54,37 @@ const pay = async ({
             pointOfSaleToken,
           },
         });
-        let pushArr = [];
-        for await (let pos of (await response.json())) {
-          try {
-            const res = await fetch(`https://touchpay-api.amlabs.com.br/api/public/MicroMarket/${pos.id}/Inventory`, {
-              method: 'GET',
-              headers: {
-                Accept: 'application/json',
-                'Content-Type': 'application/json',
-                'Authorization': `Bearer ${token}`,
-              },
-            })
-            // if (res.status !== 500)
-            pos.token = token;
-            if (res.status === 200) pushArr.push(pos);
-          } catch (error) {
-            return false;
-          }
-        }
-        posLists = posLists.concat(pushArr);
-      }
-      return posLists;
+      if (response.status !== 200) throw Error();
+       return response;
     } catch (error) {
-      console.warn('request error', error);
+      console.warn('request error', JSON.stringify());
+      console.warn({
+        amount,
+      cardNumber,
+      cardCvv,
+      cardExpirationMonth,
+      cardExpirationYear,
+      cardHolderCPF,
+      cardHolderName,
+      documentType,
+      documentNumber,
+      phoneAreaCode,
+      phoneNumber,
+      birthDate,
+      senderName,
+      items,
+      senderEmail,
+      street,
+      number,
+      // complement: "1",
+      district,
+      city,
+      state,
+      postalCode,
+      pointOfSaleId,
+      pointOfSaleToken,
+      })
+      throw error;
     } 
   }
   

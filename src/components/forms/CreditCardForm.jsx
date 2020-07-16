@@ -23,13 +23,14 @@ const CreditCardForm = ({ onSubmit }) => {
     return (
         <>
             <Text style={styles.title}>Adicionar um cartão</Text>
-            {formItems.slice(step * 3, step * 3 + 3).map(({ placeholder, error, validator, key, maxLength, transform }, i) =>
+            {formItems.slice(step * 4, step * 4 + 4).map(({ placeholder, error, validator, key, maxLength, transform }, i) =>
                 <CreditCardFormItem
                     onComplete={(value, index) => {
-                        setItemCompleted(value, i + step * 3)
+                        setItemCompleted(value, i + step * 4)
                     }}
                     maxLength={maxLength}
                     transform={transform}
+                    key={key}
                     index={i}
                     placeholder={placeholder}
                     error={error}
@@ -51,6 +52,7 @@ const CreditCardForm = ({ onSubmit }) => {
                                 expYear: cardInfo.year,
                                 name: cardInfo.name,
                                 street: cardInfo.street,
+                                postalCode: cardInfo.postalCode,
                                 document: cardInfo.document,
                                 addressNumber: cardInfo.addressNumber,
                                 district: cardInfo.district,
@@ -59,10 +61,11 @@ const CreditCardForm = ({ onSubmit }) => {
                             });
                     }
                     if (
-                        (step === 0 && completedRef.current.length === 3 && completedRef.current[2])
-                        || (step === 1 && completedRef.current.length === 6 && completedRef.current[5])
-                        || (step === 2 && completedRef.current.length === 9 && completedRef.current[8])
+                        (step === 0 && completedRef.current.length === 4 && completedRef.current[3])
+                        || (step === 1 && completedRef.current.length === 8 && completedRef.current[7])
+                        || (step === 2 && completedRef.current.length === 12 && completedRef.current[11])
                     ) setStep(step + 1);
+                    console.warn('steps: ', completedRef.current.length)
                 }}
                 label={step > 2 ? "Adicionar o cartão" : 'Próximo'}
             />
@@ -133,6 +136,13 @@ const formItems = [
         maxLength: 30,
     },
     {
+        key: 'document',
+        placeholder: 'CPF',
+        error: 'Insira um documento válido',
+        maxLength: 11,
+        validator: (v) => v.length === 11
+    },
+    {
         key: 'cvv',
         placeholder: 'Código de segurança',
         error: 'Insira o código de segurança',
@@ -160,13 +170,6 @@ const formItems = [
         maxLength: 4,
     },
     {
-        key: 'document',
-        placeholder: 'CPF',
-        error: 'Insira um documento válido',
-        maxLength: 11,
-        validator: (v) => v.length === 11
-    },
-    {
         key: 'street',
         placeholder: 'Rua',
         error: 'Insira o nome da rua',
@@ -181,18 +184,18 @@ const formItems = [
         maxLength: 8,
     },
     {
-        key: 'addressNumber',
-        placeholder: 'Número',
-        error: 'Insira um número válido',
-        validator: (v) => /^[0-9]/.test(v) ,
-        maxLength: 10,
-    },
-    {
         key: 'district',
         placeholder: 'Bairro',
         error: 'Insira um bairro',
         validator: (v) => v,
         maxLength: 30,
+    },
+    {
+        key: 'addressNumber',
+        placeholder: 'Número',
+        error: 'Insira um número válido',
+        validator: (v) => /^[0-9]/.test(v) ,
+        maxLength: 10,
     },
     {
         key: 'city',

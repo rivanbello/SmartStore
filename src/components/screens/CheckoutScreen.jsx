@@ -1,8 +1,9 @@
 import React, { useContext, useState, useEffect, useCallback } from 'react';
-import { ScrollView, Text, StyleSheet, View, Animated, BackHandler, TouchableWithoutFeedback } from 'react-native';
+import { ScrollView, Text, StyleSheet, View, Animated, TouchableWithoutFeedback } from 'react-native';
 import Screen from '../screens/Screen';
 import ItemWithoutSpinner from '../list/ItemWithoutSpinner';
 import { CheckoutFooter } from '../footers';
+import { getBirthDate } from '../../utils';
 import { UserContext } from '../../context';
 import { StackHeader } from '../headers';
 import { COLORS } from '../../constants';
@@ -65,32 +66,63 @@ const CheckoutScreen = ({ navigation }) => {
     
 }, [drawerIsOpened])
 
-const handleOnPress = useCallback(async () => {
+const handleOnPress = useCallback(async ({
+    amount,
+    birthDate,
+    cardCvv,
+    cardExpirationMonth,
+    cardExpirationYear,
+    documentNumber,
+    documentType,
+    cardHolderCPF,
+    cardHolderName,
+    cardNumber,
+    city,
+    district,
+    number,
+    phoneAreaCode,
+    phoneNumber,
+    postalCode,
+    senderEmail,
+    senderName,
+    state,
+    street,
+}) => {
     try {
+        const items = userInfo.cart.items.map(({ price, qty: quantity, id: productId }) => ({
+            productId,
+            quantity,
+            price: 0.10,
+        }));
         const res = await pay({
-            amount: getTotalAmount(),
-            birthDate: getBirthDate(),
-            cardCvv: userInfo.card(card.cvv),
-            cardExpirationMonth: card.month,
-            cardExpirationYear: card.year,
-            documentNumber: card.documentNumber,
-            documentType: 'CPF',
-            cardHolderCPF: card.document,
-            cardHolderName: card.name,
-            cardNumber: card.number,
-            city: card.city,
-            district: card.district,
-            number: card.addressNumber,
-            phoneAreaCode: userInfo.phoneAreaCode.slice(0, 2),
-            phoneNumber: userInfo.phoneNumber.slice(2),
-            postalCode: card.postalCode,
-            senderEmail: userInfo.email,
-            senderName: card.name,
-            state: card.state,
-            street: card.street,
+            amount: 0.20,
+            pointOfSaleId: userInfo.condo.id,
+            pointOfSaleToken: userInfo.condo.token,
+            items,
+            birthDate,
+            cardCvv,
+            cardExpirationMonth,
+            cardExpirationYear,
+            documentNumber,
+            documentType,
+            cardHolderCPF,
+            cardHolderName,
+            cardNumber,
+            city,
+            district,
+            number,
+            phoneAreaCode,
+            phoneNumber,
+            postalCode,
+            senderEmail,
+            senderName,
+            state,
+            street,
         })
+        // console.warn('pay res: ', res);
+        navigation.navigate('PaymentConfirmed')
     } catch (e) {
-
+        navigation.navigate('PaymentError');
     }
 }, [])
 
@@ -131,8 +163,32 @@ const handleOnPress = useCallback(async () => {
                 />
             )}
             </ScrollView>
+            {console.warn('card', card)}
             <CheckoutFooter
-            getCard={() => getCard()}
+                getCard={() => getCard()}
+                onPress={() => card && handleOnPress({
+                    amount: getTotalAmount(),
+                    // birthDate: getBirthDate(new Date(userInfo.nascimento.seconds * 1000)),
+                    birthDate: getBirthDate(new Date('1995-12-17T03:24:00')),
+                    cardCvv: card.cvv,
+                    cardExpirationMonth: card.expMonth,
+                    cardExpirationYear: card.expYear,
+                    documentNumber: card.document,
+                    documentType: 'CPF',
+                    cardHolderCPF: card.document,
+                    cardHolderName: card.name,
+                    cardNumber: card.number,
+                    city: card.city,
+                    district: card.district,
+                    number: card.addressNumber,
+                    phoneAreaCode: userInfo.telefone.slice(0, 2),
+                    phoneNumber: userInfo.telefone.slice(2),
+                    postalCode: card.postalCode,
+                    senderEmail: userInfo['e-mail'],
+                    senderName: card.name,
+                    state: card.state,
+                    street: card.street,
+            })}
             card={card}
             removeCard={() => removeCard()}
             setDrawerIsOpened={() => {
