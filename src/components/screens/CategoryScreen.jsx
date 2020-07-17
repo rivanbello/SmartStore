@@ -8,7 +8,7 @@ import { Dimensions, Text, ScrollView } from 'react-native';
 
 const screenWidth = Math.round(Dimensions.get('window').width);
 
-const CategoryScreen = ({ route, navigation }) => {
+const CategoryScreen = ({ route, navigation, state }) => {
   const list = route.params.list || [];
   const category = route.params.category || '';
   let rows = [];

@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import { ScrollView, Text } from 'react-native';
 import Screen from '../screens/Screen';
 import ItemWithSpinner from '../list/ItemWithSpinner';
@@ -6,9 +6,11 @@ import { ShoppingBagFooter } from '../footers';
 import { UserContext } from '../../context';
 import { StackHeader } from '../headers';
 import { COLORS } from '../../constants';
+import SimpleModal from '../modal/SimpleModal';
 
 const ShoppingBagScreen = ({ navigation }) => {
     const [userInfo, setUserInfo] = useContext(UserContext);
+    const [resetModalOpen, setResetModalOpen] = useState(false);
     const addToCart = ({ 
         updatedQty,
         imageUrl,
@@ -86,10 +88,38 @@ const ShoppingBagScreen = ({ navigation }) => {
                 )}
                 </ScrollView>
                 <ShoppingBagFooter
+                    onPressResetCart={() => setResetModalOpen(!resetModalOpen)}
                     onPress={() => navigation.navigate('Checkout')}
                     onPressLink={() => navigation.goBack()}
                     total={getTotalAmount()}
                 />
+                {resetModalOpen && <SimpleModal
+                    title="Tem certeza que deseja esvaziar a sacola?"
+                    style={{
+                        top: '30%',
+                        left: 20,
+                        width: '100%',
+                    }}
+                    options={[
+                        {
+                            label: "Cancelar",
+                            onPress: () => setResetModalOpen(false),
+                        },
+                        {
+                            label: "Esvaziar",
+                            color: COLORS.primary,
+                            onPress: () => {
+                                setUserInfo({
+                                    ...userInfo,
+                                    cart: {
+                                        items: [],
+                                    }
+                                });
+                                setResetModalOpen(false);
+                            }
+                        },
+                    ]}
+                />}
             </>
             }
 

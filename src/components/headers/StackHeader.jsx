@@ -1,4 +1,5 @@
-import React, { useContext, useEffect, useState, useRef } from 'react';
+import React, { useContext } from 'react';
+import { useNavigation } from '@react-navigation/native';
 import Header from './Header';
 import { TouchableOpacity, Text } from 'react-native';
 import { Feather } from '@expo/vector-icons';
@@ -8,6 +9,7 @@ import { UserContext } from '../../context';
 
 const StackHeader = ({ handleGoBack = (() => {}), style, fontStyle, showShoppingBag = true, handleOnPress = (() => {}) }) => {
 
+  const navigation = useNavigation();
   const [userInfo] = useContext(UserContext);
   // const countTotalItems = () => {
   //   let count = 0;
@@ -24,7 +26,10 @@ const StackHeader = ({ handleGoBack = (() => {}), style, fontStyle, showShopping
     <Header style={{ ...styles.container, ...style }}>
       <TouchableOpacity
         style={styles.wrapper}
-        onPress={handleGoBack}
+        onPress={() => {
+          if (!navigation.dangerouslyGetState().index != '1' && handleGoBack)
+            handleGoBack();
+        }}
       >
         <Feather
           name="arrow-left"
