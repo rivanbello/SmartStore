@@ -16,7 +16,7 @@ import {
   MaterialCommunityIcons,
 } from '@expo/vector-icons';
 import { TopAlert } from '../misc';
-import { UserContext } from '../../context';
+import { UserContext, LoadingContext } from '../../context';
 import { CondoForm } from '../forms';
 
 const icons = {
@@ -37,6 +37,7 @@ const RegisterScreen = ({ navigation }) => {
   const [hideHeader, setHideHeader] = useState(false);
   const [lastValue, setLastValue] = useState('');
   const [fadeOpacity, setfadeOpacity] = useState(new Animated.Value(0));
+  const [loadingObj, setLoadingObj] = useContext(LoadingContext);
 
   const getBackFunction = (currentIndex) => {
     setHideHeader(false);
@@ -80,6 +81,7 @@ const RegisterScreen = ({ navigation }) => {
         machineCompanyCode: userInfo.condo.machineCompanyCode,
         password: userInfo.senha,
       };
+      // setLoadingObj({ loading: true, label: 'Realizando cadastro' })
       register(infoToSave).then(() => {
         const newUserInfo = { ...userInfo, logged: true }
         AsyncStorage.setItem('userInfo', JSON.stringify(newUserInfo))
@@ -88,7 +90,8 @@ const RegisterScreen = ({ navigation }) => {
       .catch((e) => {
         setfadeOpacity(new Animated.Value(1));
         setRegisterError(e)
-      });
+      })
+      // .finally(() => setLoadingObj({ loading: false }))
     }
   }
 

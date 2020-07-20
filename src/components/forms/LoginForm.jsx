@@ -5,13 +5,14 @@ import { Row } from '../layout';
 import FormItem from './FormItem';
 import { FontAwesome, Entypo } from '@expo/vector-icons';
 import validateField from './formValidators';
-import { UserContext } from '../../context';
+import { UserContext, LoadingContext } from '../../context';
 import { AsyncStorage } from 'react-native';
 import { login } from '../../auth';
 
 const LoginForm = ({ navigation }) => {
   const [userInfo, setUserInfo] = useContext(UserContext);
   const [username, setUsername] = useState('');
+  const [loadingObj, setLoadingObj] = useContext(LoadingContext);
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
 
@@ -60,6 +61,8 @@ const LoginForm = ({ navigation }) => {
           onPress={() => {
             if (!username.includes('@') || !username.includes('.')) { setError('Digite um email válido.'); return; }
             if (!password) { setError('Insira uma senha.'); return }
+            
+            setLoadingObj({ loading: true, label: 'Fazendo login' })
             login({ email: username, password })
             .then(({
               name: nome,
@@ -87,11 +90,16 @@ const LoginForm = ({ navigation }) => {
                 logged: true,
               };
               AsyncStorage.setItem('userInfo', JSON.stringify(newUserInfo))
-              .then(() => setUserInfo(newUserInfo));
+              .then(() => 
+                setUserInfo(newUserInfo)
+              )
           }, (err) => {
               setError(err.message)
             })
-            .catch(e => setError(e))
+            .catch(e => {
+              setError(e)
+            })
+            .finally(() => setLoadingObj({ loading: false }))
           }}
           style={styles.button}
         />

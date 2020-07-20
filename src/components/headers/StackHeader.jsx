@@ -7,8 +7,13 @@ import ShoppingBag from '../icons/ShoppingBag';
 import { COLORS } from '../../constants';
 import { UserContext } from '../../context';
 
-const StackHeader = ({ handleGoBack = (() => {}), style, fontStyle, showShoppingBag = true, handleOnPress = (() => {}) }) => {
-
+const StackHeader = ({
+  handleGoBack = (() => {}),
+  style,
+  fontStyle,
+  showShoppingBag = true,
+  handleOnPress = (() => {}),
+}) => {
   const navigation = useNavigation();
   const [userInfo] = useContext(UserContext);
   // const countTotalItems = () => {

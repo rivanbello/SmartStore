@@ -25,7 +25,7 @@ import {
   PaymentErrorScreen,
   PaymentConfirmedScreen,
 } from './src/components/screens';
-import { UserContext } from './src/context';
+import { UserContext, LoadingContext } from './src/context';
 import {
   Foundation,
   AntDesign,
@@ -40,12 +40,13 @@ const Tab = createBottomTabNavigator();
 
 export default function App() {
   const [userInfo, setUserInfo] = useState({ condos: [], cart: { items: [] } });
+  const [loadingObj, setLoadingObj] = useState({ loading: true, label: 'Carregando' });
   const [logged, setLogged] = useState(false);
   const autoLogin = useCallback(async ({ userInfo }) => {
     const storedInfo = JSON.parse(await AsyncStorage.getItem('userInfo'));
-    console.warn('after condos: ', userInfo.condos);
     if (storedInfo.email && storedInfo.senha) {
       try {
+        setLoadingObj({ loading: true, label: 'Fazendo login' })
         const {
           name: nome,
           phoneNumber: telefone,
@@ -70,17 +71,19 @@ export default function App() {
             senha: storedInfo.senha,
             logged: true,
           };
-          console.warn('info to save: ', newUserInfo)
           await AsyncStorage.setItem('userInfo', JSON.stringify(newUserInfo))
-          .then(() => setUserInfo(newUserInfo));
+          await setUserInfo(newUserInfo);
       } catch (error) {
         console.warn('auto login error: ', error);
         throw error;
+      } finally {
+        setLoadingObj({ loading: false })
       }
     }
   }, []);
 
   useEffect(() => {
+    if (!userInfo.logged) setLoadingObj({ ...loadingObj, loading: false })
     getTokens()
     .then(tokens =>
     pointsOfSale({ tokens }).then(response => {
@@ -186,26 +189,28 @@ export default function App() {
     // </NavigationContainer>
     
     <NavigationContainer>
-      <UserContext.Provider value={[userInfo, setUserInfo]}>
-      <Stack.Navigator initialRouteName={!logged ? "Login" : "Navigator"}>
-        <Stack.Screen name="Login" component={LoginScreen} options= {{ headerShown: false }} />
-        <Stack.Screen name="Register" component={RegisterScreen} options= {{ headerShown: false }} />
-        <Stack.Screen name="Navigator" component={AppNavigator} options={{ headerShown: false }} />
-        <Stack.Screen name="Product" component={ProductScreen} options={{ headerShown: false }} />
-        {/* <Stack.Screen name="RegisterConfirmation" component={ConfirmationScreen} options={{ headerShown: false }} /> */}
-        <Stack.Screen name="RegisterConfirmation" component={RegisterConfirmationScreen} options={{ headerShown: false }} />
-        <Stack.Screen name="Category" component={CategoryScreen} options={{ headerShown: false }} />
-        <Stack.Screen name="Checkout" component={CheckoutScreen} options={{ headerShown: false }} />
-        <Stack.Screen name="Suggestion" component={SuggestionScreen} options={{ headerShown: false }} />
-        <Stack.Screen name="Info" component={InformationScreen} options={{ headerShown: false }}/>
-        <Stack.Screen name="FeedbackConfirmation" component={FeedbackConfirmationScreen} options={{ headerShown: false }} />
-        <Stack.Screen name="ResetPassword" component={ResetPasswordScreen} options={{ headerShown: false }} />
-        <Stack.Screen name="ShoppingBag" component={ShoppingBagScreen} options={{ headerShown: false }} />
-        <Stack.Screen name="PasswordFeedback" component={PasswordFeedbackScreen} options={{ headerShown: false }} />
-        <Stack.Screen name="PaymentConfirmed" component={PaymentConfirmedScreen} options={{ headerShown: false }} />
-        <Stack.Screen name="PaymentError" component={PaymentErrorScreen} options={{ headerShown: false }} />
-      </Stack.Navigator>
-      </UserContext.Provider>
+      <LoadingContext.Provider value={[loadingObj, setLoadingObj]}>
+        <UserContext.Provider value={[userInfo, setUserInfo]}>
+        <Stack.Navigator initialRouteName={!logged ? "Login" : "Navigator"}>
+          <Stack.Screen name="Login" component={LoginScreen} options= {{ headerShown: false }} />
+          <Stack.Screen name="Register" component={RegisterScreen} options= {{ headerShown: false }} />
+          <Stack.Screen name="Navigator" component={AppNavigator} options={{ headerShown: false }} />
+          <Stack.Screen name="Product" component={ProductScreen} options={{ headerShown: false }} />
+          {/* <Stack.Screen name="RegisterConfirmation" component={ConfirmationScreen} options={{ headerShown: false }} /> */}
+          <Stack.Screen name="RegisterConfirmation" component={RegisterConfirmationScreen} options={{ headerShown: false }} />
+          <Stack.Screen name="Category" component={CategoryScreen} options={{ headerShown: false }} />
+          <Stack.Screen name="Checkout" component={CheckoutScreen} options={{ headerShown: false }} />
+          <Stack.Screen name="Suggestion" component={SuggestionScreen} options={{ headerShown: false }} />
+          <Stack.Screen name="Info" component={InformationScreen} options={{ headerShown: false }}/>
+          <Stack.Screen name="FeedbackConfirmation" component={FeedbackConfirmationScreen} options={{ headerShown: false }} />
+          <Stack.Screen name="ResetPassword" component={ResetPasswordScreen} options={{ headerShown: false }} />
+          <Stack.Screen name="ShoppingBag" component={ShoppingBagScreen} options={{ headerShown: false }} />
+          <Stack.Screen name="PasswordFeedback" component={PasswordFeedbackScreen} options={{ headerShown: false }} />
+          <Stack.Screen name="PaymentConfirmed" component={PaymentConfirmedScreen} options={{ headerShown: false }} />
+          <Stack.Screen name="PaymentError" component={PaymentErrorScreen} options={{ headerShown: false }} />
+        </Stack.Navigator>
+        </UserContext.Provider>
+      </LoadingContext.Provider>
     </NavigationContainer>
 
     // <NavigationContainer>

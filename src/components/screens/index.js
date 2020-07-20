@@ -14,6 +14,7 @@ import ProfileScreen from './ProfileScreen';
 import PasswordFeedbackScreen from './PasswordFeedbackScreen';
 import ShoppingBagScreen from './ShoppingBagScreen';
 import PaymentConfirmedScreen from './PaymentConfirmedScreen';
+import LoadingScreen from './LoadingScreen';
 import PaymentErrorScreen from './PaymentErrorScreen';
 
 export {
@@ -26,6 +27,7 @@ export {
   InformationScreen,
   HomeScreen,
   LoginScreen,
+  LoadingScreen,
   RegisterScreen,
   ResetPasswordScreen,
   ProductScreen,

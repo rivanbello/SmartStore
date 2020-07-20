@@ -15,7 +15,6 @@ const LoginScreen = ({ navigation }) => {
   useEffect(() => {
     Keyboard.addListener('keyboardDidShow', (e) => { setKeyboardOpen(true); setKeyboardHeight(e.endCoordinates.height) } );
     Keyboard.addListener('keyboardDidHide', () => setKeyboardOpen(false));
-
   }, []);
   
   return (
