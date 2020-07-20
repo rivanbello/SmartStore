@@ -1,8 +1,9 @@
 require('./src/firebase');
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import all from './src/client/list';
+import { login } from './src/auth';
 import { getTokens } from './src/firebase';
 import pointsOfSale from './src/client/pointsOfSale';
 import { AsyncStorage } from 'react-native';
@@ -40,10 +41,47 @@ const Tab = createBottomTabNavigator();
 export default function App() {
   const [userInfo, setUserInfo] = useState({ condos: [], cart: { items: [] } });
   const [logged, setLogged] = useState(false);
+  const autoLogin = useCallback(async () => {
+    const storedInfo = await AsyncStorage.getItem('userInfo');
+    if (storedInfo.email && storedInfo.password) {
+      try {
+        const {
+          name: nome,
+          phoneNumber: telefone,
+          birthDate: nascimento,
+          machineCompanyCode,
+          email,
+          condoId,
+          password: senha,
+        } = await login({ email: storedInfo.email, password: storeInfo.password })
+          const newUserInfo = {
+            ...userInfo,
+            nome,
+            telefone,
+            nascimento,
+            condo: {
+              ...userInfo.condo,
+              name: userInfo && userInfo.condos && userInfo.condos.filter(({ machineCompanyCode: code }) => code === machineCompanyCode)[0] && userInfo.condos.filter(({ machineCompanyCode: code }) => code === machineCompanyCode)[0].name,
+              token: userInfo && userInfo.condos && userInfo.condos.filter(({ machineCompanyCode: code }) => code === machineCompanyCode)[0] && userInfo.condos.filter(({ machineCompanyCode: code }) => code === machineCompanyCode)[0].token,
+              machineCompanyCode,
+              id: condoId,
+            },
+            email,
+            senha,
+          };
+          await AsyncStorage.setItem('userInfo', JSON.stringify(newUserInfo))
+      } catch (error) {
+        console.warn('auto login error: ', error);
+        throw error;
+      }
+    }
+  }, []);
 
   useEffect(() => {
-    getTokens().then(tokens =>
+    getTokens()
+    .then(tokens =>
     pointsOfSale({ tokens }).then(response => {
+      // autoLogin();
       const condos = [];
       response.map((pos) => {
         const name = `Cond. ${pos.localName}`;
@@ -90,6 +128,7 @@ export default function App() {
             condoInfo.neighborhood = 'Campinas - SP';
             break;
         }
+        // console.warn('tokens: ', tokens)
         condos.push({
           ...condoInfo,
           token: pos.token,
@@ -98,17 +137,18 @@ export default function App() {
           id: pos.id,
           distance: "15m",
         });
+        // const newUserInfo = { ...userInfo, ...(JSON.parse(storedInfo)), condos };
+        const newUserInfo = { ...userInfo, condos };
+        setUserInfo(newUserInfo);
+        return newUserInfo;
       });
-      AsyncStorage.getItem('userInfo')
-        .then((storedInfo) => {
-          const newUserInfo = { ...userInfo, ...(JSON.parse(storedInfo)), condos };
-          setUserInfo(newUserInfo);
-          return newUserInfo;
-        })
+      
   }))}, []);
   useEffect(() => {
-    if (userInfo.condo)
-    all({ pointOfSaleId: userInfo.condo.id, secondToken: userInfo.condo.machineCompanyCode === '1304', token: userInfo.condo.token })
+    console.warn(userInfo.condo)
+    if (userInfo.condo && userInfo.condo.token)
+    all({ pointOfSaleId: userInfo.condo.id, token: userInfo.condo.token })
+    //bug login aqui
     .then(response => {
       let categories = [];
       response.map(({ categoryId, categoryName }) => {
@@ -118,7 +158,7 @@ export default function App() {
           if (!categories.includes(categoryName)) categories.push(categoryName)
         }
       })
-      const newUserInfo = { ...userInfo, availableProducts: response, categories }; 
+      const newUserInfo = { ...userInfo, availableProducts: response, categories };
       setUserInfo(newUserInfo);
     })
   }, [userInfo.condo]);

@@ -55,6 +55,7 @@ const LoginForm = ({ navigation }) => {
           label="Esqueci minha senha"
           onPress={() => navigation.navigate('ResetPassword')}
         />
+        {/* {console.warn("1 USER INFO", userInfo)} */}
         <PrimaryButton
           label="Entrar"
           onPress={() => {
@@ -70,12 +71,7 @@ const LoginForm = ({ navigation }) => {
               condoId,
               password: senha,
             } = {}) => {
-              // console.warn('LOGIN: ',
-              // {
-              //   ...userInfo.condo,
-              //   condos: userInfo.condos.filter(({ machineCompanyCode: code }) => code === machineCompanyCode)[0],
-              //   name: userInfo && userInfo.condos && userInfo.condos.filter(({ machineCompanyCode: code }) => code === machineCompanyCode)[0] && userInfo.condos.filter(({ machineCompanyCode: code }) => code === machineCompanyCode)[0].name,
-              // });
+              const condoInfo = userInfo && userInfo.condos && userInfo.condos.filter(({ machineCompanyCode: code }) => code === machineCompanyCode)[0] && userInfo.condos.filter(({ machineCompanyCode: code }) => code === machineCompanyCode)[0];
               const newUserInfo = {
                 ...userInfo,
                 nome,
@@ -84,6 +80,7 @@ const LoginForm = ({ navigation }) => {
                 condo: {
                   ...userInfo.condo,
                   name: userInfo && userInfo.condos && userInfo.condos.filter(({ machineCompanyCode: code }) => code === machineCompanyCode)[0] && userInfo.condos.filter(({ machineCompanyCode: code }) => code === machineCompanyCode)[0].name,
+                  token: userInfo && userInfo.condos && userInfo.condos.filter(({ machineCompanyCode: code }) => code === machineCompanyCode)[0] && userInfo.condos.filter(({ machineCompanyCode: code }) => code === machineCompanyCode)[0].token,
                   machineCompanyCode,
                   id: condoId,
                 },
