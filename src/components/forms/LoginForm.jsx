@@ -69,7 +69,6 @@ const LoginForm = ({ navigation }) => {
               machineCompanyCode,
               email,
               condoId,
-              password: senha,
             } = {}) => {
               const condoInfo = userInfo && userInfo.condos && userInfo.condos.filter(({ machineCompanyCode: code }) => code === machineCompanyCode)[0] && userInfo.condos.filter(({ machineCompanyCode: code }) => code === machineCompanyCode)[0];
               const newUserInfo = {
@@ -85,7 +84,7 @@ const LoginForm = ({ navigation }) => {
                   id: condoId,
                 },
                 email,
-                senha,
+                senha: password,
                 logged: true,
               };
               AsyncStorage.setItem('userInfo', JSON.stringify(newUserInfo))

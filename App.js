@@ -42,8 +42,9 @@ export default function App() {
   const [userInfo, setUserInfo] = useState({ condos: [], cart: { items: [] } });
   const [logged, setLogged] = useState(false);
   const autoLogin = useCallback(async () => {
-    const storedInfo = await AsyncStorage.getItem('userInfo');
-    if (storedInfo.email && storedInfo.password) {
+    const storedInfo = JSON.parse(await AsyncStorage.getItem('userInfo'));
+    console.warn(storedInfo.email, storedInfo.senha)
+    if (storedInfo.email && storedInfo.senha) {
       try {
         const {
           name: nome,
@@ -53,7 +54,7 @@ export default function App() {
           email,
           condoId,
           password: senha,
-        } = await login({ email: storedInfo.email, password: storeInfo.password })
+        } = await login({ email: storedInfo.email, password: storedInfo.senha })
           const newUserInfo = {
             ...userInfo,
             nome,
@@ -81,8 +82,9 @@ export default function App() {
     getTokens()
     .then(tokens =>
     pointsOfSale({ tokens }).then(response => {
-      // autoLogin();
       const condos = [];
+      autoLogin()
+      .then(() =>
       response.map((pos) => {
         const name = `Cond. ${pos.localName}`;
         let condoInfo = {};
@@ -141,11 +143,10 @@ export default function App() {
         const newUserInfo = { ...userInfo, condos };
         setUserInfo(newUserInfo);
         return newUserInfo;
-      });
-      
+      })
+    )
   }))}, []);
   useEffect(() => {
-    console.warn(userInfo.condo)
     if (userInfo.condo && userInfo.condo.token)
     all({ pointOfSaleId: userInfo.condo.id, token: userInfo.condo.token })
     //bug login aqui
