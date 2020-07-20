@@ -21,7 +21,7 @@ const ItemWithSpinner = ({ id, ageRestricted, imageUrl, name, stockQty, qty, pri
                 <Avatar overlayImage src={imageUrl}/>
                 <Text style={[styles.description, styles.text, qty === 0 && styles.canceledName]} numberOfLines={3}>{name}</Text>
                 <Column style={{ flex: 1, justifyContent: 'flex-end' }}>
-                    <Text style={[styles.price, styles.text, qty === 0 && styles.canceledName]}>R$ {price}</Text>
+                    <Text style={[styles.price, styles.text, qty === 0 && styles.canceledName]}>R$ {price.toFixed(2).replace('.',',')}</Text>
                     <Spinner
                         small
                         stockQty={stockQty}

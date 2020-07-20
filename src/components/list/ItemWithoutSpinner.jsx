@@ -16,7 +16,7 @@ const ItemWithoutSpinner = ({ id, ageRestricted, imageUrl, name, stockQty, qty, 
                 <Avatar style={styles.avatar} src={imageUrl}/>
                 <Text style={{ ...styles.description, ...styles.text }} numberOfLines={3}>{name}</Text>
                 <Column style={{ flex: 1, justifyContent: 'flex-end' }}>
-                    <Text style={{ ...styles.price, ...styles.text }}>R$ {price}</Text>
+                    <Text style={{ ...styles.price, ...styles.text }}>R$ {price.toFixed(2).replace('.',',')}</Text>
                     <Text style={{ ...styles.price, ...styles.text }}>{qty} {qty > 1 ? 'unidades' : 'unidade'}</Text>
                 </Column>
             </Row>

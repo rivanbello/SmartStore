@@ -17,7 +17,7 @@ const CheckoutFooter = ({ style, step = 0, totalSteps = 0, onPress, total, onPre
         <Column>
         <Row style={{ marginBottom: 20 }}>
             <Text style={styles.text}>Total: </Text>
-            <Text style={styles.price}>R$ {total.toFixed(2)}</Text>
+            <Text style={styles.price}>R$ {total.toFixed(2).replace('.',',')}</Text>
         </Row>
         <Row>
           <PrimaryButton

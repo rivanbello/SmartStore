@@ -11,7 +11,7 @@ const ShoppingBagFooter = ({ style, step = 0, totalSteps = 0, onPress = (() => {
   return (<Column style={{ ...styles.container, ...style }}>
     <Row style={{ justifyContent: 'flex-end' }}>
         <Text style={styles.text}>Subtotal:</Text>
-        <Text style={styles.price}>R$ {total.toFixed(2)}</Text>
+        <Text style={styles.price}>R$ {total.toFixed(2).replace('.',',')}</Text>
     </Row>
     <View style={{ alignItems: 'flex-end' }}>
       <Column>
@@ -24,8 +24,8 @@ const ShoppingBagFooter = ({ style, step = 0, totalSteps = 0, onPress = (() => {
         <Row>
             <PrimaryButton
               label="Realizar o pagamento"
-              // onPress={onPress}
-              onPress={() => setModalOpen(!modalOpen)}
+              onPress={onPress}
+              // onPress={() => setModalOpen(!modalOpen)}
               disabled={total == 0}
             />
         </Row>
