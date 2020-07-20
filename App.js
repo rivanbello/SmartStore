@@ -41,9 +41,9 @@ const Tab = createBottomTabNavigator();
 export default function App() {
   const [userInfo, setUserInfo] = useState({ condos: [], cart: { items: [] } });
   const [logged, setLogged] = useState(false);
-  const autoLogin = useCallback(async () => {
+  const autoLogin = useCallback(async ({ userInfo }) => {
     const storedInfo = JSON.parse(await AsyncStorage.getItem('userInfo'));
-    console.warn(storedInfo.email, storedInfo.senha)
+    console.warn('after condos: ', userInfo.condos);
     if (storedInfo.email && storedInfo.senha) {
       try {
         const {
@@ -53,7 +53,6 @@ export default function App() {
           machineCompanyCode,
           email,
           condoId,
-          password: senha,
         } = await login({ email: storedInfo.email, password: storedInfo.senha })
           const newUserInfo = {
             ...userInfo,
@@ -68,9 +67,12 @@ export default function App() {
               id: condoId,
             },
             email,
-            senha,
+            senha: storedInfo.senha,
+            logged: true,
           };
+          console.warn('info to save: ', newUserInfo)
           await AsyncStorage.setItem('userInfo', JSON.stringify(newUserInfo))
+          .then(() => setUserInfo(newUserInfo));
       } catch (error) {
         console.warn('auto login error: ', error);
         throw error;
@@ -83,8 +85,6 @@ export default function App() {
     .then(tokens =>
     pointsOfSale({ tokens }).then(response => {
       const condos = [];
-      autoLogin()
-      .then(() =>
       response.map((pos) => {
         const name = `Cond. ${pos.localName}`;
         let condoInfo = {};
@@ -144,8 +144,16 @@ export default function App() {
         setUserInfo(newUserInfo);
         return newUserInfo;
       })
-    )
-  }))}, []);
+  })
+  )}, []);
+
+  useEffect(() => {
+    if (userInfo.condos.length > 0 && !userInfo.logged) {
+      console.warn('before user condos: ', userInfo.condos)
+      autoLogin({ userInfo });
+    }
+  }, [userInfo.condos]);
+
   useEffect(() => {
     if (userInfo.condo && userInfo.condo.token)
     all({ pointOfSaleId: userInfo.condo.id, token: userInfo.condo.token })

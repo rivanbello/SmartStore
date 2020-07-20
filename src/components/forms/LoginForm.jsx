@@ -55,7 +55,6 @@ const LoginForm = ({ navigation }) => {
           label="Esqueci minha senha"
           onPress={() => navigation.navigate('ResetPassword')}
         />
-        {/* {console.warn("1 USER INFO", userInfo)} */}
         <PrimaryButton
           label="Entrar"
           onPress={() => {
