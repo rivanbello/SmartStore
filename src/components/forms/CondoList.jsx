@@ -40,7 +40,7 @@ const styles = {
   },
   contentContainer: {
     minHeight: 400,
-    paddingBottom: 100,
+    paddingBottom: 130,
   }
 }
 

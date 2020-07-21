@@ -5,17 +5,17 @@ import { Row, Column } from '../layout';
 import { Link } from '../buttons';
 import { AntDesign } from '@expo/vector-icons';
 
-const PaymentMethodCard = ({ card: { number, name } = {}, setDrawerIsOpened, removeCard }) => {
+const PaymentMethodCard = ({ card = {}, setDrawerIsOpened, removeCard }) => {
     return (
-        number && <Row style={styles.container}>
+        card && card.number && <Row style={styles.container}>
             <AntDesign
                 name={'creditcard'}
                 size={30}
                 color={COLORS.primary}
             />
             <Column style={styles.textsContainer}>
-                <Text style={styles.cardName}>{name}</Text>
-                <Text style={styles.cardNumber}>•••• {number.substring(number.length - 4)}</Text>
+                <Text style={styles.cardName}>{card.name}</Text>
+                <Text style={styles.cardNumber}>•••• {card.number.substring(number.length - 4)}</Text>
             </Column>
             <Link
                 onPress={() => {}}

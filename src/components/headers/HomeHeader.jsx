@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
 import { View, Text, StyleSheet, Image } from 'react-native';
-import { Row } from '../layout';
+import { Row, Column } from '../layout';
 import { HomeHeaderBackground } from '../../assets/images';
 import { StackHeader } from '../headers';
 import { SCREEN_WIDTH } from '../../constants';
@@ -15,22 +15,22 @@ const HomeHeader = ({ navigation, name, condoName, searchActive = false, setSear
     <Image source={HomeHeaderBackground} style={styles.image}/>
     {!searchActive ? 
       <Row style={
-        SCREEN_WIDTH > 340
-        ? styles.regularLabel
-        : styles.smallScreenLabel
+         styles.smallScreenLabel
       }>
-        <Text style={{ color: '#FFA5AD', fontSize: 20 }}>
-          Olá
-          <Text style={{ color: '#fff', fontWeight: 'bold' }}> {name}</Text>
-        </Text>
-        <Row>
-          <Text style={styles.condoName}> {condoName} </Text>
+        <Column style={{ flex: 1, justifyContent: 'center' }}>
+            <Text style={{ color: '#FFA5AD', fontSize: 17 }}>
+              Olá
+              <Text style={{ color: '#fff', fontWeight: 'bold' }}> {name}</Text>
+            </Text>
+            <Text style={styles.condoName}> {condoName} </Text>
+          </Column>
+          <View style={{ top: 15, position: 'absolute', right: 21 }}>
           <ShoppingBag
             quantity={userInfo.cart.totalItems}
             handleOnPress={() => navigation.navigate('ShoppingBag')}
           />
+          </View>
         </Row>
-      </Row>
     : <StackHeader
         style={styles.stackHeader}
         fontStyle={{ color: 'white' }}
@@ -57,6 +57,9 @@ const styles = StyleSheet.create({
     // position: 'absolute',
     // top: -18,
   },
+  shoppingBagContainer: {
+    
+  },
   smallScreenLabel: {
     justifyContent: 'space-between',
     position: 'absolute',
@@ -67,13 +70,13 @@ const styles = StyleSheet.create({
   regularLabel: {
     justifyContent: 'space-between',
     position: 'absolute',
-    top: 30,
-    paddingHorizontal: 20,
+    top: 25,
+    paddingHorizontal: '5%',
     // left: 20,
   },
   condoName: {
     borderWidth: 1,
-    marginRight: 10,
+    // marginRight: 10,
     borderColor: 'white',
     textAlign: 'center',
     borderRadius: 16,
@@ -81,7 +84,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 4,
     color: 'white',
     fontWeight: 'bold',
-    fontSize: 16,
+    fontSize: 14,
   },
   buttons: {
     display: 'flex',
