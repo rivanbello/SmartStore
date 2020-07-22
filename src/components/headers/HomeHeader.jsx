@@ -3,12 +3,11 @@ import { View, Text, StyleSheet, Image } from 'react-native';
 import { Row, Column } from '../layout';
 import { HomeHeaderBackground } from '../../assets/images';
 import { StackHeader } from '../headers';
-import { UserContext, CartContext } from '../../context';
+import { CartContext } from '../../context';
 import ShoppingBag from '../icons/ShoppingBag';
 
-const HomeHeader = ({ navigation, name, condoName, searchActive = false, setSearchActive = (() => {}) }) => {
+const HomeHeader = ({ navigation, name, condoName, searchActive = false, onBack }) => {
   
-  const [userInfo, setUserInfo] = useContext(UserContext);
   const [cartInfo, setCartInfo] = useContext(CartContext);
 
   return (<View style={styles.container}>
@@ -35,7 +34,8 @@ const HomeHeader = ({ navigation, name, condoName, searchActive = false, setSear
         style={styles.stackHeader}
         fontStyle={{ color: 'white' }}
         handleOnPress={() => navigation.navigate('ShoppingBag')}
-        handleGoBack={() => setSearchActive(false)}
+        handleGoBack={() => onBack()}
+        getBackFromSearch
       />
     }
   </View>)

@@ -16,7 +16,7 @@ import {
   MaterialCommunityIcons,
 } from '@expo/vector-icons';
 import { TopAlert } from '../misc';
-import { UserContext, LoadingContext } from '../../context';
+import { UserContext } from '../../context';
 import { CondoForm } from '../forms';
 
 const icons = {
@@ -37,7 +37,6 @@ const RegisterScreen = ({ navigation }) => {
   const [hideHeader, setHideHeader] = useState(false);
   const [lastValue, setLastValue] = useState('');
   const [fadeOpacity, setfadeOpacity] = useState(new Animated.Value(0));
-  const [loadingObj, setLoadingObj] = useContext(LoadingContext);
 
   const getBackFunction = (currentIndex) => {
     setHideHeader(false);
@@ -47,14 +46,17 @@ const RegisterScreen = ({ navigation }) => {
   };
 
   const nextStep = () => {
-    if ((stepIndex < 4 || stepIndex === 6) && (!validateField(stepIndex, lastValue) || !lastValue)) {
+    if ((stepIndex < 4 || stepIndex === 7) && (!validateField(stepIndex, lastValue) || !lastValue)) {
       setEmailAlreadyUsed(false); 
       fadeOpacity.setValue(1);
       setfadeOpacity(new Animated.Value(1));
-    } else if (stepIndex === 4 && typeof lastValue === 'date' && (lastValue.UTC() < 1325383200000)) {
+    } else if (stepIndex === 4 && lastValue !== userInfo['senha']) {
+        fadeOpacity.setValue(1);
+        setfadeOpacity(new Animated.Value(1));
+    } else if (stepIndex === 5 && typeof lastValue === 'date' && (lastValue.UTC() < 1325383200000)) {
       fadeOpacity.setValue(1);
       setfadeOpacity(new Animated.Value(1));
-    } else if (stepIndex === 5 && !chosenCondo) {
+    } else if (stepIndex === 6 && !chosenCondo) {
       fadeOpacity.setValue(1);
       setfadeOpacity(new Animated.Value(1));
     } else if (stepIndex < (steps.length - 1)) {
@@ -115,12 +117,15 @@ const RegisterScreen = ({ navigation }) => {
         showShoppingBag={false}
       />
       <Animated.View
-        style={{ opacity: fadeOpacity }}
+        style={{ opacity: fadeOpacity, zIndex: 10 }}
       >
         <TopAlert
           secondLabel={(() => {
             if (emailAlreadyUsed) {
               return 'O e-mail inserido já está sendo utiizado por outra conta.';
+            }
+            if (stepIndex === 4) {
+              return 'A confirmação de senha não coincide com a senha informada no passo anterior';
             }
             switch (steps[stepIndex].type) {
               case 'datePicker':
@@ -145,7 +150,7 @@ const RegisterScreen = ({ navigation }) => {
             {steps[stepIndex].label}
           </>
         }
-        {stepIndex === 5 && userInfo.condos && userInfo.condos.length > 0 && <CondoForm
+        {stepIndex === 6 && userInfo.condos && userInfo.condos.length > 0 && <CondoForm
           data={userInfo.condos}
           setHideHeader={setHideHeader}
           setFormValue={(value) => {
@@ -159,18 +164,18 @@ const RegisterScreen = ({ navigation }) => {
             setLastValue(value);
           }}
         />}
-        {(stepIndex < 5 || stepIndex === 6) && <FormItem
+        {(stepIndex < 6 || stepIndex === 7) && steps[stepIndex].formItems.map((formItem) => <FormItem
           phoneNumber={steps[stepIndex].phoneNumber}
           focused
           savedValue={lastValue}
           type={steps[stepIndex].type}
           style={styles.formItem}
           datePicker={steps[stepIndex].datePicker}
-          placeholder={steps[stepIndex].formItems[0].placeholder}
+          placeholder={formItem.placeholder}
           showError
           Icon={{
-            component: icons[steps[stepIndex].formItems[0].iconFamily],
-            name: steps[stepIndex].formItems[0].iconName,
+            component: icons[formItem.iconFamily],
+            name: formItem.iconName,
             size: 20,
           }}
           setFormValue={(value) => {
@@ -182,7 +187,7 @@ const RegisterScreen = ({ navigation }) => {
             setSteps(generateSteps(newUserInfo)); 
             setLastValue(value);
           }}
-        />}
+        />)}
         <RegisterFooter
           step={stepIndex + 1}
           style={{

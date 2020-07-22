@@ -202,6 +202,7 @@ const styles = StyleSheet.create({
   container: {
     borderBottomWidth: 1,
     borderRadius: 5,
+    marginBottom: 20,
   },
   input: {
     marginLeft: 14,

@@ -9,6 +9,7 @@ import { CartContext } from '../../context';
 
 const StackHeader = ({
   handleGoBack = (() => {}),
+  getBackFromSearch,
   style,
   fontStyle,
   showShoppingBag = true,
@@ -21,7 +22,7 @@ const StackHeader = ({
       <TouchableOpacity
         style={styles.wrapper}
         onPress={() => {
-          if (!navigation.dangerouslyGetState().index != '1' && handleGoBack)
+          if ((!navigation.dangerouslyGetState().index != '1' && handleGoBack) || getBackFromSearch)
             handleGoBack();
         }}
       >

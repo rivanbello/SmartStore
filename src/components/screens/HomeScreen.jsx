@@ -8,10 +8,9 @@ import { COLORS } from '../../constants';
 import { HomeHeader } from '../headers';
 import Screen from './Screen';
 import { UserContext } from '../../context';
-import all from '../../client/list';
 
 const HomeScreen = ({ route: { params = {} } = {}, navigation }) => {
-  const [userInfo, setUserInfo] = useContext(UserContext);
+  const [userInfo] = useContext(UserContext);
   const [searchActive, setSearchActive] = useState(false);
   const [filterValue, setFilterValue] = useState('');
 
@@ -20,7 +19,7 @@ const HomeScreen = ({ route: { params = {} } = {}, navigation }) => {
     name={userInfo.nome}
     condoName={userInfo.condo && userInfo.condo.name}
     searchActive={searchActive}
-    setSearchActive={() => setSearchActive(false)}
+    onBack={() => setSearchActive(false)}
     navigation={navigation}
   />
     <Screen>
@@ -40,7 +39,7 @@ const HomeScreen = ({ route: { params = {} } = {}, navigation }) => {
             userInfo.availableProducts
               .filter(({ description }) => {
                 if (filterValue) return description.toUpperCase().includes(filterValue.toUpperCase())
-                else return true;
+                else return false;
               })
             }
           navigation={navigation}
