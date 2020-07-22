@@ -18,7 +18,7 @@ const validators = [
     minLength: 8,
   },
   {
-    index: 6,
+    index: 7,
     equalTo: 'Smart*2020',
   },
 ]

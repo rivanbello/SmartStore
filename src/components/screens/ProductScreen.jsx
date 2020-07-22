@@ -7,7 +7,7 @@ import { COLORS } from '../../constants';
 import { StackHeader } from '../headers';
 import Spinner from '../misc/Spinner';
 import { PrimaryButton } from '../buttons';
-import { UserContext, CartContext } from '../../context';
+import { CartContext } from '../../context';
 
 const ProductScreen = ({ route: { params = {} } = {}, navigation, state }) => {
   const {
@@ -56,6 +56,7 @@ const ProductScreen = ({ route: { params = {} } = {}, navigation, state }) => {
     const item = cartInfo.items.filter(({ id: storedId }) => storedId === id)[0];
     if (item) setQtyInCart(item.qty);
     else setQtyInCart(0);
+    if (qtyToAdd > (stockQty - qtyInCart)) setQtyToAdd(stockQty - item.qty)
   }, [cartInfo.totalItems])
   
   return (

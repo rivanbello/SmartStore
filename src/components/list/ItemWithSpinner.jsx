@@ -14,7 +14,6 @@ import { UserContext } from '../../context';
 const ItemWithSpinner = ({ id, ageRestricted, imageUrl, name, stockQty, qty, price, style, addToCart, }) => {
     
     const [qtyToAdd, setQtyToAdd] = useState(qty);
-    const [userInfo, setUserInfo] = useContext(UserContext);
     return (
         <View style={{...styles.container, ...style}}>
             <Row style={styles.content}>

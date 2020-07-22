@@ -118,7 +118,6 @@ const generateSteps = (context) => [
         iconName: 'lock',
       }
     ],
-    type: 'password',
   },
 ]
 
