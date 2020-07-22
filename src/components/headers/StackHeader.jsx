@@ -5,7 +5,7 @@ import { TouchableOpacity, Text } from 'react-native';
 import { Feather } from '@expo/vector-icons';
 import ShoppingBag from '../icons/ShoppingBag';
 import { COLORS } from '../../constants';
-import { UserContext } from '../../context';
+import { CartContext } from '../../context';
 
 const StackHeader = ({
   handleGoBack = (() => {}),
@@ -15,18 +15,7 @@ const StackHeader = ({
   handleOnPress = (() => {}),
 }) => {
   const navigation = useNavigation();
-  const [userInfo] = useContext(UserContext);
-  // const countTotalItems = () => {
-  //   let count = 0;
-  //   userInfo.cart.items.forEach(({qty}) => count += qty);
-  //   return count;
-  // };
-  // const [totalItems, setTotalItems] = useState(countTotalItems());
-  // useEffect(() => {
-  //   let count = 0;
-  //   userInfo.cart.items.forEach(({qty}) => count += qty);
-  //   setTotalItems(count);
-  // }, [userInfo.cart.items.length])
+  const [cartInfo] = useContext(CartContext);
   return (
     <Header style={{ ...styles.container, ...style }}>
       <TouchableOpacity
@@ -49,7 +38,7 @@ const StackHeader = ({
       </TouchableOpacity>
       {showShoppingBag && <ShoppingBag
         header
-        quantity={userInfo.cart.totalItems}
+        quantity={cartInfo.totalItems}
         handleOnPress={() => handleOnPress()}
       />}
     </Header>

@@ -3,13 +3,13 @@ import { View, Text, StyleSheet, Image } from 'react-native';
 import { Row, Column } from '../layout';
 import { HomeHeaderBackground } from '../../assets/images';
 import { StackHeader } from '../headers';
-import { SCREEN_WIDTH } from '../../constants';
-import { UserContext } from '../../context';
+import { UserContext, CartContext } from '../../context';
 import ShoppingBag from '../icons/ShoppingBag';
 
 const HomeHeader = ({ navigation, name, condoName, searchActive = false, setSearchActive = (() => {}) }) => {
   
   const [userInfo, setUserInfo] = useContext(UserContext);
+  const [cartInfo, setCartInfo] = useContext(CartContext);
 
   return (<View style={styles.container}>
     <Image source={HomeHeaderBackground} style={styles.image}/>
@@ -26,7 +26,7 @@ const HomeHeader = ({ navigation, name, condoName, searchActive = false, setSear
           </Column>
           <View style={{ top: 15, position: 'absolute', right: 21 }}>
           <ShoppingBag
-            quantity={userInfo.cart.totalItems}
+            quantity={cartInfo.totalItems}
             handleOnPress={() => navigation.navigate('ShoppingBag')}
           />
           </View>

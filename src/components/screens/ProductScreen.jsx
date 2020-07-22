@@ -7,7 +7,7 @@ import { COLORS } from '../../constants';
 import { StackHeader } from '../headers';
 import Spinner from '../misc/Spinner';
 import { PrimaryButton } from '../buttons';
-import { UserContext } from '../../context';
+import { UserContext, CartContext } from '../../context';
 
 const ProductScreen = ({ route: { params = {} } = {}, navigation, state }) => {
   const {
@@ -15,54 +15,48 @@ const ProductScreen = ({ route: { params = {} } = {}, navigation, state }) => {
     stock = false,
     name,
     price,
-    qty,
+    qty: stockQty,
     ageRestricted,
     id,
   } = params;
+
   const [qtyToAdd, setQtyToAdd] = useState(1);
-  const [userInfo, setUserInfo] = useContext(UserContext);
-  const quantityInCart = useRef(
-    userInfo.cart.items.filter(({ id: id2, qty }) => id2 === id && qty > 0 )[0]
-    && userInfo.cart.items.filter(({ id: id2, qty }) => id2 === id && qty > 0 )[0].qty
-    || 0
-  );
+  const [qtyInCart, setQtyInCart] = useState(0);
+  const [cartInfo, setCartInfo] = useContext(CartContext);
   const addToCart = () => {
     const itemToAdd = {
         imageUrl,
         name,
         price,
-        stockQty: qty,
+        stockQty,
         qty: qtyToAdd,
         ageRestricted,
         id,
       };
-    let itemsUpdated = userInfo.cart.items;
+    let itemsUpdated = cartInfo.items;
     let index = undefined;
     let updatedQty = qtyToAdd;
     itemsUpdated.forEach((item, i) => { if(item.id === id) { index = i; updatedQty += item.qty }})
     if (index != undefined) itemsUpdated[index] = { ...itemToAdd, qty: updatedQty }
     else itemsUpdated = itemsUpdated.concat(itemToAdd);
     const totalItems = itemsUpdated.reduce((a, { qty: b }) => a + b, 0);
-    setUserInfo({
-        ...userInfo,
-        cart: {
-          ...userInfo.cart,
-          items: itemsUpdated,
-          totalItems,
-        },
+    setCartInfo({
+        ...cartInfo,
+        items: itemsUpdated,
+        totalItems,
     });
+    setCartInfo({
+      cartInfo,
+      items: itemsUpdated,
+      totalItems,
+    })
   };
-  const [refreshTrigger, setRefreshTrigger] = useState(0);
+  
   useEffect(() => {
-    navigation.removeListener('focus');
-    const unsubscribe = navigation.addListener('focus', () => {
-      const item = userInfo.cart.items.filter(({ id: id2 }) => id === id2)
-      && userInfo.cart.items.filter(({ id: id2 }) => id === id2)[0];
-      // if (item) setQtyToAdd(item.qty);
-      if (item) quantityInCart.current = item.qty;
-      setRefreshTrigger(refreshTrigger + 1);
-    });
-  } ,[]);
+    const item = cartInfo.items.filter(({ id: storedId }) => storedId === id)[0];
+    if (item) setQtyInCart(item.qty);
+    else setQtyInCart(0);
+  }, [cartInfo.totalItems])
   
   return (
   <UnsafeScreen>
@@ -83,7 +77,7 @@ const ProductScreen = ({ route: { params = {} } = {}, navigation, state }) => {
     <Row style={{ justifyContent: 'space-between' }}>
       <Text style={styles.title}>{name}</Text>
       <Text style={styles.quantity}>
-        {Number(qty) < 9 ? '0' : ''}{qty}un
+        {Number(stockQty) < 9 ? '0' : ''}{stockQty}un
       </Text>
     </Row>
     <Text style={ageRestricted ? styles.ageRestrictedPrice : styles.regularPrice}>R$ {price && price.toFixed(2).replace('.', ',')}</Text>
@@ -93,18 +87,18 @@ const ProductScreen = ({ route: { params = {} } = {}, navigation, state }) => {
       <Text style={{ color: COLORS.darkGray, maxWidth: '70%' }}>Produto autorizado somente para maiores de 18 anos</Text>
     </Row>}
     <View style={{ flex: 1, justifyContent: 'flex-end', marginBottom: 20 }}>
-      {qty > 0 && quantityInCart.current !== qty
-      && <Spinner stockQty={qty - quantityInCart.current} value={qtyToAdd} setValue={(value) => setQtyToAdd(value) }/> }
+      {stockQty > 0 && qtyInCart !== stockQty
+      && <Spinner stockQty={stockQty - qtyInCart} value={qtyToAdd} setValue={(value) => setQtyToAdd(value) }/> }
       <PrimaryButton
-        disabled={qty <= 0 || quantityInCart.current === qty}
-        label={qty <= 0 ? "Fora de estoque"
-          : quantityInCart.current === qty
+        disabled={stockQty <= 0 || qtyInCart === stockQty}
+        label={stockQty <= 0 ? "Fora de estoque"
+          : qtyInCart === stockQty
             ? 'Você adicionou todo estoque'
             : 'Adicionar à sacola'
       }
         onPress={() => {
           addToCart(qtyToAdd);
-          quantityInCart.current += qtyToAdd;
+          setQtyInCart(qtyInCart + qtyToAdd);
         }}
       />
     </View>

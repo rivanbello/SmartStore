@@ -4,7 +4,7 @@ import Screen from '../screens/Screen';
 import ItemWithoutSpinner from '../list/ItemWithoutSpinner';
 import { CheckoutFooter } from '../footers';
 import { getBirthDate } from '../../utils';
-import { UserContext } from '../../context';
+import { UserContext, CartContext } from '../../context';
 import { StackHeader } from '../headers';
 import { COLORS } from '../../constants';
 import BottomDrawer from '../drawers/BottomDrawer';
@@ -13,6 +13,7 @@ import pay from '../../client/pay';
 
 const CheckoutScreen = ({ navigation }) => {
     const [userInfo, setUserInfo] = useContext(UserContext);
+    const [cartInfo, setCartInfo] = useContext(CartContext);
     const [drawerIsOpened, setDrawerIsOpened] = useState(false);
     const [height] = useState(new Animated.Value(0));
     const [card, setCard] = useState({});
@@ -46,7 +47,7 @@ const CheckoutScreen = ({ navigation }) => {
   useEffect(() => { getCard() }, [])
 
     const getTotalAmount = () => 
-        userInfo.cart.items
+        cartInfo.items
             .filter(({ qty }) => qty > 0)
             .reduce((a, {
                 price,
@@ -90,7 +91,7 @@ const handleOnPress = useCallback(async ({
     street,
 }) => {
     try {
-        const items = userInfo.cart.items
+        const items = cartInfo.items
         .filter(({ qty }) => qty > 0)
         .map(({ price, qty: quantity, id: productId }) => ({
             productId,
@@ -122,7 +123,7 @@ const handleOnPress = useCallback(async ({
             state,
             street,
         });
-        setUserInfo({ ...userInfo, cart: { items: [] } });
+        setCartInfo({ ...cartInfo, cart: { items: [] } });
         navigation.navigate('PaymentConfirmed')
     } catch (e) {
         navigation.navigate('PaymentError');
@@ -146,7 +147,7 @@ const handleOnPress = useCallback(async ({
             <ScrollView
                 style={{ maxHeight: '60%', flexGrow: 0 }}
             >
-            {userInfo.cart.items
+            {cartInfo.items
             .filter(({ qty }) => qty > 0)
             .map(({
                 imageUrl,

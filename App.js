@@ -7,25 +7,8 @@ import { login } from './src/auth';
 import { getTokens } from './src/firebase';
 import pointsOfSale from './src/client/pointsOfSale';
 import { AsyncStorage } from 'react-native';
-import {
-  RegisterConfirmationScreen,
-  RegisterScreen,
-  ResetPasswordScreen,
-  InformationScreen,
-  FeedbackConfirmationScreen,
-  SuggestionScreen,
-  LoginScreen,
-  HomeScreen,
-  ProductScreen,
-  CategoryScreen,
-  CheckoutScreen,
-  PasswordFeedbackScreen,
-  ProfileScreen,
-  ShoppingBagScreen,
-  PaymentErrorScreen,
-  PaymentConfirmedScreen,
-} from './src/components/screens';
-import { UserContext, LoadingContext } from './src/context';
+import Screens from './src/components/screens';
+import { UserContext, LoadingContext, CartContext } from './src/context';
 import {
   Foundation,
   AntDesign,
@@ -39,9 +22,9 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 const Tab = createBottomTabNavigator();
 
 export default function App() {
-  const [userInfo, setUserInfo] = useState({ condos: [], cart: { items: [] } });
+  const [userInfo, setUserInfo] = useState({ condos: [] });
+  const [cartInfo, setCartInfo] = useState({ items: [] });
   const [loadingObj, setLoadingObj] = useState({ loading: true, label: 'Carregando' });
-  const [logged, setLogged] = useState(false);
   const autoLogin = useCallback(async ({ userInfo }) => {
     const storedInfo = JSON.parse(await AsyncStorage.getItem('userInfo'));
     if (storedInfo.email && storedInfo.senha) {
@@ -191,24 +174,26 @@ export default function App() {
     <NavigationContainer>
       <LoadingContext.Provider value={[loadingObj, setLoadingObj]}>
         <UserContext.Provider value={[userInfo, setUserInfo]}>
-        <Stack.Navigator initialRouteName={!logged ? "Login" : "Navigator"}>
-          <Stack.Screen name="Login" component={LoginScreen} options= {{ headerShown: false }} />
-          <Stack.Screen name="Register" component={RegisterScreen} options= {{ headerShown: false }} />
-          <Stack.Screen name="Navigator" component={AppNavigator} options={{ headerShown: false }} />
-          <Stack.Screen name="Product" component={ProductScreen} options={{ headerShown: false }} />
-          {/* <Stack.Screen name="RegisterConfirmation" component={ConfirmationScreen} options={{ headerShown: false }} /> */}
-          <Stack.Screen name="RegisterConfirmation" component={RegisterConfirmationScreen} options={{ headerShown: false }} />
-          <Stack.Screen name="Category" component={CategoryScreen} options={{ headerShown: false }} />
-          <Stack.Screen name="Checkout" component={CheckoutScreen} options={{ headerShown: false }} />
-          <Stack.Screen name="Suggestion" component={SuggestionScreen} options={{ headerShown: false }} />
-          <Stack.Screen name="Info" component={InformationScreen} options={{ headerShown: false }}/>
-          <Stack.Screen name="FeedbackConfirmation" component={FeedbackConfirmationScreen} options={{ headerShown: false }} />
-          <Stack.Screen name="ResetPassword" component={ResetPasswordScreen} options={{ headerShown: false }} />
-          <Stack.Screen name="ShoppingBag" component={ShoppingBagScreen} options={{ headerShown: false }} />
-          <Stack.Screen name="PasswordFeedback" component={PasswordFeedbackScreen} options={{ headerShown: false }} />
-          <Stack.Screen name="PaymentConfirmed" component={PaymentConfirmedScreen} options={{ headerShown: false }} />
-          <Stack.Screen name="PaymentError" component={PaymentErrorScreen} options={{ headerShown: false }} />
-        </Stack.Navigator>
+          <CartContext.Provider value={[cartInfo, setCartInfo]}>
+            <Stack.Navigator initialRouteName="Login">
+              <Stack.Screen name="Login" component={Screens.LoginScreen} options= {{ headerShown: false }} />
+              <Stack.Screen name="Register" component={Screens.RegisterScreen} options= {{ headerShown: false }} />
+              <Stack.Screen name="Navigator" component={AppNavigator} options={{ headerShown: false }} />
+              <Stack.Screen name="Product" component={Screens.ProductScreen} options={{ headerShown: false }} />
+              {/* <Stack.Screen name="RegisterConfirmation" component={ConfirmationScreen} options={{ headerShown: false }} /> */}
+              <Stack.Screen name="RegisterConfirmation" component={Screens.RegisterConfirmationScreen} options={{ headerShown: false }} />
+              <Stack.Screen name="Category" component={Screens.CategoryScreen} options={{ headerShown: false }} />
+              <Stack.Screen name="Checkout" component={Screens.CheckoutScreen} options={{ headerShown: false }} />
+              <Stack.Screen name="Suggestion" component={Screens.SuggestionScreen} options={{ headerShown: false }} />
+              <Stack.Screen name="Info" component={Screens.InformationScreen} options={{ headerShown: false }}/>
+              <Stack.Screen name="FeedbackConfirmation" component={Screens.FeedbackConfirmationScreen} options={{ headerShown: false }} />
+              <Stack.Screen name="ResetPassword" component={Screens.ResetPasswordScreen} options={{ headerShown: false }} />
+              <Stack.Screen name="ShoppingBag" component={Screens.ShoppingBagScreen} options={{ headerShown: false }} />
+              <Stack.Screen name="PasswordFeedback" component={Screens.PasswordFeedbackScreen} options={{ headerShown: false }} />
+              <Stack.Screen name="PaymentConfirmed" component={Screens.PaymentConfirmedScreen} options={{ headerShown: false }} />
+              <Stack.Screen name="PaymentError" component={Screens.PaymentErrorScreen} options={{ headerShown: false }} />
+            </Stack.Navigator>
+          </CartContext.Provider>
         </UserContext.Provider>
       </LoadingContext.Provider>
     </NavigationContainer>
@@ -229,11 +214,11 @@ const AppNavigator = () => <Tab.Navigator
     >
       <Tab.Screen
         name="Home"
-        component={HomeScreen}
+        component={Screens.HomeScreen}
         options={{ headerShown: false }}
       />
-      <Tab.Screen name="Info" component={InformationScreen} options={{ headerShown: false }}/>
-      <Tab.Screen name="Perfil" component={ProfileScreen} options={{ headerShown: false }}/>
+      <Tab.Screen name="Info" component={Screens.InformationScreen} options={{ headerShown: false }}/>
+      <Tab.Screen name="Perfil" component={Screens.ProfileScreen} options={{ headerShown: false }}/>
     </Tab.Navigator>
 
 const MainTabScreenOptions = ({ route }) => ({

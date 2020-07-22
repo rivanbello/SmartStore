@@ -5,7 +5,7 @@ import { Link } from '../buttons';
 import { PrimaryButton } from '../buttons';
 import { COLORS, SCREEN_HEIGHT } from '../../constants';
 
-const ShoppingBagFooter = ({ style, step = 0, totalSteps = 0, onPress = (() => {}), total = '10.00', onPressLink, onPressResetCart }) => {
+const ShoppingBagFooter = ({ style, step = 0, totalSteps = 0, onPress = (() => {}), total = '0.00', onPressLink, onPressResetCart }) => {
   const [modalOpen, setModalOpen] = useState(false);
   
   return (<Column style={{ ...styles.container, ...style }}>

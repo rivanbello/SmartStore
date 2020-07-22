@@ -17,7 +17,7 @@ import PaymentConfirmedScreen from './PaymentConfirmedScreen';
 import LoadingScreen from './LoadingScreen';
 import PaymentErrorScreen from './PaymentErrorScreen';
 
-export {
+const Screens = {
   CategoryScreen,
   ConfirmationScreen,
   CheckoutScreen,
@@ -37,3 +37,5 @@ export {
   PaymentConfirmedScreen,
   PaymentErrorScreen,
 };
+
+export default Screens;
