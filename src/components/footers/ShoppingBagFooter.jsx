@@ -24,9 +24,9 @@ const ShoppingBagFooter = ({ style, step = 0, totalSteps = 0, onPress = (() => {
         <Row>
             <PrimaryButton
               label="Realizar o pagamento"
-              onPress={onPress}
-              // onPress={() => setModalOpen(!modalOpen)}
-              disabled={total == 0}
+              // onPress={onPress}
+              onPress={() => setModalOpen(!modalOpen)}
+              // disabled={total == 0}
             />
         </Row>
         <Link
