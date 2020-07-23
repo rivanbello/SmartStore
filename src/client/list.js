@@ -1,16 +1,15 @@
-const all = async ({ limit=10, listedIds, pointOfSaleId }) => {
+const all = async ({ limit = 10, listedIds, pointOfSaleId, token }) => {
   try {
-
     const response = await fetch(`https://touchpay-api.amlabs.com.br/api/public/MicroMarket/${pointOfSaleId}/Inventory`, {
       method: 'GET',
       headers: {
         Accept: 'application/json',
         'Content-Type': 'application/json',
-        'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIzIiwianRpIjoiMTg5YTFiMDgtYWVjMi00OGUzLWIxZjItMjE2NjMzMGE4M2RkIiwiaHR0cDovL3NjaGVtYXMubWljcm9zb2Z0LmNvbS93cy8yMDA4LzA2L2lkZW50aXR5L2NsYWltcy9yb2xlIjoiUHVibGljIEFQSSIsImV4cCI6MTg5MzQ2NjgwMCwiaXNzIjoiTWVyY3VyaW8iLCJhdWQiOiIyNjgifQ.nOYlTCgeXX18kwje7aRkuISd7qBXhOBr0YB0h3SHr3g'
+        'Authorization': `Bearer ${token}`
       },
     });
 
-    return (await response.json()).slice(0, 20);
+    return (await response.json());
   } catch (error) {
     console.warn('request error', error);
   }  

@@ -1,19 +1,19 @@
 import React from 'react';
-import { View, Text, StyleSheet } from "react-native";
+import { View, TouchableOpacity, Text, StyleSheet } from "react-native";
 import Avatar from '../list/Avatar';
 import { COLORS } from '../../constants';
 
-const Item = ({ img, description, qty, price, style }) => (
-  <View style={{...styles.container, ...style}}>
+const Item = ({ img, description, qty, price, style, onPress }) => (
+  <TouchableOpacity onPress={onPress} style={{...styles.container, ...style}}>
     <View style={styles.content}>
-      <Avatar style={styles.avatar} src={img}/>
-      <Text style={{ ...styles.price, ...styles.text }}>R$ {price.toFixed(2).replace('.', ',')}</Text>
+      <Avatar style={styles.avatar} src={img} product/>
+      <Text style={{ ...styles.price, ...styles.text }}>R$ {price && price.toFixed(2).replace('.', ',')}</Text>
       <Text style={{ ...styles.description, ...styles.text }} numberOfLines={2}>{description}</Text>
       <Text style={{ ...styles.quantity, ...styles.text }}>
         {Number(qty) < 9 ? '0' : ''}{qty}un
       </Text>
     </View>
-  </View>
+  </TouchableOpacity>
 );
 
 export default Item;
@@ -36,11 +36,11 @@ const styles = StyleSheet.create({
   description: {
     fontSize: 14,
     fontWeight: 'bold',
-    color: COLORS.darkGray,
+    color: COLORS.darkestGray,
   },
   quantity: {
     fontSize: 12,
-    color: COLORS.lightGray,
+    color: COLORS.lilac,
   },
   price: {
     fontSize: 14,

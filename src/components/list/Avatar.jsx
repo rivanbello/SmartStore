@@ -1,11 +1,22 @@
 import React from 'react';
-import { Image, StyleSheet } from "react-native";
+import { Image, StyleSheet, View, Text } from "react-native";
 import { COLORS } from '../../constants';
 
-const Avatar = ({ src, style }) => (
-    <Image 
-      style={{ ...styles.avatar, ...style}} 
-      source={src ? src : null}/>
+const Avatar = ({ src, style, product = false, overlayImage = false }) => (
+  product ?
+  <View>
+    <Image
+      style={{ ...styles.avatar, ...style, }} 
+      source={src ? { uri: src } : null}
+    />
+    {/* <View style={styles.plusSign}> */}
+        <Text style={{ ...styles.plusSign, textAlign: 'center', color: '#fff', fontWeight: 'bold', fontSize: 22 }}>+</Text>
+      {/* </View> */}
+  </View>
+  : <Image
+    style={{ ...styles.avatar, ...style}} 
+    source={src ? { uri: src } : null}
+  />
 );
 
 const styles = StyleSheet.create({
@@ -14,6 +25,16 @@ const styles = StyleSheet.create({
     borderRadius: 15,
     width: 74,
     height: 74,
+  },
+  plusSign: {
+    backgroundColor: COLORS.primary,
+    borderRadius: 100,
+    position: 'absolute',
+    bottom: 3,
+    right: 3,
+    width: 22,
+    height: 22,
+    lineHeight: 24,
   },
 });
 

@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "564620633956",
+    "firebase_url": "https://smartstore-1ee85.firebaseio.com",
+    "project_id": "smartstore-1ee85",
+    "storage_bucket": "smartstore-1ee85.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:564620633956:android:7473b1c7629c438d9abc71",
+        "android_client_info": {
+          "package_name": "com.wgr.smartstore"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "564620633956-4qt7epopf1bp0h7eqnjs9pfb9uu96gid.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB-MoJaz1X46eoX4aIaHEdh0E9D3KGlpBs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "564620633956-4qt7epopf1bp0h7eqnjs9pfb9uu96gid.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

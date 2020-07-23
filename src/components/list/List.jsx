@@ -1,41 +1,77 @@
-import React, { useState, useEffect } from 'react';
-import { FlatList, View, StyleSheet } from "react-native";
+import React, { useContext } from 'react';
+import { FlatList, ScrollView, StyleSheet } from "react-native";
 import { Dimensions } from 'react-native';
-import all from '../../client/list'
 import ListHeader from './ListHeader';
 import Item from './Item';
+import { UserContext } from '../../context';
+import { SCREEN_WIDTH } from '../../constants';
 
 const screenWidth = Math.round(Dimensions.get('window').width);
-const List = () => {
 
-  const [loading, setLoading] = useState(true);
-  const [list, setList] = useState([]);
-  
-  useEffect(() => {
-    all({pointOfSaleId: 1}).then(response => {
-      setLoading(false);
-      setList(response);
-    })
-  }, []);
+const List = ({ navigation, list }) => {
+  const [userInfo, setUserInfo] = useContext(UserContext);
+
+  const filterListAndSlice = (list) => {
+    let filteredList = list
+      .filter(({ categoryId, categoryName}) => 
+        category === `Categoria ${categoryId}`
+        || category === categoryName
+      );
+      if (filteredList.length > 4) filteredList = filteredList.slice(0, 5);
+    return filteredList;
+  }
+
   return (
-    <View>
-      <ListHeader label="Bebidas" expandLabel="Ver tudo" style={styles.header}/>
-      <FlatList
-        style={styles.container}
-        horizontal
-        data={list}
-        contentContainerStyle={styles.content}
-        keyExtractor={item => item.id}
-        renderItem={({item: { description, categoryName, price, slots } = {}} ) => (
-          <Item
-            style={styles.item} 
-            description={description}
-            category={categoryName}
-            price={price}
-            qty={slots && slots[0].quantity}/>
-        )}
-      />
-    </View>
+    <ScrollView style={styles.container}>
+      {userInfo.categories && userInfo.categories.map((category) => <> 
+        <ListHeader
+          label={category}
+          expandLabel="Ver tudo"
+          style={styles.header}
+          expandOnPress={() => navigation.navigate('Category', {
+            // categoryName: categoryName || `Categoria ${categoryId}`
+            category,
+            list: list
+            .filter(({ categoryId, categoryName}) => 
+              category === `Categoria ${categoryId}`
+              || category === categoryName
+            )
+          })}
+        />
+        <FlatList
+          style={styles.list}
+          horizontal
+          data={
+            list
+              .filter(({ categoryId, categoryName}) => 
+                category === `Categoria ${categoryId}`
+                || category === categoryName
+              )
+            .slice(0, 4)}
+          // contentContainerStyle={styles.content}
+          keyExtractor={item => item.id}
+          renderItem={({item: { id, ageRestricted, description, categoryName, price, quantity, imageUrl } = {}} ) => (
+            <Item
+              img={imageUrl}
+              style={styles.item} 
+              description={description}
+              category={categoryName}
+              price={price}
+              qty={quantity}
+              onPress={() => navigation.navigate('Product', {
+                stock: quantity == 0 ? false : true,
+                name: description,
+                price,
+                ageRestricted,
+                qty: quantity,
+                imageUrl,
+                id,
+              })}
+            />
+          )}
+        />
+      </>)}
+    </ScrollView>
   )
 };
 
@@ -43,12 +79,15 @@ export default List;
 
 const styles = StyleSheet.create({
   container: {
-    // width: '100%',
+    marginTop: 30,
+  },
+  list: {
+    marginBottom: 30,
   },
   header: {
     marginBottom: 16,
   },
   item: {
-    marginRight: (screenWidth - (74 * 4) - 40) / 3,
+    marginRight: screenWidth > 550 ? (screenWidth - (74 * 4) - 40) / 3 : 0,
   }
 });
