@@ -31,6 +31,7 @@ const generateSteps = (context) => [
         iconName: 'phone-square',
       }
     ],
+    keyBoardType: 'numeric',
     phoneNumber: true,
     type: 'phoneNumber',
   },
@@ -48,12 +49,13 @@ const generateSteps = (context) => [
         iconName: 'email-outline',
       }
     ],
+    keyBoardType: 'email-address',
     email: true,
     type: 'email',
   },
   {
     label: <Text style={styles.stepLabel}>
-      <Text>Para manter suas compras seguras, insira uma senha com mais de 8 caracteres.</Text>
+      <Text>Para manter suas compras seguras, insira uma senha com 8 caracteres ou mais.</Text>
     </Text>,
     stepIndex: 4,
     formItems: [
