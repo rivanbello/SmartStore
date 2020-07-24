@@ -56,7 +56,7 @@ const ProductScreen = ({ route: { params = {} } = {}, navigation, state }) => {
     const item = cartInfo.items.filter(({ id: storedId }) => storedId === id)[0];
     if (item) setQtyInCart(item.qty);
     else setQtyInCart(0);
-    if (qtyToAdd > (stockQty - qtyInCart)) setQtyToAdd(stockQty - item.qty)
+    if (item && (qtyToAdd > (stockQty - qtyInCart))) setQtyToAdd(stockQty - item.qty)
   }, [cartInfo.totalItems])
   
   return (

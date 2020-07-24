@@ -111,6 +111,10 @@ export default function App() {
             condoInfo.address = 'R. Vitória Randi, 135';
             condoInfo.neighborhood = 'Valinhos - SP';
             break;
+          case 'Life Space':
+            condoInfo.address = 'Avenida Visconde de Guarapuava, 3806';
+            condoInfo.neighborhood = 'Curitiba - PR';
+            break;
           default:
             condoInfo.address = 'Av. Carlos Diaulas Serpa';
             condoInfo.neighborhood = 'Campinas - SP';
