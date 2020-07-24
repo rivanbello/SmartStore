@@ -122,7 +122,7 @@ const RegisterScreen = ({ navigation }) => {
         <TopAlert
           secondLabel={(() => {
             if (emailAlreadyUsed) {
-              return 'O e-mail inserido já está sendo utiizado por outra conta.';
+              return 'O e-mail inserido já está sendo utilizado por outra conta.';
             }
             if (stepIndex === 4) {
               return 'A confirmação de senha não coincide com a senha informada no passo anterior';
