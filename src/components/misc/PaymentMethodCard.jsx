@@ -15,7 +15,7 @@ const PaymentMethodCard = ({ card = {}, setDrawerIsOpened, removeCard }) => {
             />
             <Column style={styles.textsContainer}>
                 <Text style={styles.cardName}>{card.name}</Text>
-                <Text style={styles.cardNumber}>•••• {card.number.substring(number.length - 4)}</Text>
+                <Text style={styles.cardNumber}>•••• {card.number.substring(card.number.length - 4)}</Text>
             </Column>
             <Link
                 onPress={() => {}}

@@ -9,7 +9,7 @@ import { COLORS } from '../../constants';
 import SimpleModal from '../modal/SimpleModal';
 
 const ShoppingBagScreen = ({ navigation }) => {
-    const [userInfo, setUserInfo] = useContext(UserContext);
+    const [userInfo] = useContext(UserContext);
     const [cartInfo, setCartInfo] = useContext(CartContext);
     const [resetModalOpen, setResetModalOpen] = useState(false);
     const addToCart = ({ 
@@ -85,8 +85,10 @@ const ShoppingBagScreen = ({ navigation }) => {
                 }
                 )}
                 </ScrollView>
+                {console.warn(userInfo.condo && userInfo.condo.name === 'Cond. Life Space')}
                 <ShoppingBagFooter
                     onPressResetCart={() => setResetModalOpen(!resetModalOpen)}
+                    paymentEnabled={userInfo.condo && userInfo.condo.name === 'Cond. Life Space'}
                     onPress={() => navigation.navigate('Checkout')}
                     onPressLink={() => navigation.goBack()}
                     total={getTotalAmount()}

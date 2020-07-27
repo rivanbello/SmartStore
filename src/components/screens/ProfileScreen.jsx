@@ -5,11 +5,12 @@ import { Image, Text, View, TouchableOpacity, AsyncStorage, ScrollView } from 'r
 import UnsafeScreen from './UnsafeScreen';
 import { Ionicons } from '@expo/vector-icons'; 
 import { COLORS } from '../../constants';
-import { UserContext } from '../../context';
+import { UserContext, CartContext } from '../../context';
 import * as SecureStore from 'expo-secure-store';
 
 const ProfileScreen = ({ navigation }) => {
   const [userInfo, setUserInfo] = useContext(UserContext);
+  const [cartInfo, setCartInfo] = useContext(CartContext);
   return (
     <>
       <UnsafeScreen>
@@ -31,6 +32,7 @@ const ProfileScreen = ({ navigation }) => {
             <Text style={styles.feedbackText}>Envie seu feedback</Text>
           </TouchableOpacity>
           <TouchableOpacity onPress={() => {
+            setCartInfo({ items: [], totalItems: 0 });
             AsyncStorage.setItem('userInfo', JSON.stringify({ ...userInfo, logged: false, password: '', email: '' }))
             .then(() => 
               setUserInfo({ ...userInfo, logged: false, password: '', email: '', cart: { items: [] } }))

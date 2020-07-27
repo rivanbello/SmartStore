@@ -5,7 +5,7 @@ import { Link } from '../buttons';
 import { PrimaryButton } from '../buttons';
 import { COLORS, SCREEN_HEIGHT } from '../../constants';
 
-const ShoppingBagFooter = ({ style, step = 0, totalSteps = 0, onPress = (() => {}), total = '0.00', onPressLink, onPressResetCart }) => {
+const ShoppingBagFooter = ({ style, step = 0, totalSteps = 0, onPress = (() => {}), total = '0.00', onPressLink, onPressResetCart, paymentEnabled }) => {
   const [modalOpen, setModalOpen] = useState(false);
   
   return (<Column style={{ ...styles.container, ...style }}>
@@ -25,7 +25,7 @@ const ShoppingBagFooter = ({ style, step = 0, totalSteps = 0, onPress = (() => {
             <PrimaryButton
               label="Realizar o pagamento"
               // onPress={onPress}
-              onPress={() => setModalOpen(!modalOpen)}
+              onPress={paymentEnabled ? onPress : () => setModalOpen(!modalOpen)}
               // disabled={total == 0}
             />
         </Row>
@@ -38,7 +38,7 @@ const ShoppingBagFooter = ({ style, step = 0, totalSteps = 0, onPress = (() => {
       </Column>
     </View>
     {modalOpen && <View style={styles.modal}>
-      <Text style={styles.modalContent}>A operação de compra ainda não está disponível.</Text>
+      <Text style={styles.modalContent}>A operação de compra ainda não está disponível para a unidade do seu condomínio.</Text>
       <Link onPress={() => setModalOpen(!modalOpen)} label="Entendi" />
     </View>}
   </Column>);

@@ -1,5 +1,5 @@
 import React from 'react';
-import { ConfirmationScreen } from '../screens';
+import ConfirmationScreen from './ConfirmationScreen';
 import { PaymentFailed } from '../../assets/images';
 
 const PaymentErrorScreen = ({ navigation }) => {
