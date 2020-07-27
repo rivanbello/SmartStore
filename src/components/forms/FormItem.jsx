@@ -23,6 +23,7 @@ const FormItem = ({
   setFormValue,
   savedValue,
   RightIcon,
+  keyBoardType,
 }) => {
   const [active, setActive] = useState(false);
   const [labelXPosition] = useState(new Animated.Value(10));
@@ -36,11 +37,15 @@ const FormItem = ({
   const onChangeText = (text) => {
     let value = text
 
+    if(type === 'password'){
+      value = value.replace(/\s+/g, '');
+    }
+
     if (phoneNumber) {
       value = value.replace(/[)(-]/, '');
       value = value.replace(')', '');
       value = value.replace('-', '');
-      value = value.replace(' ', '');
+      value = value.replace(/\s+/g, '');
     }
     setFormValue(value);
     if (value.length > 0) setInputHasContent(true)
@@ -49,6 +54,8 @@ const FormItem = ({
 
   useEffect(() => {
     if (active) {
+
+
       floatingLabel([
         {
           position: labelXPosition,
@@ -171,6 +178,8 @@ const FormItem = ({
         }}
         maxLength={phoneNumber ? 15 : 50}
         // keyboardType={phoneNumber ? "numeric" : "default"}
+        keyboardType={keyBoardType}
+        autoCapitalize={type === "email" ? 'none':'default'}
         autoFocus={focused}
         secureTextEntry={type === 'password' && !showPassword}
         onFocus={() => setActive(true)}

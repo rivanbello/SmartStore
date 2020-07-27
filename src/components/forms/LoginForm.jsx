@@ -33,6 +33,7 @@ const LoginForm = ({ navigation }) => {
           name: "user-circle",
           size: 20,
         }}
+        keyBoardType = 'email-address'
       />
       <FormItem
         placeholder="Senha"
