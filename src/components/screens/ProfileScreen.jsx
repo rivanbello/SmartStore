@@ -20,11 +20,11 @@ const ProfileScreen = ({ navigation }) => {
         </View>
         <Text style={styles.title}>Perfil</Text>
         <ScrollView style={styles.container}>
-          <ProfileItem firstLabel="Nome" value={userInfo && userInfo.nome} />
-          <ProfileItem firstLabel="E-mail" value={userInfo && userInfo['e-mail']} />
+          <ProfileItem firstLabel="Nome" value={userInfo && userInfo.nome}onPress={() => navigation.navigate('EditProfile', {title: 'Nome'})} />
           {/* <ProfileItem firstLabel="E-mail" value={userInfo && userInfo.email} /> */}
-          <ProfileItem firstLabel="Telefone" value={userInfo && userInfo.telefone} />
-          <ProfileItem firstLabel="Condomínio" value={userInfo && userInfo.condo && userInfo.condo.name} />
+          <ProfileItem firstLabel="Telefone" value={userInfo && userInfo.telefone}onPress={() => navigation.navigate('EditProfile', {title: 'Telefone'})} />
+          <ProfileItem pressable={false} firstLabel="E-mail" value={userInfo && userInfo['email']}/>
+          <ProfileItem pressable={false} firstLabel="Condomínio" value={userInfo && userInfo.condo && userInfo.condo.name} />
           <TouchableOpacity
             style={styles.feedback}
             onPress={() => navigation.navigate('Suggestion')}
@@ -51,17 +51,24 @@ const onChangeUserInfo = ({ indexName, newValue }) => {
   setUserInfo({ ...userInfo, indexName: newValue });
 };
 
-const ProfileItem = ({ firstLabel, value }) => (
+const ProfileItem = ({ firstLabel, value, onPress, pressable=true }) => (
   
-  value ?
-  <TouchableOpacity>
+  pressable ? <TouchableOpacity onPress={onPress}>  
   <Row style={styles.profileRow}>
     <Text style={{ ...styles.profileItem, ...styles.profileItemFirstLabel }}>{firstLabel}</Text>
     <Text style={styles.profileItem}>{value || 'nome'}</Text>
     <Ionicons style={{ ...styles.profileItem, alignSelf: 'flex-end', left:65 }} name="ios-arrow-forward" size={22} color={COLORS.lilac} />
   </Row>
-  </TouchableOpacity>
-  : null
+  </TouchableOpacity> 
+  :
+  <View>  
+  <Row style={styles.profileRow}>
+    <Text style={{ ...styles.profileItem, ...styles.profileItemFirstLabel }}>{firstLabel}</Text>
+    <Text style={styles.profileItem}>{value || 'nome'}</Text>
+    <Ionicons style={{ ...styles.profileItem, alignSelf: 'flex-end', left:65 }} name="ios-arrow-forward" size={22} color={'white'} />
+  </Row>
+  </View>
+  
 )
 
 const styles = {
