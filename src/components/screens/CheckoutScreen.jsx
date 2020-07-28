@@ -4,7 +4,7 @@ import Screen from '../screens/Screen';
 import ItemWithoutSpinner from '../list/ItemWithoutSpinner';
 import { CheckoutFooter } from '../footers';
 import { getBirthDate } from '../../utils';
-import { UserContext, CartContext } from '../../context';
+import { UserContext, CartContext, LoadingContext } from '../../context';
 import { StackHeader } from '../headers';
 import { COLORS } from '../../constants';
 import BottomDrawer from '../drawers/BottomDrawer';
@@ -14,6 +14,7 @@ import pay from '../../client/pay';
 const CheckoutScreen = ({ navigation }) => {
     const [userInfo, setUserInfo] = useContext(UserContext);
     const [cartInfo, setCartInfo] = useContext(CartContext);
+    const [loadingObj, setLoadingObj] = useContext(LoadingContext);
     const [drawerIsOpened, setDrawerIsOpened] = useState(false);
     const [height] = useState(new Animated.Value(0));
     const [card, setCard] = useState({});
@@ -98,6 +99,7 @@ const handleOnPress = useCallback(async ({
             quantity,
             price,
         }));
+        setLoadingObj({ loading: true, label: 'Realizando pagamento' })
         const res = await pay({
             amount,
             pointOfSaleId: userInfo.condo.id,
@@ -118,15 +120,17 @@ const handleOnPress = useCallback(async ({
             phoneAreaCode,
             phoneNumber,
             postalCode,
-            senderEmail,
+            senderEmail: userInfo.email,
             senderName,
             state,
             street,
         });
         setCartInfo({ ...cartInfo, cart: { items: [] } });
+        setLoadingObj({ loading: false, label: 'Realizando pagamento' })
         navigation.navigate('PaymentConfirmed')
     } catch (e) {
         navigation.navigate('PaymentError');
+        setLoadingObj({ loading: false, label: 'Realizando pagamento' })
     }
 }, [])
 
@@ -167,6 +171,7 @@ const handleOnPress = useCallback(async ({
                 />
             )}
             </ScrollView>
+            {console.warn(userInfo.email)}
             <CheckoutFooter
                 getCard={() => getCard()}
                 onPress={() => card && handleOnPress({
