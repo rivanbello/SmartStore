@@ -33,7 +33,7 @@ const pay = async ({
       cardExpirationMonth,
       cardExpirationYear,
       cardHolderCPF,
-      cardHolderName,
+      cardHolderName: cardHolderName && cardHolderName.toUpperCase(),
       documentType,
       documentNumber,
       phoneAreaCode,
@@ -52,6 +52,7 @@ const pay = async ({
       pointOfSaleToken
     };
     try {
+      console.warn('req: ', body)
         const response = await fetch(`https://painel.tahnamao.com.br/smartstore/pay`, {
           method: 'POST',
           headers: {

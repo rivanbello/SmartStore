@@ -29,13 +29,12 @@ const CreditCardForm = ({ onSubmit }) => {
                         setItemCompleted(value, i + step * 4)
                     }}
                     maxLength={maxLength}
-                    transform={transform}
+                    transform={typeof transform === 'function' && ((v) => transform(v))}
                     key={key}
                     index={i}
                     placeholder={placeholder}
                     error={error}
                     onChange={(value) => {
-                        if (key === 'postalCode') console.warn('Postal Code: ', value)
                         if(value) setCardInfo({ ...cardInfo, [`${key}`]: value })
                     }}
                     validator={validator}
@@ -77,16 +76,17 @@ const CreditCardFormItem = ({ error, placeholder, validator, onComplete, index, 
     const [showError, setShowError] = useState(false);
     const [value, setValue] = useState('');
     const handleOnChangeValue = (v) => {
-        if (typeof transform === 'function') v = transform(v);
         setShowError(!validator(v));
-        onChange(v)
-        setValue(v)
+        onChange(v);
+        setValue(v);
         onComplete(validator(v), index);
     };
     return (
         <View>
+            {/* {console.warn(value)} */}
             <TextInput
                 placeholder={placeholder}
+                autoCapitalize={(placeholder === 'Nome impresso' || placeholder === 'Estado') && 'characters'}
                 onChangeText={(v) => handleOnChangeValue(v)}
                 style={styles.input}
                 value={value}

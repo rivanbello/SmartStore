@@ -1,5 +1,5 @@
 import React from 'react';
-import { ConfirmationScreen } from '../screens';
+import ConfirmationScreen from './ConfirmationScreen';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 
 const PaymentConfirmedScreen = ({ navigation }) => {
