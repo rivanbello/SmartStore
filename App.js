@@ -139,7 +139,6 @@ export default function App() {
 
   useEffect(() => {
     if (userInfo.condos.length > 0 && !userInfo.logged) {
-      console.warn('before user condos: ', userInfo.condos)
       autoLogin({ userInfo });
     }
   }, [userInfo.condos]);

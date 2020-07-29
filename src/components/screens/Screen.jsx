@@ -12,12 +12,13 @@ const Screen = ({ children, style }) => {
       ...styles.container,
       ...style,
     }}>
-      {!loadingObj.loading && children}
-      {loadingObj.loading &&
+     
+      {loadingObj.loading ?
         <Row style={{ height: '100%', justifyContent: 'center', alignItems: 'center' }}>
           <ActivityIndicator size="small"/>
           <Text style={{ marginLeft: 15, color: COLORS.darkGray, fontSize: 20, }}>{loadingObj && loadingObj.label}</Text>
         </Row>
+        : children
       }
     </SafeAreaView>
   )

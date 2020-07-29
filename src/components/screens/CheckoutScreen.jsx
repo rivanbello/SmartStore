@@ -99,7 +99,6 @@ const handleOnPress = useCallback(async ({
             quantity,
             price,
         }));
-        setLoadingObj({ loading: true, label: 'Realizando pagamento' })
         const res = await pay({
             amount,
             pointOfSaleId: userInfo.condo.id,
@@ -126,11 +125,11 @@ const handleOnPress = useCallback(async ({
             street,
         });
         setCartInfo({ ...cartInfo, cart: { items: [] } });
-        setLoadingObj({ loading: false, label: 'Realizando pagamento' })
         navigation.navigate('PaymentConfirmed')
+        // setLoadingObj({ loading: false, label: 'Realizando pagamento' })
     } catch (e) {
         navigation.navigate('PaymentError');
-        setLoadingObj({ loading: false, label: 'Realizando pagamento' })
+        // setLoadingObj({ loading: false, label: 'Realizando pagamento' })
     }
 }, [])
 
@@ -171,7 +170,6 @@ const handleOnPress = useCallback(async ({
                 />
             )}
             </ScrollView>
-            {console.warn(userInfo.email)}
             <CheckoutFooter
                 getCard={() => getCard()}
                 onPress={() => card && handleOnPress({

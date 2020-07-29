@@ -85,7 +85,6 @@ const ShoppingBagScreen = ({ navigation }) => {
                 }
                 )}
                 </ScrollView>
-                {console.warn(userInfo.condo && userInfo.condo.name === 'Cond. Life Space')}
                 <ShoppingBagFooter
                     onPressResetCart={() => setResetModalOpen(!resetModalOpen)}
                     paymentEnabled={userInfo.condo && userInfo.condo.name === 'Cond. Life Space'}

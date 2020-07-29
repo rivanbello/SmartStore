@@ -1,8 +1,14 @@
-import React from 'react';
+import React, { useContext, useEffect } from 'react';
 import ConfirmationScreen from './ConfirmationScreen';
+import { LoadingContext } from '../../context';
 import { PaymentFailed } from '../../assets/images';
 
 const PaymentErrorScreen = ({ navigation }) => {
+
+    const [loadingObj, setLoadingObj] = useContext(LoadingContext);
+    useEffect(() => {
+        setLoadingObj({ loading: false, label: 'Carregando' });
+    }, []);
     return (
         <ConfirmationScreen
             title="Algo deu errado no pagamento"

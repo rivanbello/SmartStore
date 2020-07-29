@@ -24,7 +24,6 @@ const pay = async ({
       pointOfSaleId,
       pointOfSaleToken,
  }) => {
-
     const body = {
       amount,
       cardNumber,
@@ -52,7 +51,7 @@ const pay = async ({
       pointOfSaleToken
     };
     try {
-      console.warn('req: ', body)
+      // console.warn('req: ', body)
         const response = await fetch(`https://painel.tahnamao.com.br/smartstore/pay`, {
           method: 'POST',
           headers: {
@@ -61,7 +60,7 @@ const pay = async ({
           },
           body: JSON.stringify(body),
         });
-      if (response.status !== 200) throw Error();
+      if (response.status !== 200) throw new Error();
        return response;
     } catch (error) {
       console.warn('request error', JSON.stringify());
