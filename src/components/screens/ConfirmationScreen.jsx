@@ -47,6 +47,7 @@ const styles = {
     fontSize: 26,
     marginBottom: '5%',
     color: COLORS.darkLilac,
+    textAlign: 'center',
   },
   icon: {
     color: COLORS.primary,
