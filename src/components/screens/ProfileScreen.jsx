@@ -36,8 +36,8 @@ const ProfileScreen = ({ navigation }) => {
             AsyncStorage.setItem('userInfo', JSON.stringify({ ...userInfo, logged: false, password: '', email: '' }))
             .then(() => 
               setUserInfo({ ...userInfo, logged: false, password: '', email: '', cart: { items: [] } }))
-            .then(() => SecureStore.setItemAsync('qwe', JSON.stringify({})));
-            navigation.navigate('Login');
+            .then(() => SecureStore.setItemAsync('qwe', '{}'))
+            .then(() => navigation.navigate('Login'));
           }}>
             <Text style={{ alignSelf: 'center', marginVertical: 40, fontWeight: 'bold', color: COLORS.darkGray }}>Sair da minha conta</Text>
           </TouchableOpacity>

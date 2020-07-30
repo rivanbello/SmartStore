@@ -11,7 +11,7 @@ const SuggestionScreen = ({ navigation }) => {
     <Screen>
       <StackHeader
         onPress={() => navigation.goBack()}
-        handleOnPress={() => navigation.navigate('ShoppingBag')}
+        handleGoBack={() => navigation.goBack()}
         showShoppingBag={false}
       />
         <View style={{ justifyContent: 'space-between', flex: 1 }}>
@@ -26,6 +26,7 @@ const SuggestionScreen = ({ navigation }) => {
           {!value && <Text style={{ color: 'red', marginTop: 15, textAlign: 'center' }}>Escreva uma sugestão antes de continuar</Text>}
         </View>
         <PrimaryButton
+          disabled={!value}
           onPress={() => navigation.navigate('FeedbackConfirmation') }
           style={{ marginBottom: 30 }}
           label={'Enviar sugestão'}
