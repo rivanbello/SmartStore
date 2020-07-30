@@ -26,6 +26,7 @@ const Screen = ({ children, style }) => {
 
 const styles = {
   container: {
+    top: 30,
     width: '100%',
     backgroundColor: '#fff',
     flex: 1,

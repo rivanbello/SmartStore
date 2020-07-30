@@ -16,6 +16,7 @@ import ShoppingBagScreen from './ShoppingBagScreen';
 import PaymentConfirmedScreen from './PaymentConfirmedScreen';
 import LoadingScreen from './LoadingScreen';
 import PaymentErrorScreen from './PaymentErrorScreen';
+import EditInfoScreen from'./EditInfoScreen';
 
 const Screens = {
   CategoryScreen,
@@ -36,6 +37,7 @@ const Screens = {
   ProfileScreen,
   PaymentConfirmedScreen,
   PaymentErrorScreen,
+  EditInfoScreen,
 };
 
 export default Screens;

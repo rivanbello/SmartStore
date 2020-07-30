@@ -187,6 +187,7 @@ export default function App() {
               <Stack.Screen name="RegisterConfirmation" component={Screens.RegisterConfirmationScreen} options={{ headerShown: false }} />
               <Stack.Screen name="Category" component={Screens.CategoryScreen} options={{ headerShown: false }} />
               <Stack.Screen name="Checkout" component={Screens.CheckoutScreen} options={{ headerShown: false }} />
+              <Stack.Screen name="EditProfile" component={Screens.EditInfoScreen} options={{ headerShown: false }} />
               <Stack.Screen name="Suggestion" component={Screens.SuggestionScreen} options={{ headerShown: false }} />
               <Stack.Screen name="Info" component={Screens.InformationScreen} options={{ headerShown: false }}/>
               <Stack.Screen name="FeedbackConfirmation" component={Screens.FeedbackConfirmationScreen} options={{ headerShown: false }} />
