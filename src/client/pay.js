@@ -63,7 +63,6 @@ const pay = async ({
       if (response.status !== 200) throw new Error();
        return response;
     } catch (error) {
-      console.warn('request error', JSON.stringify());
       throw error;
     } 
   }

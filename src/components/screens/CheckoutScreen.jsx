@@ -4,7 +4,7 @@ import Screen from '../screens/Screen';
 import ItemWithoutSpinner from '../list/ItemWithoutSpinner';
 import { CheckoutFooter } from '../footers';
 import { getBirthDate } from '../../utils';
-import { UserContext, CartContext, LoadingContext } from '../../context';
+import { UserContext, CartContext } from '../../context';
 import { StackHeader } from '../headers';
 import { COLORS } from '../../constants';
 import BottomDrawer from '../drawers/BottomDrawer';
@@ -14,7 +14,7 @@ import pay from '../../client/pay';
 const CheckoutScreen = ({ navigation }) => {
     const [userInfo, setUserInfo] = useContext(UserContext);
     const [cartInfo, setCartInfo] = useContext(CartContext);
-    const [loadingObj, setLoadingObj] = useContext(LoadingContext);
+    const [loading, setLoading] = useState(false);
     const [drawerIsOpened, setDrawerIsOpened] = useState(false);
     const [height] = useState(new Animated.Value(0));
     const [card, setCard] = useState({});
@@ -99,6 +99,7 @@ const handleOnPress = useCallback(async ({
             quantity,
             price,
         }));
+        setLoading(true);
         const res = await pay({
             amount,
             pointOfSaleId: userInfo.condo.id,
@@ -126,10 +127,10 @@ const handleOnPress = useCallback(async ({
         });
         setCartInfo({ ...cartInfo, cart: { items: [] } });
         navigation.navigate('PaymentConfirmed')
-        // setLoadingObj({ loading: false, label: 'Realizando pagamento' })
+        setLoading(false);
     } catch (e) {
         navigation.navigate('PaymentError');
-        // setLoadingObj({ loading: false, label: 'Realizando pagamento' })
+        setLoading(false);
     }
 }, [])
 
@@ -171,6 +172,7 @@ const handleOnPress = useCallback(async ({
             )}
             </ScrollView>
             <CheckoutFooter
+                loading={loading}
                 getCard={() => getCard()}
                 onPress={() => card && handleOnPress({
                     amount: getTotalAmount(),

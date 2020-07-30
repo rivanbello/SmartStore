@@ -1,11 +1,11 @@
-import React, { useCallback } from 'react';
+import React from 'react';
 import { Text, View } from 'react-native';
 import { Column, Row } from '../layout';
 import { PrimaryButton } from '../buttons';
 import { COLORS, SCREEN_HEIGHT } from '../../constants';
 import { PaymentMethodCard } from '../misc';
 
-const CheckoutFooter = ({ style, step = 0, totalSteps = 0, onPress, total, onPressLink, setDrawerIsOpened, removeCard, card }) => {
+const CheckoutFooter = ({ style, step = 0, totalSteps = 0, onPress, total, onPressLink, setDrawerIsOpened, removeCard, card, loading }) => {
 
   return (<Column style={{ ...styles.container, ...style }}>
     <PaymentMethodCard
@@ -21,6 +21,7 @@ const CheckoutFooter = ({ style, step = 0, totalSteps = 0, onPress, total, onPre
         </Row>
         <Row>
           <PrimaryButton
+            loading={loading}
             label="Pagar"
             onPress={onPress}
             disabled={!card || !card.name}
