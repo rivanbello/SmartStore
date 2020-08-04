@@ -21,7 +21,7 @@ const ProfileScreen = ({ navigation }) => {
         <Text style={styles.title}>Perfil</Text>
         <ScrollView style={styles.container}>
           <ProfileItem firstLabel="Nome" value={userInfo && userInfo.nome} />
-          <ProfileItem firstLabel="E-mail" value={userInfo && userInfo['e-mail']} />
+          <ProfileItem firstLabel="E-mail" value={userInfo && userInfo.email} />
           {/* <ProfileItem firstLabel="E-mail" value={userInfo && userInfo.email} /> */}
           <ProfileItem firstLabel="Telefone" value={userInfo && userInfo.telefone} />
           <ProfileItem firstLabel="Condomínio" value={userInfo && userInfo.condo && userInfo.condo.name} />

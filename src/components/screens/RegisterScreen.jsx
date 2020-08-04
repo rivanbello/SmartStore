@@ -47,12 +47,12 @@ const RegisterScreen = ({ navigation }) => {
 
   const nextStep = () => {
     if ((stepIndex < 4 || stepIndex === 7) && (!validateField(stepIndex, lastValue) || !lastValue)) {
-      setEmailAlreadyUsed(false); 
+      setEmailAlreadyUsed(false);
       fadeOpacity.setValue(1);
       setfadeOpacity(new Animated.Value(1));
     } else if (stepIndex === 4 && lastValue !== userInfo['senha']) {
-        fadeOpacity.setValue(1);
-        setfadeOpacity(new Animated.Value(1));
+      fadeOpacity.setValue(1);
+      setfadeOpacity(new Animated.Value(1));
     } else if (stepIndex === 5 && typeof lastValue === 'date' && (lastValue.UTC() < 1325383200000)) {
       fadeOpacity.setValue(1);
       setfadeOpacity(new Animated.Value(1));
@@ -69,13 +69,13 @@ const RegisterScreen = ({ navigation }) => {
           setEmailAlreadyUsed(true); 
           setfadeOpacity(new Animated.Value(1))
         });
-    }
-    else {
-      setStepIndex(stepIndex + 1);
-    }
-  } else if (userInfo.condo && userInfo.condo.id) {
+      }
+      else {
+        setStepIndex(stepIndex + 1);
+      }
+    } else if (userInfo.condo && userInfo.condo.id) {
       const infoToSave = {
-        email: userInfo['e-mail'],
+        email: userInfo.email,
         name: userInfo.nome,
         phoneNumber: userInfo.telefone,
         birthDate: userInfo.nascimento || new Date(),
@@ -87,7 +87,7 @@ const RegisterScreen = ({ navigation }) => {
       register(infoToSave).then(() => {
         const newUserInfo = { ...userInfo, logged: true }
         AsyncStorage.setItem('userInfo', JSON.stringify(newUserInfo))
-          .then(() => setUserInfo(newUserInfo));
+        .then(() => setUserInfo(newUserInfo));
       })
       .catch((e) => {
         setfadeOpacity(new Animated.Value(1));
@@ -106,7 +106,7 @@ const RegisterScreen = ({ navigation }) => {
   }, [fadeOpacity, setRegisterError])
 
   useEffect(() => {
-    setLastValue(userInfo[`${steps[stepIndex].formItems[0].placeholder.toLowerCase()}`] || '')
+    setLastValue(userInfo[`${steps[stepIndex].formItems[0].placeholder.toLowerCase().replace('-','')}`] || '')
   },[stepIndex])
 
   return (
@@ -182,7 +182,7 @@ const RegisterScreen = ({ navigation }) => {
           setFormValue={(value) => {
             const newUserInfo = {
               ...userInfo,
-              [`${steps[stepIndex].formItems[0].placeholder.toLowerCase()}`]: value,
+              [`${steps[stepIndex].formItems[0].placeholder.toLowerCase().replace('-','')}`]: value,
             };
             setUserInfo(newUserInfo)
             setSteps(generateSteps(newUserInfo)); 

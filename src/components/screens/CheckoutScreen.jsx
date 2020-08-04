@@ -125,11 +125,13 @@ const handleOnPress = useCallback(async ({
             state,
             street,
         });
+        console.warn("res", res)
         setCartInfo({ ...cartInfo, cart: { items: [] } });
         navigation.navigate('PaymentConfirmed')
         setLoading(false);
     } catch (e) {
         navigation.navigate('PaymentError');
+        console.warn("error", e)
         setLoading(false);
     }
 }, [])
@@ -171,6 +173,7 @@ const handleOnPress = useCallback(async ({
                 />
             )}
             </ScrollView>
+            {console.warn(userInfo.email)}
             <CheckoutFooter
                 loading={loading}
                 getCard={() => getCard()}
@@ -192,7 +195,7 @@ const handleOnPress = useCallback(async ({
                     phoneAreaCode: userInfo.telefone.slice(0, 2),
                     phoneNumber: userInfo.telefone.slice(2),
                     postalCode: card.postalCode,
-                    senderEmail: userInfo['e-mail'],
+                    senderEmail: userInfo.email,
                     senderName: card.name,
                     state: card.state,
                     street: card.street,

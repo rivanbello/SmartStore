@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import Screen from './Screen';
 import { Text, TextInput, View } from 'react-native';
-import { Row } from '../layout';
 import { StackHeader } from '../headers';
 import { PrimaryButton } from '../buttons';
 import { COLORS } from '../../constants';
