@@ -8,7 +8,7 @@ import { getTokens } from './src/firebase';
 import pointsOfSale from './src/client/pointsOfSale';
 import { AsyncStorage } from 'react-native';
 import Screens from './src/components/screens';
-import { UserContext, LoadingContext, CartContext } from './src/context';
+import { UserContext, CartContext } from './src/context';
 import {
   Foundation,
   AntDesign,
@@ -24,12 +24,10 @@ const Tab = createBottomTabNavigator();
 export default function App() {
   const [userInfo, setUserInfo] = useState({ condos: [] });
   const [cartInfo, setCartInfo] = useState({ items: [] });
-  const [loadingObj, setLoadingObj] = useState({ loading: true, label: 'Carregando' });
   const autoLogin = useCallback(async ({ userInfo }) => {
     const storedInfo = JSON.parse(await AsyncStorage.getItem('userInfo'));
     if (storedInfo.email && storedInfo.senha) {
       try {
-        setLoadingObj({ loading: true, label: 'Fazendo login' })
         const {
           name: nome,
           phoneNumber: telefone,
@@ -60,13 +58,12 @@ export default function App() {
         console.warn('auto login error: ', error);
         throw error;
       } finally {
-        setLoadingObj({ loading: false })
       }
     }
   }, []);
 
   useEffect(() => {
-    if (!userInfo.logged) setLoadingObj({ ...loadingObj, loading: false })
+    // console.disableYellowBox = true;
     getTokens()
     .then(tokens =>
     pointsOfSale({ tokens }).then(response => {
@@ -138,12 +135,6 @@ export default function App() {
   )}, []);
 
   useEffect(() => {
-    if (userInfo.condos.length > 0 && !userInfo.logged) {
-      autoLogin({ userInfo });
-    }
-  }, [userInfo.condos]);
-
-  useEffect(() => {
     if (userInfo.condo && userInfo.condo.token)
     all({ pointOfSaleId: userInfo.condo.id, token: userInfo.condo.token })
     //bug login aqui
@@ -162,20 +153,7 @@ export default function App() {
   }, [userInfo.condo]);
 
   return (
-    // <NavigationContainer>
-    //   <UserContext.Provider value={[userInfo, setUserInfo]}>
-    //   <Stack.Navigator initialRouteName={logged ? "Login" : "Main"}>
-    //       <Stack.Screen name="Login" component={LoginScreen} />
-    //       <Stack.Screen name="Main" component={HomeScreen} />
-    //     </Stack.Navigator>
-    //     <Stack.Navigator initialRouteName={"ConfirmRegistration"}>
-    //       <Stack.Screen name="Register" component={RegisterScreen} options={{ headerShown: false }}/>
-    //     </Stack.Navigator>
-    //   </UserContext.Provider>
-    // </NavigationContainer>
-    
     <NavigationContainer>
-      <LoadingContext.Provider value={[loadingObj, setLoadingObj]}>
         <UserContext.Provider value={[userInfo, setUserInfo]}>
           <CartContext.Provider value={[cartInfo, setCartInfo]}>
             <Stack.Navigator initialRouteName="Login">
@@ -183,7 +161,6 @@ export default function App() {
               <Stack.Screen name="Register" component={Screens.RegisterScreen} options= {{ headerShown: false }} />
               <Stack.Screen name="Navigator" component={AppNavigator} options={{ headerShown: false }} />
               <Stack.Screen name="Product" component={Screens.ProductScreen} options={{ headerShown: false }} />
-              {/* <Stack.Screen name="RegisterConfirmation" component={ConfirmationScreen} options={{ headerShown: false }} /> */}
               <Stack.Screen name="RegisterConfirmation" component={Screens.RegisterConfirmationScreen} options={{ headerShown: false }} />
               <Stack.Screen name="Category" component={Screens.CategoryScreen} options={{ headerShown: false }} />
               <Stack.Screen name="Checkout" component={Screens.CheckoutScreen} options={{ headerShown: false }} />
@@ -198,7 +175,6 @@ export default function App() {
             </Stack.Navigator>
           </CartContext.Provider>
         </UserContext.Provider>
-      </LoadingContext.Provider>
     </NavigationContainer>
 
     // <NavigationContainer>

@@ -83,7 +83,6 @@ const RegisterScreen = ({ navigation }) => {
         machineCompanyCode: userInfo.condo.machineCompanyCode,
         password: userInfo.senha,
       };
-      // setLoadingObj({ loading: true, label: 'Realizando cadastro' })
       register(infoToSave).then(() => {
         const newUserInfo = { ...userInfo, logged: true }
         AsyncStorage.setItem('userInfo', JSON.stringify(newUserInfo))
@@ -93,7 +92,6 @@ const RegisterScreen = ({ navigation }) => {
         setfadeOpacity(new Animated.Value(1));
         setRegisterError(e)
       })
-      // .finally(() => setLoadingObj({ loading: false }))
     }
   }
 

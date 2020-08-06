@@ -1,21 +1,32 @@
-import React, { useContext, useState, useEffect, useCallback } from 'react';
+import React, { useContext, useState, useEffect } from 'react';
 import { Text } from 'react-native';
 import { PrimaryButton, Link } from '../buttons';
 import { Row } from '../layout';
 import FormItem from './FormItem';
 import { FontAwesome, Entypo } from '@expo/vector-icons';
 import validateField from './formValidators';
-import { UserContext, LoadingContext } from '../../context';
+import { UserContext } from '../../context';
 import { AsyncStorage } from 'react-native';
 import { login } from '../../auth';
 
 const LoginForm = ({ navigation }) => {
   const [userInfo, setUserInfo] = useContext(UserContext);
   const [username, setUsername] = useState('');
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
-  const signIn = async ({ username, password }) => {
+  const signIn = async ({ username, password } = {}) => {
+    let storedInfo = {};
+    if (!username || !password) {
+      storedInfo = JSON.parse(await AsyncStorage.getItem('userInfo'));
+      if (storedInfo.email && storedInfo.senha) {
+        username = storedInfo.email;
+        password = storedInfo.senha;
+      } else {
+        setLoading(false);
+        return;
+      }
+    }
     try {
       const {
         name: nome,
@@ -41,6 +52,7 @@ const LoginForm = ({ navigation }) => {
         senha: password,
         logged: true,
       };
+      setUserInfo(newUserInfo);
       try {
         await AsyncStorage.setItem('userInfo', JSON.stringify(newUserInfo))
       } catch (error) {
@@ -57,6 +69,12 @@ const LoginForm = ({ navigation }) => {
   useEffect(() => {
     if(userInfo.logged) navigation.navigate('Navigator', { username, password });
   }, [userInfo.logged])
+
+  useEffect(() => {
+    if (userInfo.condos.length > 0) {
+      signIn();
+    }
+  }, [userInfo.condos]);
 
   return (
     <>
