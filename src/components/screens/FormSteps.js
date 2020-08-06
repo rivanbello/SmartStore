@@ -20,7 +20,7 @@ const generateSteps = (context) => [
     label:
     <Text style={styles.stepLabel}>
       <Text>Legal </Text>
-      <Text style={{ color: COLORS.primary }}>{context.nome}</Text>
+      <Text style={{ color: COLORS.primary }}>{context.nome || context.name}</Text>
       <Text>, agora insira seu número de telefone</Text>
     </Text>,
     stepIndex: 2,
@@ -38,7 +38,7 @@ const generateSteps = (context) => [
   {
     label:
     <Text style={styles.stepLabel}>
-      <Text style={{ color: COLORS.primary }}>{context.nome}</Text>
+      <Text style={{ color: COLORS.primary }}>{context.nome || context.name}</Text>
       <Text>, insira seu e-mail{'\n'}</Text>
     </Text>,
     stepIndex: 3,

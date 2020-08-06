@@ -5,6 +5,7 @@ const floatingLabel = (args = []) => (
     Animated.timing(position, {
       toValue,
       duration,
+      useNativeDriver: false,
     }).start()
   ))
 );

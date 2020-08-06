@@ -1,4 +1,4 @@
-import React, { useContext, useState, useEffect } from 'react';
+import React, { useContext, useState, useEffect, useCallback } from 'react';
 import { Text } from 'react-native';
 import { PrimaryButton, Link } from '../buttons';
 import { Row } from '../layout';
@@ -12,9 +12,47 @@ import { login } from '../../auth';
 const LoginForm = ({ navigation }) => {
   const [userInfo, setUserInfo] = useContext(UserContext);
   const [username, setUsername] = useState('');
-  const [loadingObj, setLoadingObj] = useContext(LoadingContext);
+  const [loading, setLoading] = useState(false);
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
+  const signIn = async ({ username, password }) => {
+    try {
+      const {
+        name: nome,
+        phoneNumber: telefone,
+        birthDate: nascimento,
+        machineCompanyCode,
+        email,
+        condoId,
+      } = await login({ email: username, password })
+      const newUserInfo = {
+        ...userInfo,
+        nome,
+        telefone,
+        nascimento,
+        condo: {
+          ...userInfo.condo,
+          name: userInfo && userInfo.condos && userInfo.condos.filter(({ machineCompanyCode: code }) => code === machineCompanyCode)[0] && userInfo.condos.filter(({ machineCompanyCode: code }) => code === machineCompanyCode)[0].name,
+          token: userInfo && userInfo.condos && userInfo.condos.filter(({ machineCompanyCode: code }) => code === machineCompanyCode)[0] && userInfo.condos.filter(({ machineCompanyCode: code }) => code === machineCompanyCode)[0].token,
+          machineCompanyCode,
+          id: condoId,
+        },
+        email,
+        senha: password,
+        logged: true,
+      };
+      try {
+        await AsyncStorage.setItem('userInfo', JSON.stringify(newUserInfo))
+      } catch (error) {
+        setError(error.message)
+      }
+    } catch (e) {
+      setError(e.message)
+    }
+    finally{
+      setLoading(false)
+    }
+  };
 
   useEffect(() => {
     if(userInfo.logged) navigation.navigate('Navigator', { username, password });
@@ -62,46 +100,10 @@ const LoginForm = ({ navigation }) => {
           onPress={() => {
             if (!username.includes('@') || !username.includes('.')) { setError('Digite um email válido.'); return; }
             if (!password) { setError('Insira uma senha.'); return }
-            
-            setLoadingObj({ loading: true, label: 'Fazendo login' })
-            login({ email: username, password })
-            .then(({
-              name: nome,
-              phoneNumber: telefone,
-              birthDate: nascimento,
-              machineCompanyCode,
-              email,
-              condoId,
-            } = {}) => {
-              const condoInfo = userInfo && userInfo.condos && userInfo.condos.filter(({ machineCompanyCode: code }) => code === machineCompanyCode)[0] && userInfo.condos.filter(({ machineCompanyCode: code }) => code === machineCompanyCode)[0];
-              const newUserInfo = {
-                ...userInfo,
-                nome,
-                telefone,
-                nascimento,
-                condo: {
-                  ...userInfo.condo,
-                  name: userInfo && userInfo.condos && userInfo.condos.filter(({ machineCompanyCode: code }) => code === machineCompanyCode)[0] && userInfo.condos.filter(({ machineCompanyCode: code }) => code === machineCompanyCode)[0].name,
-                  token: userInfo && userInfo.condos && userInfo.condos.filter(({ machineCompanyCode: code }) => code === machineCompanyCode)[0] && userInfo.condos.filter(({ machineCompanyCode: code }) => code === machineCompanyCode)[0].token,
-                  machineCompanyCode,
-                  id: condoId,
-                },
-                email,
-                senha: password,
-                logged: true,
-              };
-              AsyncStorage.setItem('userInfo', JSON.stringify(newUserInfo))
-              .then(() => 
-                setUserInfo(newUserInfo)
-              )
-          }, (err) => {
-              setError(err.message)
-            })
-            .catch(e => {
-              setError(e)
-            })
-            .finally(() => setLoadingObj({ loading: false }))
+            setLoading(true);
+            signIn({ username, password })
           }}
+          loading={loading}
           style={styles.button}
         />
       </Row>

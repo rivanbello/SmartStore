@@ -30,7 +30,7 @@ const icons = {
 const RegisterScreen = ({ navigation }) => {
   const [userInfo, setUserInfo] = useContext(UserContext);
   const [emailAlreadyUsed, setEmailAlreadyUsed] = useState(false);
-  const [steps, setSteps] = useState(generateSteps({}));
+  const [steps, setSteps] = useState(generateSteps(userInfo));
   const [stepIndex, setStepIndex] = useState(0);
   const [registerError, setRegisterError] = useState('');
   const [chosenCondo, setChosenCondo] = useState(false);
@@ -158,6 +158,7 @@ const RegisterScreen = ({ navigation }) => {
               ...userInfo,
               [`${steps[stepIndex].formItems[0].placeholder.toLowerCase()}`]: value,
             };
+            console.warn(newUserInfo)
             setUserInfo(newUserInfo)
             setChosenCondo(value);
             setSteps(generateSteps(newUserInfo)); 
