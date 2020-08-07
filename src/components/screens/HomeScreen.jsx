@@ -33,12 +33,15 @@ const HomeScreen = ({ route: { params = {} } = {}, navigation }) => {
         placeholderTextColor={COLORS.darkestGray}
         Icon={<Ionicons name="ios-search" size={26} style={{ color: COLORS.primary }}/>}
       />
-      {userInfo.availableProducts &&
+      {Array.isArray(userInfo.availableProducts) &&
       (searchActive
         ? <FreeList list={
             userInfo.availableProducts
               .filter(({ description }) => {
-                if (filterValue) return description.toUpperCase().includes(filterValue.toUpperCase())
+                if (filterValue) return description.toUpperCase()
+                  .includes(filterValue.toUpperCase())
+                  //placing all products with 0 quantity to the end
+                  .sort((a = {}, b = {}) => a.quantity === 0)
                 else return false;
               })
             }
@@ -47,7 +50,12 @@ const HomeScreen = ({ route: { params = {} } = {}, navigation }) => {
         : <List
         navigation={navigation}
         filterValue={filterValue}
-        list={userInfo.availableProducts}
+        list={
+          //displaying all products in random order
+          userInfo.availableProducts.sort(() => Math.random() > 0.5)  
+          //placing all products with 0 quantity to the end
+          .sort((a = {}, b = {}) => a.quantity === 0)
+        }
         />)
       }
     </Screen>

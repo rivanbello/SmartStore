@@ -9,7 +9,12 @@ import { Dimensions, Text, ScrollView } from 'react-native';
 const screenWidth = Math.round(Dimensions.get('window').width);
 
 const CategoryScreen = ({ route, navigation, state }) => {
-  const list = route.params.list || [];
+  const list = Array.isArray(route.params.list)
+  //displaying all products in random order
+    && route.params.list.sort(() => Math.random() > 0.5)  
+    //placing all products with 0 quantity to the end
+    .sort((a = {}, b = {}) => a.quantity === 0)
+  || [];
   const category = route.params.category || '';
   let rows = [];
   for (let i = 4; i < (list.length + 4); i = i + 4) {
