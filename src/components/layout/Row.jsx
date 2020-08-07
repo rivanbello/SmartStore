@@ -2,7 +2,11 @@ import React from 'react';
 import { View, StyleSheet } from 'react-native';
 
 const Row = ({ style, children }) => (
-  <View style={{ ...styles.container, ...style }}>
+  Array.isArray(style)
+  ? <View style={[styles.container, ...style]}>
+    {children}
+  </View>
+  : <View style={{ ...styles.container, ...style }}>
     {children}
   </View>
 );

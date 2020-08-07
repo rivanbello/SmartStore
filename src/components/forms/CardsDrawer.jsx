@@ -4,11 +4,9 @@ import { COLORS } from '../../constants';
 import { validCreditCard } from './cardFormValidators';
 import { PrimaryButton, Link } from '../buttons';
 import { CreditCardContainer, AddNewCardContainer } from '../misc';
-import { Colors } from 'react-native/Libraries/NewAppScreen';
 
-const CardsDrawer = ({ onSubmit, cards, onPressAddNewCard }) => {
-    const [cardInfo, setCardInfo] = useState({});
-    const [selectedCard, setSelectedCard] = useState({});
+const CardsDrawer = ({ onSubmit, cards = [], onPressAddNewCard, selectedCardNumber }) => {
+    const [selected, setSelected] = useState(cards.filter((card) => card.number === selectedCardNumber));
     const completedRef = useRef([]);
     const handleSubmit = () => {
         let i = 0;
@@ -24,6 +22,8 @@ const CardsDrawer = ({ onSubmit, cards, onPressAddNewCard }) => {
                 <CreditCardContainer
                     onPress={() => {}}
                     card={card}
+                    selected={selected.number === card.number}
+                    onPress={() => setSelected(card)}
                 />
             )}
             <View style={styles.blankSpace} />
@@ -33,7 +33,7 @@ const CardsDrawer = ({ onSubmit, cards, onPressAddNewCard }) => {
             <View style={styles.blankSpace} />
             <PrimaryButton
                 onPress={() => {
-                    // console.warn('steps: ', completedRef.current.length)
+                    
                 }}
                 label={'Selecionar'}
             />

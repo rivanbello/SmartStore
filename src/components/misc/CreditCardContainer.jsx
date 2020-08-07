@@ -4,17 +4,21 @@ import { COLORS } from '../../constants';
 import { Row, Column } from '../layout';
 import { AntDesign } from '@expo/vector-icons';
 
-const CreditCardContainer = ({ card = {}, onPress, removeCard }) => {
+const CreditCardContainer = ({ card = {}, onPress, selected }) => {
     return (
-        card && card.number && <TouchableOpacity>
-            <Row style={styles.container}>
+        card && card.number &&
+        <TouchableOpacity onPress={onPress}>
+            <Row style={[
+                styles.container,
+                selected && styles.selectedContainer,
+            ]}>
             <AntDesign
                 name={'creditcard'}
                 size={30}
-                color={COLORS.primary}
+                color={selected ? '#fff' : COLORS.primary}
             />
-            <Text style={styles.cardName}>{card.name}</Text>
-            <Text style={styles.cardNumber}>•••• {card.number.substring(card.number.length - 4)}</Text>
+            <Text style={[ styles.cardName, selected && styles.selectedText ]}>{card.name}</Text>
+            <Text style={[ styles.cardNumber, selected && styles.selectedText ]}>•••• {card.number.substring(card.number.length - 4)}</Text>
             </Row>
         </TouchableOpacity>
     );
@@ -33,12 +37,19 @@ const styles = StyleSheet.create({
     },
     cardName: {
         color: COLORS.gray,
-        textAlign: 'left',
+        textAlign: 'center',
+        maxWidth: 120
     },
     cardNumber: {
         color: COLORS.darkestGray,
         textAlign: 'left',
     },
+    selectedContainer: {
+        backgroundColor: COLORS.primary,
+    },
+    selectedText: {
+        color: 'white',
+    }
 })
 
 export default CreditCardContainer;
