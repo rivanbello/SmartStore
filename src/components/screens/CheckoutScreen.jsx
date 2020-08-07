@@ -11,41 +11,49 @@ import BottomDrawer from '../drawers/BottomDrawer';
 import * as SecureStore from 'expo-secure-store';
 import pay from '../../client/pay';
 
-const CheckoutScreen = ({ navigation }) => {
+const CheckoutScreen = ({ navigation, setError = () => {}, setSuccess = () => {} }) => {
     const [userInfo, setUserInfo] = useContext(UserContext);
     const [cartInfo, setCartInfo] = useContext(CartContext);
     const [loading, setLoading] = useState(false);
     const [drawerIsOpened, setDrawerIsOpened] = useState(false);
     const [height] = useState(new Animated.Value(0));
-    const [card, setCard] = useState({});
-    const getCard = useCallback(async () => {
-        const card = (await SecureStore.getItemAsync('qwe'));
-        setCard(JSON.parse(card));
+    const [currentCard, setCurrentCard] = useState({});
+    const [storedCards, setStoredCards] = useState([]);
+
+    useEffect(() => {
+        SecureStore.getItemAsync('qwe')
+            .then(cards => 
+                Array.isArray(JSON.parse(cards)) && setStoredCards(cards)
+            );
     }, []);
 
-    const removeCard = useCallback(async () => {
-        setCard({});
+    const storeCards = useCallback(async (cards) => {
+        if (Array.isArray(cards)) {
+            await SecureStore.setItemAsync('qwe', JSON.stringify(cards))
+            setStoredCards(cards);
+        }
     }, []);
-    const saveCard = useCallback(async ({ number, cvv, expMonth, expYear, name, document, brand, street, addressNumber, district, city, state, postalCode }) => {
-        const cardToSave = {
-            number,
-            cvv,
-            document,
-            expMonth,
-            expYear,
-            name,
-            brand,
-            street,
-            addressNumber,
-            postalCode,
-            district,
-            city,
-            state,
-        };
-        await SecureStore.setItemAsync('qwe', JSON.stringify(cardToSave));
-        setCard(cardToSave)
-    } , []);
-  useEffect(() => { getCard() }, [])
+
+    const saveCurrentCard = useCallback(async (card) => {
+        let aux = storedCards;
+        if (aux.filter(({ number }) => number === card.number).length > 0) {
+            setError('Este cartão já foi adicionado.')
+            return;
+        }
+        aux.unshift(card);
+        await storeCards(aux);
+        setCurrentCard(card);
+        setSuccess('O cartão foi adicionado com sucesso!');
+    }, []);
+    
+    const removeCard = useCallback(async ({ cardNumber } = {}) => {
+        if (!cardNumber) return;
+        let aux = storedCards.filter((card) => card.number !== cardNumber);
+        await storeCards(aux);
+        setCurrentCard(aux[0]);
+        setSuccess('O cartão foi removido com sucesso!');
+    }, []);
+
 
     const getTotalAmount = () => 
         cartInfo.items
@@ -176,38 +184,37 @@ const handleOnPress = useCallback(async ({
             {console.warn(userInfo.email)}
             <CheckoutFooter
                 loading={loading}
-                getCard={() => getCard()}
-                onPress={() => card && handleOnPress({
+                onPress={() => currentCard && handleOnPress({
                     amount: getTotalAmount(),
                     // birthDate: getBirthDate(new Date(userInfo.nascimento.seconds * 1000)),
                     birthDate: getBirthDate(new Date('1995-12-17T03:24:00')),
-                    cardCvv: card.cvv,
-                    cardExpirationMonth: card.expMonth,
-                    cardExpirationYear: card.expYear,
-                    documentNumber: card.document,
+                    cardCvv: currentCard.cvv,
+                    cardExpirationMonth: currentCard.expMonth,
+                    cardExpirationYear: currentCard.expYear,
+                    documentNumber: currentCard.document,
                     documentType: 'CPF',
-                    cardHolderCPF: card.document,
-                    cardHolderName: card.name,
-                    cardNumber: card.number,
-                    city: card.city,
-                    district: card.district,
-                    number: card.addressNumber,
+                    cardHolderCPF: currentCard.document,
+                    cardHolderName: currentCard.name,
+                    cardNumber: currentCard.number,
+                    city: currentCard.city,
+                    district: currentCard.district,
+                    number: currentCard.addressNumber,
                     phoneAreaCode: userInfo.telefone.slice(0, 2),
                     phoneNumber: userInfo.telefone.slice(2),
-                    postalCode: card.postalCode,
+                    postalCode: currentCard.postalCode,
                     senderEmail: userInfo.email,
-                    senderName: card.name,
-                    state: card.state,
-                    street: card.street,
+                    senderName: currentCard.name,
+                    state: currentCard.state,
+                    street: currentCard.street,
             })}
-            card={card}
+            card={currentCard}
             removeCard={() => removeCard()}
             setDrawerIsOpened={() => {
                     setDrawerIsOpened(!drawerIsOpened);
                 }}
                 total={getTotalAmount()}
             />
-            {drawerIsOpened && <BottomDrawer height={height} saveCard={saveCard} onFormSubmit={() => setDrawerIsOpened(false)} />}
+            {drawerIsOpened && <BottomDrawer height={height} saveCard={saveCurrentCard} onFormSubmit={() => setDrawerIsOpened(false)} />}
         </Screen>
     );
 };
