@@ -42,7 +42,7 @@ const firebaseLogin = ({ email, password }) => {
       return getUserInfo({ email });
     })
     .catch((error) => {
-      if(String(error).includes('network')) {
+      if(String(error).includes('network') || String(error).includes('could not reach')) {
         throw new Error('Erro de conexão. Verifique sua internet e tente novamente.');
     } else if(String(error).includes('record') || String(error).includes('invalid')) {
       throw new Error('Credenciais inválidas.')

@@ -10,6 +10,7 @@ import { COLORS } from '../../constants';
 import BottomDrawer from '../drawers/BottomDrawer';
 import * as SecureStore from 'expo-secure-store';
 import pay from '../../client/pay';
+import CreditCardForm from '../forms/CreditCardForm';
 
 const CheckoutScreen = ({ navigation, setError = () => {}, setSuccess = () => {} }) => {
     const [userInfo, setUserInfo] = useContext(UserContext);
@@ -18,6 +19,7 @@ const CheckoutScreen = ({ navigation, setError = () => {}, setSuccess = () => {}
     const [drawerIsOpened, setDrawerIsOpened] = useState(false);
     const [height] = useState(new Animated.Value(0));
     const [currentCard, setCurrentCard] = useState({});
+    const [showCardForm, setShowCardForm] = useState(false);
     const [storedCards, setStoredCards] = useState([]);
 
     useEffect(() => {
@@ -53,11 +55,12 @@ const CheckoutScreen = ({ navigation, setError = () => {}, setSuccess = () => {}
     }, []);
     
     const removeCard = useCallback(async ({ cardNumber } = {}) => {
-        if (!cardNumber) return;
-        let aux = storedCards.filter((card) => card.number !== cardNumber);
-        await storeCards(aux);
-        setCurrentCard(aux[0]);
-        setSuccess('O cartão foi removido com sucesso!');
+        // if (!cardNumber) return;
+        // let aux = storedCards.filter((card) => card.number !== cardNumber);
+        // await storeCards(aux);
+        // setCurrentCard(aux[0]);
+        // setSuccess('O cartão foi removido com sucesso!');
+        setCurrentCard({})
     }, []);
 
 
@@ -151,6 +154,8 @@ const handleOnPress = useCallback(async ({
 }, [])
 
     return (
+        <>
+        {!showCardForm &&
         <Screen>
             {drawerIsOpened && <TouchableWithoutFeedback
                 onPress={() => setDrawerIsOpened(!drawerIsOpened)}
@@ -189,38 +194,29 @@ const handleOnPress = useCallback(async ({
             </ScrollView>
             <CheckoutFooter
                 loading={loading}
-                onPress={() => currentCard && handleOnPress({
-                    amount: getTotalAmount(),
-                    // birthDate: getBirthDate(new Date(userInfo.nascimento.seconds * 1000)),
-                    birthDate: getBirthDate(new Date('1995-12-17T03:24:00')),
-                    cardCvv: currentCard.cvv,
-                    cardExpirationMonth: currentCard.expMonth,
-                    cardExpirationYear: currentCard.expYear,
-                    documentNumber: currentCard.document,
-                    documentType: 'CPF',
-                    cardHolderCPF: currentCard.document,
-                    cardHolderName: currentCard.name,
-                    cardNumber: currentCard.number,
-                    city: currentCard.city,
-                    district: currentCard.district,
-                    number: currentCard.addressNumber,
-                    phoneAreaCode: userInfo.telefone.slice(0, 2),
-                    phoneNumber: userInfo.telefone.slice(2),
-                    postalCode: currentCard.postalCode,
-                    senderEmail: userInfo.email,
-                    senderName: currentCard.name,
-                    state: currentCard.state,
-                    street: currentCard.street,
-            })}
-            card={currentCard}
-            removeCard={() => removeCard()}
-            setDrawerIsOpened={() => {
-                    setDrawerIsOpened(!drawerIsOpened);
+                card={currentCard}
+                removeCard={() => removeCard()}
+                onPress={() => {
+                    if (currentCard) setDrawerIsOpened(!drawerIsOpened);
+                    else setShowCardForm(true);
                 }}
                 total={getTotalAmount()}
             />
-            {drawerIsOpened && <BottomDrawer height={height} saveCard={saveCurrentCard} onFormSubmit={() => setDrawerIsOpened(false)} />}
-        </Screen>
+            {drawerIsOpened &&
+                <BottomDrawer
+                    setShowCardForm={setShowCardForm}
+                    cards={storedCards}
+                    height={height}
+                    onFormSubmit={() => setDrawerIsOpened(false)}
+                    removeCard={removeCard}
+                    setCurrentCard={setCurrentCard}
+                />}
+        </Screen>}
+        {showCardForm && <CreditCardForm
+            handleGoBack={() => setShowCardForm(false)}
+            saveCard={saveCurrentCard}
+        />}
+        </>
     );
 };
 

@@ -1,34 +1,18 @@
 import React from 'react';
-import { Text, StyleSheet, TouchableOpacity } from 'react-native';
+import { StyleSheet, TouchableOpacity } from 'react-native';
 import { COLORS } from '../../constants';
-import { Row, Column } from '../layout';
+import { Row } from '../layout';
 import { Link } from '../buttons';
-import { AntDesign } from '@expo/vector-icons';
+import { MaterialCommunityIcons } from '@expo/vector-icons';
     
-const PaymentMethodCard = ({ card = {}, onPress, removeCard }) => {
+const AddNewCardContainer = ({ card = {}, onPress, removeCard }) => {
     return (
-        card && card.number && <Row style={styles.container}>
-            <AntDesign
-                name={'creditcard'}
-                size={30}
-                color={COLORS.primary}
-            />
-            <Column style={styles.textsContainer}>
-                <Text style={styles.cardName}>{card.name}</Text>
-                <Text style={styles.cardNumber}>•••• {card.number.substring(card.number.length - 4)}</Text>
-            </Column>
-            <Link
-                label="Trocar"
-                labelStyle={{ color: COLORS.primary, fontSize: 14 }}
-                onPress={() => onPress()}
-            />
-        </Row>
-        || <TouchableOpacity
+        <TouchableOpacity
             onPress={() => onPress()}
         >
             <Row style={{ ...styles.container, justifyContent: 'flex-start' }}>
-                <AntDesign
-                    name={'creditcard'}
+                <MaterialCommunityIcons
+                    name="shape-rectangle-plus"
                     size={30}
                     color={COLORS.primary}
                 />
@@ -63,4 +47,4 @@ const styles = StyleSheet.create({
     },
 })
 
-export default PaymentMethodCard;
+export default AddNewCardContainer;

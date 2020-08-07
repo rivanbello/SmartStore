@@ -1,14 +1,16 @@
-import React, { useCallback, useEffect } from 'react';
+import React from 'react';
 import { Animated, StyleSheet, Text } from 'react-native';
 import { SCREEN_WIDTH } from '../../constants';
-import CreditCardForm from '../forms/CreditCardForm';
+import CardsDrawer from '../forms/CardsDrawer';
 
-const BottomDrawer = ({ children, height, onFormSubmit, saveCard }) => {
+const BottomDrawer = ({ cards = [], height, onFormSubmit, setShowCardForm }) => {
     
     return (
         <Animated.View style={{ ...styles.container, height: height }}>
-            <CreditCardForm
-                onSubmit={(card) => { saveCard(card); onFormSubmit()} }
+            <CardsDrawer
+                onPressAddNewCard={() => setShowCardForm(true)}
+                cards={cards}
+                onSubmit={(card) => { onFormSubmit()} }
             />
         </Animated.View>
     );
