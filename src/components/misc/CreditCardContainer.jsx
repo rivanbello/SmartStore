@@ -1,7 +1,7 @@
 import React from 'react';
 import { Text, StyleSheet, TouchableOpacity } from 'react-native';
 import { COLORS } from '../../constants';
-import { Row, Column } from '../layout';
+import { Row } from '../layout';
 import { AntDesign } from '@expo/vector-icons';
 
 const CreditCardContainer = ({ card = {}, onPress, selected }) => {

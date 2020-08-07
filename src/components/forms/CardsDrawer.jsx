@@ -5,8 +5,14 @@ import { validCreditCard } from './cardFormValidators';
 import { PrimaryButton, Link } from '../buttons';
 import { CreditCardContainer, AddNewCardContainer } from '../misc';
 
-const CardsDrawer = ({ onSubmit, cards = [], onPressAddNewCard, selectedCardNumber }) => {
-    const [selected, setSelected] = useState(cards.filter((card) => card.number === selectedCardNumber));
+const CardsDrawer = ({
+        onSubmit,
+        cards = [],
+        onPressAddNewCard,
+        selectedCardNumber,
+        setCurrentCard
+    }) => {
+    const [selected, setSelected] = useState(cards.filter((card) => card.number === selectedCardNumber)[0]);
     const completedRef = useRef([]);
     const handleSubmit = () => {
         let i = 0;
@@ -33,7 +39,7 @@ const CardsDrawer = ({ onSubmit, cards = [], onPressAddNewCard, selectedCardNumb
             <View style={styles.blankSpace} />
             <PrimaryButton
                 onPress={() => {
-                    
+                    setCurrentCard(selected)
                 }}
                 label={'Selecionar'}
             />

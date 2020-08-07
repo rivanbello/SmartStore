@@ -3,12 +3,14 @@ import { Animated, StyleSheet, Text } from 'react-native';
 import { SCREEN_WIDTH } from '../../constants';
 import CardsDrawer from '../forms/CardsDrawer';
 
-const BottomDrawer = ({ cards = [], height, onFormSubmit, setShowCardForm }) => {
+const BottomDrawer = ({ cards = [], height, onFormSubmit, setShowCardForm, currentCard, setCurrentCard }) => {
     
     return (
         <Animated.View style={{ ...styles.container, height: height }}>
             <CardsDrawer
+                setCurrentCard={setCurrentCard}
                 onPressAddNewCard={() => setShowCardForm(true)}
+                selectedCardNumber={currentCard.number}
                 cards={cards}
                 onSubmit={(card) => { onFormSubmit()} }
             />

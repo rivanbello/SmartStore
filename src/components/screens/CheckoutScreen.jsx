@@ -204,12 +204,16 @@ const handleOnPress = useCallback(async ({
             />
             {drawerIsOpened &&
                 <BottomDrawer
+                    currentCard={currentCard}
                     setShowCardForm={setShowCardForm}
                     cards={storedCards}
                     height={height}
                     onFormSubmit={() => setDrawerIsOpened(false)}
                     removeCard={removeCard}
-                    setCurrentCard={setCurrentCard}
+                    setCurrentCard={(v) => {
+                        setCurrentCard(v)
+                        setDrawerIsOpened(false)
+                    }}
                 />}
         </Screen>}
         {showCardForm && <CreditCardForm
