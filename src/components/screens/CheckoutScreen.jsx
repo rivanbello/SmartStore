@@ -25,8 +25,8 @@ const CheckoutScreen = ({ navigation, setError = () => {}, setSuccess = () => {}
             .then(cards => {
                     let aux = JSON.parse(cards)
                     if (aux) {
-                        setStoredCards(JSON.parse(cards))
-                        setCurrentCard((JSON.parse(cards))[0])
+                        setStoredCards(aux)
+                        cards.length > 0 && setCurrentCard(aux[0])
                     }
                 }
             );
@@ -41,6 +41,7 @@ const CheckoutScreen = ({ navigation, setError = () => {}, setSuccess = () => {}
 
     const saveCurrentCard = useCallback(async (card) => {
         let aux = storedCards;
+        console.warn(aux)
         if (aux.filter(({ number }) => number === card.number).length > 0) {
             setError('Este cartão já foi adicionado.')
             return;
