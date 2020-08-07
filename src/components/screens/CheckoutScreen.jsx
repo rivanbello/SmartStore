@@ -22,8 +22,13 @@ const CheckoutScreen = ({ navigation, setError = () => {}, setSuccess = () => {}
 
     useEffect(() => {
         SecureStore.getItemAsync('qwe')
-            .then(cards => 
-                Array.isArray(JSON.parse(cards)) && setStoredCards(cards)
+            .then(cards => {
+                    let aux = JSON.parse(cards)
+                    if (aux) {
+                        setStoredCards(JSON.parse(cards))
+                        setCurrentCard((JSON.parse(cards))[0])
+                    }
+                }
             );
     }, []);
 
@@ -181,7 +186,6 @@ const handleOnPress = useCallback(async ({
                 />
             )}
             </ScrollView>
-            {console.warn(userInfo.email)}
             <CheckoutFooter
                 loading={loading}
                 onPress={() => currentCard && handleOnPress({
