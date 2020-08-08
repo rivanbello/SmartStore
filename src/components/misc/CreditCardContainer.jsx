@@ -26,6 +26,7 @@ const CreditCardContainer = ({ card = {}, onPress, selected }) => {
 
 const styles = StyleSheet.create({
     container: {
+        marginBottom: 5,
         backgroundColor: COLORS.lightLilac,
         height: 50,
         borderRadius: 10,

@@ -1,56 +1,49 @@
-import React, { useState, useRef } from 'react';
-import { View, StyleSheet, TextInput, Text } from 'react-native';
-import { COLORS } from '../../constants';
+import React, { useState } from 'react';
+import { View, StyleSheet, TextInput, Text, Animated } from 'react-native';
+import { COLORS, SCREEN_WIDTH } from '../../constants';
 import { validCreditCard } from './cardFormValidators';
 import { PrimaryButton, Link } from '../buttons';
 import { CreditCardContainer, AddNewCardContainer } from '../misc';
 
 const CardsDrawer = ({
-        onSubmit,
         cards = [],
         onPressAddNewCard,
+        height,
         selectedCardNumber,
-        setCurrentCard
+        setCurrentCard,
+        removeCard,
     }) => {
-    const [selected, setSelected] = useState(cards.filter((card) => card.number === selectedCardNumber)[0]);
-    const completedRef = useRef([]);
-    const handleSubmit = () => {
-        let i = 0;
-        if (completedRef.current.length !== 12) return false;
-        for (i = 0; i < completedRef.current.length; i++) if (!completedRef.current[i]) return false
-        if (i === completedRef.current.length) return true;
-    };
-    // useEffect(() => console.warn(completedRef.current), [completedRef.current.length]);
+    const [selected, setSelected] = useState(cards.filter((card) => card.number === selectedCardNumber)[0] || {});
     return (
-        <>
+        <Animated.View style={{ ...styles.container, height: height }}>
             <Text style={styles.title}>Trocar o cartão</Text>
             {cards.map((card) => 
                 <CreditCardContainer
-                    onPress={() => {}}
                     card={card}
                     selected={selected.number === card.number}
                     onPress={() => setSelected(card)}
                 />
             )}
-            <View style={styles.blankSpace} />
             <AddNewCardContainer
                 onPress={onPressAddNewCard}
             />
             <View style={styles.blankSpace} />
-            <PrimaryButton
-                onPress={() => {
-                    setCurrentCard(selected)
-                }}
-                label={'Selecionar'}
-            />
-            <Link
-                onPress={() => {
-                    // console.warn('steps: ', completedRef.current.length)
-                }}
-                labelStyle={{ color: COLORS.primary }}
-                label={'Remover cartão'}
-            />
-        </>
+            {selected && <>
+                <PrimaryButton
+                    onPress={() => {
+                        setCurrentCard(selected)
+                    }}
+                    label={'Selecionar'}
+                />
+                <Link
+                    onPress={(selected) => {
+                        removeCard(selected)
+                    }}
+                    labelStyle={{ color: COLORS.primary }}
+                    label={'Remover cartão'}
+                />
+            </>}
+        </Animated.View>
     );
 };
 
@@ -81,6 +74,14 @@ const CreditCardFormItem = ({ error, placeholder, validator, onComplete, index, 
 };
 
 const styles = StyleSheet.create({
+    container: {
+        width: SCREEN_WIDTH,
+        position: 'absolute',
+        bottom: 0,
+        zIndex: 10,
+        padding: 30,
+        backgroundColor: '#fff',
+    },
     title: {
         fontWeight: 'bold',
         alignSelf: 'center',

@@ -3,14 +3,13 @@ import { ScrollView, Text, StyleSheet, View, Animated, TouchableWithoutFeedback 
 import Screen from '../screens/Screen';
 import ItemWithoutSpinner from '../list/ItemWithoutSpinner';
 import { CheckoutFooter } from '../footers';
-import { getBirthDate } from '../../utils';
 import { UserContext, CartContext } from '../../context';
 import { StackHeader } from '../headers';
 import { COLORS } from '../../constants';
-import BottomDrawer from '../drawers/BottomDrawer';
 import * as SecureStore from 'expo-secure-store';
 import pay from '../../client/pay';
 import CreditCardForm from '../forms/CreditCardForm';
+import CardsDrawer from '../forms/CardsDrawer';
 
 const CheckoutScreen = ({ navigation, setError = () => {}, setSuccess = () => {} }) => {
     const [userInfo, setUserInfo] = useContext(UserContext);
@@ -62,7 +61,6 @@ const CheckoutScreen = ({ navigation, setError = () => {}, setSuccess = () => {}
         // setSuccess('O cartão foi removido com sucesso!');
         setCurrentCard({})
     }, []);
-
 
     const getTotalAmount = () => 
         cartInfo.items
@@ -203,9 +201,9 @@ const handleOnPress = useCallback(async ({
                 total={getTotalAmount()}
             />
             {drawerIsOpened &&
-                <BottomDrawer
-                    currentCard={currentCard}
-                    setShowCardForm={setShowCardForm}
+                <CardsDrawer
+                    selectedCardNumber={currentCard.number}
+                    onPressAddNewCard={setShowCardForm}
                     cards={storedCards}
                     height={height}
                     onFormSubmit={() => setDrawerIsOpened(false)}

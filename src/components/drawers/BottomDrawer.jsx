@@ -1,11 +1,16 @@
 import React from 'react';
-import { Animated, StyleSheet, Text } from 'react-native';
+import { Animated, StyleSheet } from 'react-native';
 import { SCREEN_WIDTH } from '../../constants';
 import CardsDrawer from '../forms/CardsDrawer';
 
-const BottomDrawer = ({ cards = [], height, onFormSubmit, setShowCardForm, currentCard, setCurrentCard }) => {
-    
-    return (
+const BottomDrawer = ({
+        cards = [],
+        height,
+        onFormSubmit,
+        setShowCardForm,
+        currentCard,
+        setCurrentCard
+    }) => (
         <Animated.View style={{ ...styles.container, height: height }}>
             <CardsDrawer
                 setCurrentCard={setCurrentCard}
@@ -16,7 +21,6 @@ const BottomDrawer = ({ cards = [], height, onFormSubmit, setShowCardForm, curre
             />
         </Animated.View>
     );
-};
 
 const styles = StyleSheet.create({
     container: {
