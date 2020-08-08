@@ -34,6 +34,7 @@ const CheckoutScreen = ({ navigation, setError = () => {}, setSuccess = () => {}
     }, []);
 
     const storeCards = useCallback(async (cards) => {
+        console.warn(cards.length)
         if (Array.isArray(cards)) {
             await SecureStore.setItemAsync('qwe', JSON.stringify(cards))
             setStoredCards(cards);
@@ -54,12 +55,11 @@ const CheckoutScreen = ({ navigation, setError = () => {}, setSuccess = () => {}
     }, []);
     
     const removeCard = useCallback(async ({ cardNumber } = {}) => {
-        // if (!cardNumber) return;
-        // let aux = storedCards.filter((card) => card.number !== cardNumber);
-        // await storeCards(aux);
-        // setCurrentCard(aux[0]);
-        // setSuccess('O cartão foi removido com sucesso!');
-        setCurrentCard({})
+        if (!cardNumber) return;
+        let aux = storedCards.filter((card) => card.number !== cardNumber);
+        await storeCards(aux);
+        setCurrentCard(aux[0] || {});
+        setSuccess('O cartão foi removido com sucesso!');
     }, []);
 
     const getTotalAmount = () => 
@@ -203,11 +203,11 @@ const handleOnPress = useCallback(async ({
             {drawerIsOpened &&
                 <CardsDrawer
                     selectedCardNumber={currentCard.number}
-                    onPressAddNewCard={setShowCardForm}
+                    onPressAddNewCard={() => setShowCardForm(true)}
                     cards={storedCards}
                     height={height}
                     onFormSubmit={() => setDrawerIsOpened(false)}
-                    removeCard={removeCard}
+                    removeCard={(cardNumber) => removeCard(cardNumber)}
                     setCurrentCard={(v) => {
                         setCurrentCard(v)
                         setDrawerIsOpened(false)

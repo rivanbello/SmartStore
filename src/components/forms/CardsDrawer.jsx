@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
-import { View, StyleSheet, TextInput, Text, Animated } from 'react-native';
+import { View, StyleSheet, Text, Animated } from 'react-native';
 import { COLORS, SCREEN_WIDTH } from '../../constants';
 import { validCreditCard } from './cardFormValidators';
 import { PrimaryButton, Link } from '../buttons';
 import { CreditCardContainer, AddNewCardContainer } from '../misc';
+import SimpleModal from '../modal/SimpleModal';
 
 const CardsDrawer = ({
         cards = [],
@@ -14,6 +15,7 @@ const CardsDrawer = ({
         removeCard,
     }) => {
     const [selected, setSelected] = useState(cards.filter((card) => card.number === selectedCardNumber)[0] || {});
+    const [modalOpen, setModalOpen] = useState(false);
     return (
         <Animated.View style={{ ...styles.container, height: height }}>
             <Text style={styles.title}>Trocar o cartão</Text>
@@ -28,7 +30,7 @@ const CardsDrawer = ({
                 onPress={onPressAddNewCard}
             />
             <View style={styles.blankSpace} />
-            {selected && <>
+            {cards.length > 0 && selected && <>
                 <PrimaryButton
                     onPress={() => {
                         setCurrentCard(selected)
@@ -36,41 +38,35 @@ const CardsDrawer = ({
                     label={'Selecionar'}
                 />
                 <Link
-                    onPress={(selected) => {
-                        removeCard(selected)
-                    }}
+                    onPress={() => setModalOpen(true)}
                     labelStyle={{ color: COLORS.primary }}
                     label={'Remover cartão'}
                 />
             </>}
+            {modalOpen && <SimpleModal
+                title="Tem certeza que deseja remover este cartão?"
+                style={{
+                    top: '30%',
+                    left: 20,
+                    width: '100%',
+                }}
+                options={[
+                    {
+                        label: "Cancelar",
+                        onPress: () => setModalOpen(false),
+                    },
+                    {
+                        label: "Remover",
+                        color: COLORS.primary,
+                        onPress: () => {
+                            removeCard({ cardNumber: selected && selected.number })
+                            setModalOpen(false);
+                        }
+                    },
+                ]}
+            />}
         </Animated.View>
     );
-};
-
-const CreditCardFormItem = ({ error, placeholder, validator, onComplete, index, onChange, maxLength, transform }) => {
-    const [showError, setShowError] = useState(false);
-    const [value, setValue] = useState('');
-    const handleOnChangeValue = (v) => {
-        setShowError(!validator(v));
-        onChange(v);
-        setValue(v);
-        onComplete(validator(v), index);
-    };
-    return (
-        <View>
-            {/* {console.warn(value)} */}
-            <TextInput
-                placeholder={placeholder}
-                autoCapitalize={(placeholder === 'Nome impresso' || placeholder === 'Estado') && 'characters'}
-                onChangeText={(v) => handleOnChangeValue(v)}
-                style={styles.input}
-                value={value}
-                maxLength={maxLength}
-            />
-            <View style={styles.divider} />
-            <Text style={styles.error}>{showError && error}</Text>
-        </View>
-    )
 };
 
 const styles = StyleSheet.create({
