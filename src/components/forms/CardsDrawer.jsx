@@ -30,19 +30,21 @@ const CardsDrawer = ({
                 onPress={onPressAddNewCard}
             />
             <View style={styles.blankSpace} />
-            {cards.length > 0 && selected && <>
-                <PrimaryButton
-                    onPress={() => {
-                        setCurrentCard(selected)
-                    }}
-                    label={'Selecionar'}
-                />
-                <Link
-                    onPress={() => setModalOpen(true)}
-                    labelStyle={{ color: COLORS.primary }}
-                    label={'Remover cartão'}
-                />
-            </>}
+            {cards.length > 0 && selected &&
+                <View style={styles.buttonsContainer}>
+                    <PrimaryButton
+                        onPress={() => {
+                            setCurrentCard(selected)
+                        }}
+                        label={'Selecionar'}
+                    />
+                    <Link
+                        onPress={() => setModalOpen(true)}
+                        labelStyle={{ color: COLORS.primary }}
+                        label={'Remover cartão'}
+                    />
+                </View>
+            }
             {modalOpen && <SimpleModal
                 title="Tem certeza que deseja remover este cartão?"
                 style={{
@@ -77,6 +79,10 @@ const styles = StyleSheet.create({
         zIndex: 10,
         padding: 30,
         backgroundColor: '#fff',
+    },
+    buttonsContainer: {
+        flex: 1,
+        // backgroundColor: 'red',
     },
     title: {
         fontWeight: 'bold',

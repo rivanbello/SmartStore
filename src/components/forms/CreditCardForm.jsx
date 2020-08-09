@@ -11,7 +11,7 @@ const CreditCardForm = ({ handleGoBack, saveCard }) => {
     const checkIfFormIsComplete = () => {
         const cardInfoArr = Object.values(cardInfo);
         let i = 0;
-        if (cardInfoArr.length !== 12) return false;
+        if (cardInfoArr.length !== formItems.length) return false;
         for (i = 0; i < cardInfoArr.length; i++) if (!cardInfoArr[i]) return false
         if (i === cardInfoArr.length) return true;
     };

@@ -27,7 +27,7 @@ const CheckoutScreen = ({ navigation, setError = () => {}, setSuccess = () => {}
                     let aux = JSON.parse(cards)
                     if (aux) {
                         setStoredCards(aux)
-                        cards.length > 0 && setCurrentCard(aux[0])
+                        cards.length > 0 && setCurrentCard(aux[0] || {})
                     }
                 }
             );
@@ -76,7 +76,7 @@ const CheckoutScreen = ({ navigation, setError = () => {}, setSuccess = () => {}
             //     setDrawerIsOpened(false);
             //     return true; //disable default BackHandler behavior
             // });
-            Animated.timing(height, { toValue: 320, duration: 300 }).start()
+            Animated.timing(height, { toValue: 320, duration: 300, useNativeDriver: false }).start()
         // } else { 
         //     BackHandler.addEventListener('hardwareBackPress', function() { navigation.goBack(); BackHandler.removeEventListener('hardwareBackPress'); } )
         //     height.setValue(0);
@@ -195,7 +195,7 @@ const handleOnPress = useCallback(async ({
                 card={currentCard}
                 removeCard={() => removeCard()}
                 onPress={() => {
-                    if (currentCard) setDrawerIsOpened(!drawerIsOpened);
+                    if (currentCard.number) setDrawerIsOpened(!drawerIsOpened);
                     else setShowCardForm(true);
                 }}
                 total={getTotalAmount()}

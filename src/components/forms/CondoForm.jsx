@@ -23,10 +23,12 @@ const CondoForm = ({ data, setHideHeader, setFormValue }) => {
     searchIsActive && Animated.timing(searchWidth, {
       toValue: 100,
       duration: 300,
+      useNativeDriver: false,
     }).start();
     !searchIsActive && Animated.timing(searchWidth, {
       toValue: 34,
       duration: 300,
+      useNativeDriver: false,
     }).start();
   }, [searchIsActive]);
   return (data &&

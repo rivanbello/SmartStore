@@ -100,6 +100,7 @@ const RegisterScreen = ({ navigation }) => {
         toValue: 0,
         delay: 2000,
         duration: 1000,
+        useNativeDriver: false,
       }).start();
   }, [fadeOpacity, setRegisterError])
 
