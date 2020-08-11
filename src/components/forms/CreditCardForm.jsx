@@ -19,11 +19,11 @@ const CreditCardForm = ({ handleGoBack, saveCard }) => {
         const value = cardInfo[key];
         const item = formItems.filter(({ key: itemKey }) => key === itemKey)[0];
         const { validator } = item || {};
-        if (!item[key]
-        || (typeof validator === 'function' && !validator(item)))
+        if (!value
+        || (typeof validator === 'function' && !validator(value)))
             return false
-        if (i === cardInfoArr.length) return true;
-      }
+        }
+      return true;
     };
     return (
         <Screen>
