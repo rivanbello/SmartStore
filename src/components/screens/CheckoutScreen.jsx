@@ -87,26 +87,46 @@ const CheckoutScreen = ({ navigation, setError = () => {}, setSuccess = () => {}
 const handleOnPress = useCallback(async ({
     amount,
     birthdate,
+    cvv: cardCvv,
+    expMonth: cardExpirationMonth,
+    expYear: cardExpirationYear,
+    document: documentNumber,
+    name: cardHolderName,
+    email: cardHolderEmail,
+    city,
+    district,
+    number: cardNumber,
+    addressNumber,
+    postalCode,
+    state,
+    street,
+}) => {
+  const items = cartInfo.items
+        .filter(({ qty }) => qty > 0)
+        .map(({ price, qty: quantity, id: productId }) => ({
+            productId,
+            quantity,
+            price,
+        }));
+  console.warn(amount,
+    userInfo.condo.id,
+    userInfo.condo.token,
+    birthdate,
+    items,
     cardCvv,
     cardExpirationMonth,
     cardExpirationYear,
     documentNumber,
-    documentType,
-    cardHolderCPF,
     cardHolderName,
-    cardHolderEmail,
     cardNumber,
     city,
     district,
-    number,
-    phoneAreaCode,
-    phoneNumber,
+    addressNumber,
     postalCode,
-    senderEmail,
-    senderName,
+    cardHolderEmail,
+    cardHolderName,
     state,
-    street,
-}) => {
+    street,)
     try {
         const items = cartInfo.items
         .filter(({ qty }) => qty > 0)
@@ -126,18 +146,18 @@ const handleOnPress = useCallback(async ({
             cardExpirationMonth,
             cardExpirationYear,
             documentNumber,
-            documentType,
-            cardHolderCPF,
+            documentType: 'CPF',
+            cardHolderCPF: documentNumber,
             cardHolderName,
             cardNumber,
             city,
             district,
-            number,
-            phoneAreaCode,
-            phoneNumber,
+            number: addressNumber,
+            phoneAreaCode: userInfo.telefone && userInfo.telefone.slice(0, 2),
+            phoneNumber: userInfo.telefone && userInfo.telefone.slice(2),
             postalCode,
-            senderEmail,
-            senderName,
+            senderEmail: cardHolderEmail,
+            senderName: cardHolderName,
             state,
             street,
         });
@@ -195,7 +215,7 @@ const handleOnPress = useCallback(async ({
                 loading={loading}
                 card={currentCard}
                 removeCard={() => removeCard()}
-                onSubmit={() => handleOnPress(currentCard || {})}
+                onSubmit={() => handleOnPress({...currentCard, amount: getTotalAmount() })}
                 onPress={() => {
                     if (currentCard.number) setDrawerIsOpened(!drawerIsOpened);
                     else setShowCardForm(true);

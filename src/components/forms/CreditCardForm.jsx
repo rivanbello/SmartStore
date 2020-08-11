@@ -31,7 +31,7 @@ const CreditCardForm = ({ handleGoBack, saveCard }) => {
                 handleGoBack={() => handleGoBack()}
                 showShoppingBag={false}
             />
-            <ScrollView style={styles.container}>
+            <ScrollView style={styles.container} contentContainerStyle={styles.contentContainer}>
             <Text style={styles.title}>Adicionar um cartão</Text>
             <Text style={styles.subtitle}>Insira todos os dados de acordo com o cadastro no banco que emitiu o cartão</Text>
             {formItems.map(({ placeholder, error, validator, key, maxLength, transform, autoCapitalize }, i) =>
@@ -59,6 +59,7 @@ const CreditCardForm = ({ handleGoBack, saveCard }) => {
                             expMonth: cardInfo.month,
                             expYear: cardInfo.year,
                             name: cardInfo.name,
+                            email: cardInfo.email,
                             street: cardInfo.street,
                             postalCode: cardInfo.postalCode,
                             birthdate: cardInfo.birthdate,
@@ -106,6 +107,9 @@ const CreditCardFormItem = ({ error, placeholder, validator, onChange, maxLength
 const styles = StyleSheet.create({
     container: {
         paddingVertical: 25,
+    },
+    contentContainer: {
+      paddingBottom: 50,
     },
     title: {
         fontWeight: 'bold',
