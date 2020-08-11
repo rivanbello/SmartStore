@@ -26,7 +26,7 @@ export default function App() {
   const [cartInfo, setCartInfo] = useState({ items: [] });
   const autoLogin = useCallback(async ({ userInfo }) => {
     const storedInfo = JSON.parse(await AsyncStorage.getItem('userInfo'));
-    if (storedInfo.email && storedInfo.senha) {
+    if (storedInfo && storedInfo.email && storedInfo.senha) {
       try {
         const {
           name: nome,

@@ -9,7 +9,7 @@ import {
 } from 'react-native';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import { COLORS } from '../../constants';
-import { floatingLabel } from './animations';
+import { floatingLabel } from './Animations';
 import { phoneNumberMask } from './masks';
 
 const FormItem = ({

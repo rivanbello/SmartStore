@@ -7,7 +7,7 @@ import { FormItem } from '../forms';
 import { RegisterFooter } from '../footers';
 import validateField from '../forms/formValidators';
 import { SCREEN_HEIGHT } from '../../constants';
-import generateSteps from './formSteps';
+import generateSteps from './FormSteps';
 import {
   FontAwesome,
   AntDesign,

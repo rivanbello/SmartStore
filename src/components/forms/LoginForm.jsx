@@ -19,7 +19,7 @@ const LoginForm = ({ navigation }) => {
     let storedInfo = {};
     if (!username || !password) {
       storedInfo = JSON.parse(await AsyncStorage.getItem('userInfo'));
-      if (storedInfo.email && storedInfo.senha) {
+      if (storedInfo && storedInfo.email && storedInfo.senha) {
         username = storedInfo.email;
         password = storedInfo.senha;
       } else {
@@ -120,6 +120,7 @@ const LoginForm = ({ navigation }) => {
             if (!password) { setError('Insira uma senha.'); return }
             setLoading(true);
             signIn({ username, password })
+              .then(() => setLoading(false));
           }}
           loading={loading}
           style={styles.button}

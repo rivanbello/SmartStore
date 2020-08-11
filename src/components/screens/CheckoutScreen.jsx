@@ -86,7 +86,7 @@ const CheckoutScreen = ({ navigation, setError = () => {}, setSuccess = () => {}
 
 const handleOnPress = useCallback(async ({
     amount,
-    birthDate,
+    birthdate,
     cardCvv,
     cardExpirationMonth,
     cardExpirationYear,
@@ -94,6 +94,7 @@ const handleOnPress = useCallback(async ({
     documentType,
     cardHolderCPF,
     cardHolderName,
+    cardHolderEmail,
     cardNumber,
     city,
     district,
@@ -119,7 +120,7 @@ const handleOnPress = useCallback(async ({
             amount,
             pointOfSaleId: userInfo.condo.id,
             pointOfSaleToken: userInfo.condo.token,
-            birthDate,
+            birthdate,
             items,
             cardCvv,
             cardExpirationMonth,
@@ -135,7 +136,7 @@ const handleOnPress = useCallback(async ({
             phoneAreaCode,
             phoneNumber,
             postalCode,
-            senderEmail: userInfo.email,
+            senderEmail,
             senderName,
             state,
             street,
@@ -194,6 +195,7 @@ const handleOnPress = useCallback(async ({
                 loading={loading}
                 card={currentCard}
                 removeCard={() => removeCard()}
+                onSubmit={() => handleOnPress(currentCard || {})}
                 onPress={() => {
                     if (currentCard.number) setDrawerIsOpened(!drawerIsOpened);
                     else setShowCardForm(true);
