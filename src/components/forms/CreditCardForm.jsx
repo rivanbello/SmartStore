@@ -201,8 +201,7 @@ const formItems = [
     },
     {
       placeholder: 'E-mail',
-      maxLength: 10,
-      key: 'cardHolderEmail',
+      key: 'email',
       // transform: v => dateMask(v),
       error: 'Insira um e-mail válido',
       validator: (v) => /\S+@\S+\.\S+/.test(v),
