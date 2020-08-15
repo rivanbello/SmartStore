@@ -24,10 +24,10 @@ const HomeHeader = ({ navigation, name, condoName, searchActive = false, onBack 
             <Text style={styles.condoName}> {condoName} </Text>
           </Column>
           <View style={{ top: 15, position: 'absolute', right: 21 }}>
-          <ShoppingBag
+          {/* <ShoppingBag
             quantity={cartInfo.totalItems}
             handleOnPress={() => navigation.navigate('ShoppingBag')}
-          />
+          /> */}
           </View>
         </Row>
     : <StackHeader

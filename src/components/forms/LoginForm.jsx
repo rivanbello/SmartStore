@@ -9,10 +9,9 @@ import { UserContext } from '../../context';
 import { AsyncStorage } from 'react-native';
 import { login } from '../../auth';
 
-const LoginForm = ({ navigation }) => {
+const LoginForm = ({ navigation, loading, setLoading }) => {
   const [userInfo, setUserInfo] = useContext(UserContext);
   const [username, setUsername] = useState('');
-  const [loading, setLoading] = useState(true);
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const signIn = async ({ username, password } = {}) => {

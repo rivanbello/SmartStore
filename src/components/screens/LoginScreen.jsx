@@ -11,6 +11,7 @@ const LoginScreen = ({ navigation }) => {
 
   const [keyboardOpen, setKeyboardOpen] = useState(false);
   const [keyboardHeight, setKeyboardHeight] = useState(0);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     Keyboard.addListener('keyboardDidShow', (e) => { setKeyboardOpen(true); setKeyboardHeight(e.endCoordinates.height) } );
@@ -33,16 +34,21 @@ const LoginScreen = ({ navigation }) => {
       }
       </View>
       <View style={{ minWidth: '33%' }}>
-        <LoginForm navigation={navigation} />
+        <LoginForm
+          navigation={navigation}
+          loading={loading}
+          setLoading={setLoading}
+        />
       </View>
       { ((keyboardOpen && SCREEN_HEIGHT > 550)
         || !keyboardOpen)
-        && <TopAlert
-        firstLabel="Ainda não tem conta?"
-        secondLabel=" Cadastre-se"
-        style={{ top: 60 }}
-        onPress={() => navigation.navigate('Register')}
-      />
+        &&
+        !loading && <TopAlert
+          firstLabel="Ainda não tem conta?"
+          secondLabel=" Cadastre-se"
+          style={{ top: 60 }}
+          onPress={() => navigation.navigate('Register')}
+        />
     }
     </Screen>
   )

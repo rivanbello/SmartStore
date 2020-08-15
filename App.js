@@ -63,7 +63,7 @@ export default function App() {
   }, []);
 
   useEffect(() => {
-    // console.disableYellowBox = true;
+    console.disableYellowBox = true;
     getTokens()
     .then(tokens =>
     pointsOfSale({ tokens }).then(response => {

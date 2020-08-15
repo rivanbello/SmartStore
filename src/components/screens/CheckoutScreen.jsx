@@ -34,7 +34,6 @@ const CheckoutScreen = ({ navigation, setError = () => {}, setSuccess = () => {}
     }, []);
 
     const storeCards = useCallback(async (cards) => {
-        console.warn(cards.length)
         if (Array.isArray(cards)) {
             await SecureStore.setItemAsync('qwe', JSON.stringify(cards))
             setStoredCards(cards);
@@ -161,7 +160,6 @@ const handleOnPress = useCallback(async ({
             state,
             street,
         });
-        console.warn("res", res)
         setCartInfo({ ...cartInfo, cart: { items: [] } });
         navigation.navigate('PaymentConfirmed')
         setLoading(false);

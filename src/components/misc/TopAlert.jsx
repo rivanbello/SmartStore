@@ -6,11 +6,11 @@ import { COLORS } from '../../constants';
 const TopAlert = ({ firstLabel, secondLabel, style, error, onPress }) => (
   <TouchableOpacity
     onPress={() => onPress()}
-    style={{
-    ...styles.container,
-    ...style,
-    backgroundColor: error ? COLORS.primary : '#fff',
-  }}>
+    style={[
+      styles.container,
+      style,
+      { backgroundColor: error ? COLORS.primary : '#fff' },
+  ]}>
     <Row style={styles.content}>
       <Text style={styles.text}>{firstLabel}</Text>
         <Text

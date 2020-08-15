@@ -88,7 +88,7 @@ const ProductScreen = ({ route: { params = {} } = {}, navigation, state }) => {
       <Text style={{ color: COLORS.darkGray, maxWidth: '70%' }}>Produto autorizado somente para maiores de 18 anos</Text>
     </Row>}
     <View style={{ flex: 1, justifyContent: 'flex-end', marginBottom: 20 }}>
-      {stockQty > 0 && qtyInCart !== stockQty
+      {/* {stockQty > 0 && qtyInCart !== stockQty
       && <Spinner stockQty={stockQty - qtyInCart} value={qtyToAdd} setValue={(value) => setQtyToAdd(value) }/> }
       <PrimaryButton
         disabled={stockQty <= 0 || qtyInCart === stockQty}
@@ -101,7 +101,7 @@ const ProductScreen = ({ route: { params = {} } = {}, navigation, state }) => {
           addToCart(qtyToAdd);
           setQtyInCart(qtyInCart + qtyToAdd);
         }}
-      />
+      /> */}
     </View>
     </ScrollView>
   </UnsafeScreen>)

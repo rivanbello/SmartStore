@@ -37,11 +37,11 @@ const StackHeader = ({
         />
         <Text style={{ color: COLORS.textPrimary, ...fontStyle }}>Voltar</Text>
       </TouchableOpacity>
-      {showShoppingBag && <ShoppingBag
+      {/* {showShoppingBag && <ShoppingBag
         header
         quantity={cartInfo.totalItems}
         handleOnPress={() => handleOnPress()}
-      />}
+      />} */}
     </Header>
   );
 };
