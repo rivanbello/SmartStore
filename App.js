@@ -8,6 +8,7 @@ import { getTokens } from './src/firebase';
 import pointsOfSale from './src/client/pointsOfSale';
 import { AsyncStorage } from 'react-native';
 import Screens from './src/components/screens';
+import NetInfo from '@react-native-community/netinfo';
 import { UserContext, CartContext } from './src/context';
 import {
   Foundation,
@@ -24,6 +25,7 @@ const Tab = createBottomTabNavigator();
 export default function App() {
   const [userInfo, setUserInfo] = useState({ condos: [] });
   const [cartInfo, setCartInfo] = useState({ items: [] });
+  const [networkStatus, setNetworkStatus] = useState(true);
   const autoLogin = useCallback(async ({ userInfo }) => {
     const storedInfo = JSON.parse(await AsyncStorage.getItem('userInfo'));
     if (storedInfo && storedInfo.email && storedInfo.senha) {
@@ -63,7 +65,18 @@ export default function App() {
   }, []);
 
   useEffect(() => {
-    console.disableYellowBox = true;
+    // console.disableYellowBox = true;
+    NetInfo.fetch().then(state => {
+      if (!state.isConnected) {
+        setLoading(false);
+        setError('Sem conexão com a internet!')
+      }
+    }).then(() => 
+      NetInfo.addEventListener(state => {
+        if(state.isConnected !== networkStatus) setNetworkStatus(state.isConnected);
+      })
+    );
+    
     getTokens()
     .then(tokens =>
     pointsOfSale({ tokens }).then(response => {

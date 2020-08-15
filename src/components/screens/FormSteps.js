@@ -14,7 +14,8 @@ const generateSteps = (context) => [
         iconFamily: 'FontAwesome',
         iconName: 'user-circle',
       }
-    ]
+    ],
+    // keyBoardType: 'default',
   },
   {
     label:
@@ -31,7 +32,7 @@ const generateSteps = (context) => [
         iconName: 'phone-square',
       }
     ],
-    keyBoardType: 'numeric',
+    keyBoardType: 'number-pad',
     phoneNumber: true,
     type: 'phoneNumber',
   },
