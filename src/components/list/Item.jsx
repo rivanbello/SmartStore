@@ -1,20 +1,34 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { View, TouchableOpacity, Text, StyleSheet } from "react-native";
 import Avatar from '../list/Avatar';
 import { COLORS } from '../../constants';
+import * as ImageManipulator from 'expo-image-manipulator';
 
-const Item = ({ img, description, qty, price, style, onPress }) => (
-  <TouchableOpacity onPress={onPress} style={{...styles.container, ...style}}>
+const Item = ({ img, description, qty, price, style, onPress }) => {
+  const [imgSrc, setImgSrc] = useState(null);
+  useEffect(() => {
+    ImageManipulator.manipulateAsync(img, [{
+      resize: {
+        height: 74,
+      }},
+    ],
+    {
+      compress: 0.4
+    },
+    ).then(({ uri }) => setImgSrc(uri));
+  }, [])
+  
+  return(<TouchableOpacity onPress={onPress} style={{...styles.container, ...style}}>
     <View style={styles.content}>
-      <Avatar style={styles.avatar} src={img} product/>
+      <Avatar style={styles.avatar} src={imgSrc} product/>
       <Text style={{ ...styles.price, ...styles.text }}>R$ {price && price.toFixed(2).replace('.', ',')}</Text>
       <Text style={{ ...styles.description, ...styles.text }} numberOfLines={2}>{description}</Text>
       <Text style={{ ...styles.quantity, ...styles.text }}>
         {Number(qty) < 9 ? '0' : ''}{qty}un
       </Text>
     </View>
-  </TouchableOpacity>
-);
+  </TouchableOpacity>)
+};
 
 export default Item;
 

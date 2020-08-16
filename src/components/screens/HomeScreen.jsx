@@ -23,6 +23,7 @@ const HomeScreen = ({ route: { params = {} } = {}, navigation }) => {
     navigation={navigation}
   />
     <Screen>
+    {console.warn(userInfo)}
       <Filter
         style={styles.filter}
         placeholder="O que você está procurando?"

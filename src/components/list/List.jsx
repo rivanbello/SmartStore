@@ -22,8 +22,9 @@ const List = ({ navigation, list }) => {
   }
 
   return (
-    <ScrollView style={styles.container}>
-      {userInfo.categories && userInfo.categories.map((category) => <> 
+    <FlatList style={styles.container}
+      data={Array.isArray(userInfo.categories) && userInfo.categories}
+      renderItem={({ item: category }) => <> 
         <ListHeader
           label={category}
           expandLabel="Ver tudo"
@@ -40,6 +41,9 @@ const List = ({ navigation, list }) => {
         />
         <FlatList
           style={styles.list}
+          viewabilityConfig = {{
+            itemVisiblePercentThreshold: 50,
+          }}
           horizontal
           data={
             list
@@ -70,8 +74,8 @@ const List = ({ navigation, list }) => {
             />
           )}
         />
-      </>)}
-    </ScrollView>
+      </>}
+    />
   )
 };
 
