@@ -3,10 +3,12 @@ import { SafeAreaView } from 'react-native';
 
 const Screen = ({ children, style }) => {
   return (
-    <SafeAreaView style={{ 
-      ...styles.container,
-      ...style,
-    }}>
+    <SafeAreaView
+      style={{ 
+        ...styles.container,
+        ...style,
+      }}
+    >
       {children}
     </SafeAreaView>
   )
@@ -15,6 +17,7 @@ const Screen = ({ children, style }) => {
 const styles = {
   container: {
     width: '100%',
+    paddingTop: 20,
     backgroundColor: '#fff',
     flex: 1,
     paddingHorizontal: 18,

@@ -1,10 +1,10 @@
 import React from 'react';
 import Item from '../list/Item';
 import { StackHeader } from '../headers';
-import { COLORS } from '../../constants';
+import { COLORS, SCREEN_HEIGHT } from '../../constants';
 import Screen from './Screen';
 import { Row } from '../layout';
-import { Dimensions, Text, ScrollView } from 'react-native';
+import { Dimensions, Text, VirtualizedList, FlatList } from 'react-native';
 
 const screenWidth = Math.round(Dimensions.get('window').width);
 
@@ -28,31 +28,42 @@ const CategoryScreen = ({ route, navigation, state }) => {
       handleOnPress={() => navigation.navigate('ShoppingBag')}
     />
     <Text style={styles.title}>{category}</Text>
-    <ScrollView>
-    {rows.map((row) => (
-      <Row style={{ justifyContent: 'flex-start' }}>
-        {row.map(({ description, price, quantity, imageUrl, id, ageRestricted  }) => (
-          <Item
-            img={imageUrl}
-            style={styles.item}
-            description={description}
-            // category={category}
-            price={price}
-            qty={quantity}
-            onPress={() => navigation.navigate('Product', {
-              stock: quantity == 0 ? false : true,
-              name: description,
-              price,
-              ageRestricted,
-              qty: quantity,
-              imageUrl,
-              id,
-            })}
+    <VirtualizedList
+      data={rows}
+      removeClippedSubviews
+      getItemCount={() => rows.length}
+      initialNumToRender={4}
+      getItem={(rows, i) => rows[i]}
+      renderItem={({ item: row }) => (
+        <Row style={{ justifyContent: 'flex-start' }}>
+          <FlatList
+            data={row}
+            horizontal
+            showsHorizontalScrollIndicator={false}
+            // getItemCount={() => 4}
+            // getItem={(items, i) => items[i]}
+            // initialNumToRender={4}
+            renderItem={({ item: { description, price, quantity, imageUrl, id, ageRestricted  }}) => <Item
+              img={imageUrl}
+              style={styles.item}
+              description={description}
+              // category={category}
+              price={price}
+              qty={quantity}
+              onPress={() => navigation.navigate('Product', {
+                stock: quantity == 0 ? false : true,
+                name: description,
+                price,
+                ageRestricted,
+                qty: quantity,
+                imageUrl,
+                id,
+              })}
+            />}
           />
-        ))}
-      </Row>
-    ))}
-    </ScrollView>
+        </Row>
+        )}
+      />
   </Screen>)
 };
 

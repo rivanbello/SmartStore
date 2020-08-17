@@ -57,13 +57,11 @@ const styles = StyleSheet.create({
     // position: 'absolute',
     // top: -18,
   },
-  shoppingBagContainer: {
-    
-  },
   smallScreenLabel: {
     justifyContent: 'space-between',
     position: 'absolute',
     flexDirection: 'column',
+    paddingTop: 10,
     top: 5,
     paddingHorizontal: 20,
   },

@@ -7,7 +7,6 @@ import { COLORS } from '../../constants';
 import { StackHeader } from '../headers';
 import Spinner from '../misc/Spinner';
 import { PrimaryButton } from '../buttons';
-import * as ImageManipulator from 'expo-image-manipulator';
 import { CartContext } from '../../context';
 
 const ProductScreen = ({ route: { params = {} } = {}, navigation, state }) => {
@@ -23,18 +22,6 @@ const ProductScreen = ({ route: { params = {} } = {}, navigation, state }) => {
 
   const [imgSrc, setImgSrc] = useState(null);
   const [qtyToAdd, setQtyToAdd] = useState(1);
-
-  useEffect(() => {
-    ImageManipulator.manipulateAsync(imageUrl, [{
-      resize: {
-        height: 145,
-      }},
-    ],
-    {
-      compress: 0.4
-    },
-    ).then(({ uri }) => setImgSrc(uri));
-  }, [])
   
   const [qtyInCart, setQtyInCart] = useState(0);
   const [cartInfo, setCartInfo] = useContext(CartContext);
@@ -82,7 +69,7 @@ const ProductScreen = ({ route: { params = {} } = {}, navigation, state }) => {
     />
     <ScrollView>
     <Row style={styles.imageBackground}>
-      <Image style={styles.image} source={imgSrc ? {uri: imgSrc} : null} />
+      <Image style={styles.image} source={imageUrl ? {uri: imageUrl} : null} />
       {stock ? 
       <Text style=
       {{ ...styles.stockLabel, ...styles.onStockLabel }}>Em estoque!</Text>

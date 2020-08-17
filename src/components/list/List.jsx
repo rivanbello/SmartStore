@@ -51,7 +51,7 @@ const List = ({ navigation, list }) => {
                 category === `Categoria ${categoryId}`
                 || category === categoryName
               )
-            .slice(0, 4)}
+            .slice(0, 5)}
           // contentContainerStyle={styles.content}
           keyExtractor={item => item.id}
           renderItem={({item: { id, ageRestricted, description, categoryName, price, quantity, imageUrl } = {}} ) => (
