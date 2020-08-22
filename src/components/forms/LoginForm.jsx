@@ -18,7 +18,6 @@ const LoginForm = ({ navigation, loading, setLoading }) => {
     let storedInfo = {};
     if (!username || !password) {
       storedInfo = JSON.parse(await AsyncStorage.getItem('userInfo'));
-      console.warn('storedInfo: ', storedInfo);
       if (storedInfo && storedInfo.email && storedInfo.senha) {
         username = storedInfo.email;
         password = storedInfo.senha;

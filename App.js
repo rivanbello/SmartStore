@@ -1,5 +1,6 @@
 require('./src/firebase');
 import React, { useState, useEffect, useCallback } from 'react';
+import * as Sentry from "sentry-expo";
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import all from './src/client/list';
@@ -18,6 +19,13 @@ import {
   MaterialCommunityIcons,
 } from '@expo/vector-icons';
 import { COLORS } from './src/constants';
+
+
+Sentry.init({
+  dsn: "https://0e53614aa30d4eef8be38c058ddbdf0a@o372799.ingest.sentry.io/5400308",
+  enableInExpoDevelopment: true,
+  debug: true,
+});
 
 const Stack = createStackNavigator();
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
@@ -66,7 +74,7 @@ export default function App() {
   }, []);
 
   useEffect(() => {
-    // console.disableYellowBox = true;
+    console.disableYellowBox = true;
     NetInfo.fetch().then(state => {
       if (!state.isConnected) {
         setLoading(false);
@@ -77,7 +85,6 @@ export default function App() {
         if(state.isConnected !== networkStatus) setNetworkStatus(state.isConnected);
       })
     );
-    console.warn('oi')
     
     getTokens()
     .then(tokens =>

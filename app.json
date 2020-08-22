@@ -29,7 +29,18 @@
       "versionCode": 18,
       "googleServicesFile": "./google-services.json",
       "permissions" : []
+    },
+    "hooks": {
+      "postPublish": [
+        {
+          "file": "sentry-expo/upload-sourcemaps",
+          "config": {
+            "organization": "gyramais",
+            "project": "smartstore",
+            "authToken": "50d1d73e001d4d4fb225c1ce9c5cb21690606998c79d49268ce5fe0391e7826c"
+          }
+        }
+      ]
     }
-    
   }
 }

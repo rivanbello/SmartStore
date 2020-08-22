@@ -1,10 +1,9 @@
 import React, { useContext } from 'react';
-import { FlatList, ScrollView, StyleSheet } from "react-native";
+import { FlatList, StyleSheet } from "react-native";
 import { Dimensions } from 'react-native';
 import ListHeader from './ListHeader';
 import Item from './Item';
 import { UserContext } from '../../context';
-import { SCREEN_WIDTH } from '../../constants';
 
 const screenWidth = Math.round(Dimensions.get('window').width);
 

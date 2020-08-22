@@ -7,7 +7,7 @@ import * as ImageManipulator from 'expo-image-manipulator';
 const Item = ({ img, description, qty, price, style, onPress }) => {
   const [imgSrc, setImgSrc] = useState(null);
   useEffect(() => {
-    ImageManipulator.manipulateAsync(img, [
+    img && ImageManipulator.manipulateAsync(String(img), [
       {
         resize: {
           height: 175,

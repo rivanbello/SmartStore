@@ -7,7 +7,7 @@ const Avatar = ({ src, style, product = false, overlayImage = false }) => (
   <View>
     <Image
       style={{ ...styles.avatar, ...style, }} 
-      source={src ? { uri: src } : null}
+      source={src ? { uri: String(src) } : null}
     />
     {/* <View style={styles.plusSign}> */}
         <Text style={{ ...styles.plusSign, textAlign: 'center', color: '#fff', fontWeight: 'bold', fontSize: 22 }}>+</Text>
@@ -15,7 +15,7 @@ const Avatar = ({ src, style, product = false, overlayImage = false }) => (
   </View>
   : <Image
     style={{ ...styles.avatar, ...style}} 
-    source={src ? { uri: src } : null}
+    source={src ? { uri: String(src) } : null}
   />
 );
 

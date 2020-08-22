@@ -31,6 +31,7 @@ const CategoryScreen = ({ route, navigation, state }) => {
     <VirtualizedList
       data={rows}
       removeClippedSubviews
+      keyExtractor={(item, index) => item + index}
       getItemCount={() => rows.length}
       initialNumToRender={4}
       getItem={(rows, i) => rows[i]}
