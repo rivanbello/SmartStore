@@ -23,7 +23,6 @@ const HomeScreen = ({ route: { params = {} } = {}, navigation }) => {
     navigation={navigation}
   />
     <Screen>
-    {console.warn(userInfo)}
       <Filter
         style={styles.filter}
         placeholder="O que você está procurando?"
@@ -39,12 +38,12 @@ const HomeScreen = ({ route: { params = {} } = {}, navigation }) => {
         ? <FreeList list={
             userInfo.availableProducts
               .filter(({ description }) => {
-                if (filterValue) return description.toUpperCase()
+                if (filterValue && description) return description
+                  .toUpperCase()
                   .includes(filterValue.toUpperCase())
                   //placing all products with 0 quantity to the end
-                  .sort((a = {}, b = {}) => a.quantity === 0)
-                else return false;
-              })
+                  else return false;
+                }).sort((a = {}, b = {}) => a.quantity === 0)
             }
           navigation={navigation}
           />

@@ -1,7 +1,7 @@
 import React from 'react';
 import Item from './Item';
 import { COLORS } from '../../constants';
-import { Dimensions, ScrollView } from 'react-native';
+import { Dimensions, ScrollView, FlatList } from 'react-native';
 import { Row } from '../layout';
 
 const screenWidth = Math.round(Dimensions.get('window').width);
@@ -12,8 +12,9 @@ const FreeList = ({ list = [], navigation }) => {
     else rows.push(list.slice(i - 4, i - (i % list.length)))
   }
   return (
-    <ScrollView style={styles.container}>
-    {rows.map((row) => (
+    <FlatList style={styles.container}
+    data={rows}
+    renderItem={({ item: row }) => (
     <Row style={{ justifyContent: 'flex-start' }}>
     {row.map(({ description, price, quantity, imageUrl, ageRestricted, id }) => (
       <Item
@@ -35,8 +36,8 @@ const FreeList = ({ list = [], navigation }) => {
       />
     ))}
     </Row>
-    ))}
-  </ScrollView>
+    )}
+  />
 )}
 
 const styles = {

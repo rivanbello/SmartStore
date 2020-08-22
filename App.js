@@ -65,8 +65,7 @@ export default function App() {
   }, []);
 
   useEffect(() => {
-    console.disableYellowBox = true;
-    console.warn('oi')
+    // console.disableYellowBox = true;
     NetInfo.fetch().then(state => {
       if (!state.isConnected) {
         setLoading(false);

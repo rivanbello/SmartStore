@@ -4,7 +4,7 @@ import { Row, Column } from '../layout';
 import { HomeHeaderBackground } from '../../assets/images';
 import { StackHeader } from '../headers';
 import { CartContext } from '../../context';
-import ShoppingBag from '../icons/ShoppingBag';
+// import ShoppingBag from '../icons/ShoppingBag';
 
 const HomeHeader = ({ navigation, name, condoName, searchActive = false, onBack }) => {
   

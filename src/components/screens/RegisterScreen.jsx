@@ -7,6 +7,7 @@ import { FormItem } from '../forms';
 import { RegisterFooter } from '../footers';
 import validateField from '../forms/formValidators';
 import { SCREEN_HEIGHT } from '../../constants';
+import { Entypo } from '@expo/vector-icons';
 import generateSteps from './FormSteps';
 import {
   FontAwesome,
@@ -157,7 +158,6 @@ const RegisterScreen = ({ navigation }) => {
               ...userInfo,
               [`${steps[stepIndex].formItems[0].placeholder.toLowerCase()}`]: value,
             };
-            console.warn(newUserInfo)
             setUserInfo(newUserInfo)
             setChosenCondo(value);
             setSteps(generateSteps(newUserInfo)); 
@@ -178,6 +178,12 @@ const RegisterScreen = ({ navigation }) => {
             component: icons[formItem.iconFamily],
             name: formItem.iconName,
             size: 20,
+          }}
+          RightIcon={steps[stepIndex].type === 'password' && {
+            component: Entypo,
+            activeName: 'eye-with-line',
+            name: "eye",
+            size: 24,
           }}
           setFormValue={(value) => {
             const newUserInfo = {
