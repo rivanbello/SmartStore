@@ -166,7 +166,7 @@ const RegisterScreen = ({ navigation }) => {
         />}
         {(stepIndex < 6 || stepIndex === 7) && steps[stepIndex].formItems.map((formItem) => { return <FormItem
           phoneNumber={steps[stepIndex].phoneNumber}
-          keyBoardType={steps[stepIndex].keyBoardType || (steps[stepIndex].type === 'password' ? 'default' : 'email-address')}
+          keyBoardType={steps[stepIndex].keyBoardType || 'email-address'}
           focused
           savedValue={lastValue}
           type={steps[stepIndex].type}

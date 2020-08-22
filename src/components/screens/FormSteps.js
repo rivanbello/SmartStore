@@ -68,6 +68,7 @@ const generateSteps = (context) => [
     ],
     password: true,
     type: 'password',
+    keyBoardType: 'default',
   },
   {
     label: <Text style={styles.stepLabel}>
@@ -81,6 +82,7 @@ const generateSteps = (context) => [
         iconName: 'lock',
       },
     ],
+    keyBoardType: 'default',
     password: true,
     type: 'password',
   },
