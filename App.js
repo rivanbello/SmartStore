@@ -9,6 +9,7 @@ import pointsOfSale from './src/client/pointsOfSale';
 import { AsyncStorage } from 'react-native';
 import Screens from './src/components/screens';
 import NetInfo from '@react-native-community/netinfo';
+import { getCondoAddress } from './src/utils/condoHelpers';
 import { UserContext, CartContext } from './src/context';
 import {
   Foundation,
@@ -85,52 +86,10 @@ export default function App() {
       response.map((pos) => {
         const name = `Cond. ${pos.localName}`;
         let condoInfo = {};
-        switch (pos.localName) {
-          case 'Spazio Castellon':
-            condoInfo.address ="R. Profa. Maria Pilar Bórgia, 215";
-            condoInfo.neighborhood = "Vila Carminha, Campinas - SP";
-            break;
-          case 'Spazio Castellon PDV2':
-            condoInfo.address ="R. Profa. Maria Pilar Bórgia, 215";
-            condoInfo.neighborhood = "Vila Carminha, Campinas - SP";
-            break;
-          case 'Topazio Ville':
-            condoInfo.address = 'Av. São José dos Campos, 150';
-            condoInfo.neighborhood = "Jardim Nova Europa, Campinas - SP";
-            break;
-          case 'Topazio Ville PDV1':
-            condoInfo.address = 'Av. São José dos Campos, 150';
-            condoInfo.neighborhood = "Jardim Nova Europa, Campinas - SP";
-            break;
-          case 'Bairro Jardim Nova Europa':
-            condoInfo.address = 'R. Manuel Sylvestre de Freitas Filho, 75',
-            condoInfo.neighborhood = "Jardim Nova Europa, Campinas - SP";
-            break;
-          case 'Ametista Villa':
-            condoInfo.address = 'Rua Manoel Silvestre de Freitas Filho, 1277';
-            condoInfo.neighborhood = "Jardim Nova Europa, Campinas - SP";
-            break;
-          case 'Ametista Villa PDV2':
-            condoInfo.address = 'Rua Manoel Silvestre de Freitas Filho, 1277';
-            condoInfo.neighborhood = "Jardim Nova Europa, Campinas - SP";
-            break;
-          case 'Parque dos Alecrins':
-            condoInfo.address = 'Av. Carlos Diaulas Serpa';
-            condoInfo.neighborhood = 'Campinas - SP';
-            break;
-          case 'Alta Vista':
-            condoInfo.address = 'R. Vitória Randi, 135';
-            condoInfo.neighborhood = 'Valinhos - SP';
-            break;
-          case 'Life Space':
-            condoInfo.address = 'Avenida Visconde de Guarapuava, 3806';
-            condoInfo.neighborhood = 'Curitiba - PR';
-            break;
-          default:
-            condoInfo.address = 'Av. Carlos Diaulas Serpa';
-            condoInfo.neighborhood = 'Campinas - SP';
-            break;
-        }
+        condoInfo = getCondoAddress(pos.localName);
+
+        // para tratar erros no nome vindo da AMLabs
+        if (condoInfo.localName) pos.localName = condoInfo.localName;
         // console.warn('tokens: ', tokens)
         condos.push({
           ...condoInfo,
