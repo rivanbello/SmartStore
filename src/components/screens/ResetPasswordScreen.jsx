@@ -1,5 +1,5 @@
 import React, { useState, useCallback, useEffect } from 'react';
-import { Image, Text, Keyboard } from 'react-native';
+import { Image, Text, Keyboard, View } from 'react-native';
 import { PrimaryButton } from '../buttons';
 import { ResetPassword } from '../../assets/images';
 import { FormItem } from '../forms'; 
@@ -37,6 +37,7 @@ const ResetPasswordScreen = ({
       <StackHeader
         handleGoBack={() => navigation.goBack()}
       />
+      <View style={styles.content}>
       {!keyboardOpen && <Image source={ResetPassword} style={styles.image} resizeMode="contain"/>}
       <Text style={styles.title}>Tudo bem, acontece</Text>
       <Text style={styles.description}>Para recuperar sua senha, insira seu endereço de e-mail, que enviaremos um link de recuperação pra lá!</Text>
@@ -54,6 +55,7 @@ const ResetPasswordScreen = ({
           }}
           />
       {!!error && <Text style={styles.error}>{error}</Text>}
+      </View>
       <PrimaryButton
         label="Próximo"
         disabled={!validateField(2, email)}
@@ -66,9 +68,13 @@ const ResetPasswordScreen = ({
 
 const styles = {
   container: {
-    justifyContent: 'flex-end',
     alignItems: 'center',
     paddingBottom: '4%',
+  },
+  content: {
+    flex: 1,
+    justifyContent: 'flex-end',
+    alignItems: 'center',
   },
   title: {
     fontWeight: 'bold',
@@ -96,6 +102,7 @@ const styles = {
   },
   button: {
     width: '80%',
+    marginBottom: 30,
   }
 }
 

@@ -41,6 +41,7 @@ const CategoryScreen = ({ route, navigation, state }) => {
             data={row}
             horizontal
             scrollEnabled={false}
+            keyExtractor={(item, index) => item + index}
             showsHorizontalScrollIndicator={false}
             // getItemCount={() => 4}
             // getItem={(items, i) => items[i]}

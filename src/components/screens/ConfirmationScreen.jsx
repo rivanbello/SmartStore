@@ -64,6 +64,7 @@ const styles = {
   },
   button: {
     width: '80%',
+    marginBottom: 30,
   }
 }
 
