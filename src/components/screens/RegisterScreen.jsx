@@ -47,6 +47,7 @@ const RegisterScreen = ({ navigation }) => {
   };
 
   const nextStep = () => {
+    setHideHeader(false)
     if ((stepIndex < 4 || stepIndex === 7) && (!validateField(stepIndex, lastValue) || !lastValue)) {
       setEmailAlreadyUsed(false);
       fadeOpacity.setValue(1);
