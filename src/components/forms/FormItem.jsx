@@ -7,7 +7,7 @@ import {
   TouchableOpacity,
   Text,
 } from 'react-native';
-import DateTimePicker from '@react-native-community/datetimepicker';
+import DateTimePickerModal from 'react-native-modal-datetime-picker';
 import { COLORS } from '../../constants';
 import { floatingLabel } from './Animations';
 import { phoneNumberMask } from './masks';
@@ -144,16 +144,19 @@ const FormItem = ({
         </Text>
       }
       {datePicker && datePickerOpen &&
-        <DateTimePicker
+        <DateTimePickerModal
+          style={{ width: '100%', backgroundColor: 'white' }}
           value={date}
+          isVisible={true}
           mode="date"
-          onChange={
-            (e, date) => {
+          onConfirm={
+            (date) => {
               setDatePickerOpen(false);
               if (date && date.getMonth) setDate(date);
               setFormValue(date);
             }
           }
+          onCancel={() => setDatePickerOpen(false)}
         />
       }
       {!datePicker && <Animated.View
