@@ -40,6 +40,7 @@ const CategoryScreen = ({ route, navigation, state }) => {
           <FlatList
             data={row}
             horizontal
+            scrollEnabled={false}
             showsHorizontalScrollIndicator={false}
             // getItemCount={() => 4}
             // getItem={(items, i) => items[i]}
