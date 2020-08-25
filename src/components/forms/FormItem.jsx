@@ -186,7 +186,7 @@ const FormItem = ({
         autoFocus={focused}
         secureTextEntry={type === 'password' && !showPassword}
         onFocus={() => setActive(true)}
-        onBlur={() => setActive(false)}
+        //onBlur={() => setActive(false)}
         value={phoneNumber ? phoneNumberMask(savedValue) : savedValue}
         onChangeText={onChangeText}
       />}

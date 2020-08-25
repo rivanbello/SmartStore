@@ -72,14 +72,17 @@ const CondoForm = ({ data, setHideHeader, setFormValue }) => {
             onBlur={() => {
               !filter && setSearchIsActive(false);
               !filter && setHideHeader(false);
-              setFilter('');
+              //setFilter('');
             }}
             onFocus={() => setHideHeader(true)}
             style={{
               width: '80%',
               marginLeft: 30,
             }}
-            onChangeText={(text) => setFilter(text)}
+            onChangeText={(text) => {
+              setFilter(text);
+              setSelected('');
+            }}
           />}
         </Animated.View>
       </TouchableOpacity>
