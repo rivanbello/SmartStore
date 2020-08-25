@@ -133,6 +133,7 @@ const styles = {
   FAQTitle: {
     fontWeight: 'bold',
     marginTop: 13,
+    maxWidth: '90%',
     marginBottom: 10,
     color: COLORS.textPrimary,
   },
