@@ -5,6 +5,7 @@ const Filter = ({
   style,
   Icon,
   placeholder,
+  value,
   focused,
   placeholderTextColor,
   onBlur = () => {},
@@ -18,6 +19,7 @@ const Filter = ({
       <TextInput
         placeholder={placeholder}
         onFocus={() => onFocus()}
+        value={value}
         autoFocus={focused}
         onChangeText={onChangeText}
         onBlur={() => onBlur()}
