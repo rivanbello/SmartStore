@@ -1,4 +1,4 @@
-import React, { useContext, useState, useEffect } from 'react';
+import React, { useContext, useState } from 'react';
 import { StyleSheet } from 'react-native';
 import List from '../list/List';
 import FreeList from '../list/FreeList';
@@ -18,23 +18,24 @@ const HomeScreen = ({ route: { params = {} } = {}, navigation }) => {
   <HomeHeader
     name={userInfo.nome}
     condoName={userInfo.condo && userInfo.condo.name}
-    searchActive={searchActive}
-    onBack={() => setSearchActive(false)}
+    searchActive={filterValue}
+    onBack={() => setFilterValue('') }
     navigation={navigation}
   />
     <Screen>
       <Filter
         style={styles.filter}
         placeholder="O que você está procurando?"
-        focused={searchActive}
+        focused={filterValue}
+        value={filterValue}
         onChangeText={(value) => setFilterValue(value)}
-        onFocus={() => setSearchActive(true)}
-        onBlur={() => !filterValue && setSearchActive(false)}
+        onFocus={() => {}}
+        onBlur={() => !filterValue}
         placeholderTextColor={COLORS.darkestGray}
         Icon={<Ionicons name="ios-search" size={26} style={{ color: COLORS.primary }}/>}
       />
       {Array.isArray(userInfo.availableProducts) &&
-      (searchActive
+      (filterValue
         ? <FreeList list={
             userInfo.availableProducts
               .filter(({ description }) => {
