@@ -1,16 +1,26 @@
 import React from 'react';
-import { SafeAreaView } from 'react-native';
+import { Platform, SafeAreaView, KeyboardAvoidingView } from 'react-native';
 
 const Screen = ({ children, style }) => {
   return (
-    <SafeAreaView
+    Platform.OS === 'ios' ?
+    <KeyboardAvoidingView
+      behavior={'padding'}
       style={{ 
         ...styles.container,
         ...style,
       }}
     >
       {children}
-    </SafeAreaView>
+    </KeyboardAvoidingView>
+    : <SafeAreaView
+    style={{ 
+      ...styles.container,
+      ...style,
+    }}
+  >
+    {children}
+  </SafeAreaView>
   )
 };
 
