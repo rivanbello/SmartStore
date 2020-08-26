@@ -23,6 +23,7 @@ const List = ({ navigation, list }) => {
   return (
     <FlatList style={styles.container}
       data={Array.isArray(userInfo.categories) && userInfo.categories}
+      keyExtractor={(item, index) => `${item}${index}`}
       renderItem={({ item: category }) => <> 
         <ListHeader
           label={category}
@@ -40,6 +41,7 @@ const List = ({ navigation, list }) => {
         />
         <FlatList
           style={styles.list}
+          keyExtractor={(item, index) => `${item}${index}`}
           viewabilityConfig = {{
             itemVisiblePercentThreshold: 50,
           }}
