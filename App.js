@@ -131,7 +131,6 @@ export default function App() {
 
   return (
     <NavigationContainer>
-      {console.warn(isLogged)}
         <UserContext.Provider value={[userInfo, setUserInfo]}>
           <AuthenticationContext.Provider value={[isLogged, setIsLogged]}>
             <CartContext.Provider value={[cartInfo, setCartInfo]}>
