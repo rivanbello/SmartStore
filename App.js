@@ -3,7 +3,6 @@ import React, { useState, useEffect, useCallback } from 'react';
 import * as Sentry from "sentry-expo";
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
-import all from './src/client/list';
 import { login } from './src/auth';
 import { getTokens } from './src/firebase';
 import pointsOfSale from './src/client/pointsOfSale';
@@ -12,7 +11,7 @@ import Screens from './src/components/screens';
 import { loadCondos } from './src/utils/condoHelpers';
 import { getProductsAndCategories } from './src/utils/products';
 import { checkNetworkStatus, monitorNetworkStatus } from './src/network';
-import { UserContext, CartContext } from './src/context';
+import { UserContext, CartContext, AuthenticationContext } from './src/context';
 import {
   Foundation,
   AntDesign,
@@ -34,12 +33,14 @@ const Tab = createBottomTabNavigator();
 export default function App() {
   const [userInfo, setUserInfo] = useState({ condos: [] });
   const [cartInfo, setCartInfo] = useState({ items: [] });
+  const [isLogged, setIsLogged] = useState(false);
   const [networkStatus, setNetworkStatus] = useState(true);
   const [isLoading, setIsLoading] = useState(true);
-  const autoLogin = useCallback(async ({ username, password } = {}) => {
+  const autoLogin = useCallback(async ({ username, password, condos = [] } = {}) => {
     let storedInfo = {};
     if (!username || !password) {
       storedInfo = JSON.parse(await AsyncStorage.getItem('userInfo'));
+      console.warn('storedInfo', storedInfo);
       if (storedInfo && storedInfo.email && storedInfo.senha) {
         username = storedInfo.email;
         password = storedInfo.senha;
@@ -57,6 +58,8 @@ export default function App() {
         email,
         condoId,
       } = await login({ email: username, password })
+      const condo = condos.filter(({ machineCompanyCode: code }) => code === machineCompanyCode)[0] && userInfo.condos.filter(({ machineCompanyCode: code }) => code === machineCompanyCode)[0] || {};
+      console.warn("condo!: ", condo)
       const newUserInfo = {
         ...userInfo,
         nome,
@@ -64,8 +67,8 @@ export default function App() {
         nascimento,
         condo: {
           ...userInfo.condo,
-          name: userInfo && userInfo.condos && userInfo.condos.filter(({ machineCompanyCode: code }) => code === machineCompanyCode)[0] && userInfo.condos.filter(({ machineCompanyCode: code }) => code === machineCompanyCode)[0].name,
-          token: userInfo && userInfo.condos && userInfo.condos.filter(({ machineCompanyCode: code }) => code === machineCompanyCode)[0] && userInfo.condos.filter(({ machineCompanyCode: code }) => code === machineCompanyCode)[0].token,
+          name: condo.name,
+          token: condo.token,
           machineCompanyCode,
           id: condoId,
         },
@@ -74,6 +77,7 @@ export default function App() {
         logged: true,
       };
       setUserInfo(newUserInfo);
+      setIsLogged(true);
       try {
         await AsyncStorage.setItem('userInfo', JSON.stringify(newUserInfo))
       } catch (error) {
@@ -94,6 +98,7 @@ export default function App() {
     checkNetworkStatus()
       .then(status => {
         if(!status) {
+          setNetworkStatus(status);
           setIsLoading(false);
           setError('Sem conexão com a internet!')
         }
@@ -102,55 +107,58 @@ export default function App() {
     getTokens()
       .then(tokens =>
         pointsOfSale({ tokens })
-        .then(response => {
-          const condos = loadCondos(response);
-          const newUserInfo = { ...userInfo, condos };
-          setUserInfo(newUserInfo);
-          return newUserInfo;
-        })
+          .then(response => {
+            const condos = loadCondos(response);
+            const newUserInfo = { ...userInfo, condos };
+            console.warn('condos param: ', condos)
+            setUserInfo(newUserInfo);
+            autoLogin({ condos });
+            return newUserInfo;
+          })
   )}, []);
   
   useEffect(() => {
     if (userInfo.condo && userInfo.condo.token)
-    getProductsAndCategories({ pointOfSaleId: userInfo.condo.id, token: userInfo.condo.token })
-      .then((res) => {
-        const { availableProducts, categories } = res;
-        const newUserInfo = { ...userInfo, availableProducts, categories };
-        setUserInfo(newUserInfo)
-          .then(() => {
-            if (userInfo.condos.length > 0)
-              autoLogin({ username: newUserInfo.email, password: newUserInfo.senha });
-          })
+      getProductsAndCategories({ pointOfSaleId: userInfo.condo.id, token: userInfo.condo.token })
+        .then((res) => {
+          const { products: availableProducts, categories } = res;
+          const newUserInfo = { ...userInfo, availableProducts, categories };
+          setUserInfo(newUserInfo)
+        })
         .finally(() => setIsLoading(false))
-      })
+      else
+        setIsLoading(false);
     }, [userInfo.condo]);
 
   if (isLoading) {
     // We haven't finished checking for the token yet
     return <Screens.SplashScreen />;
   }
+
   return (
     <NavigationContainer>
         <UserContext.Provider value={[userInfo, setUserInfo]}>
-          <CartContext.Provider value={[cartInfo, setCartInfo]}>
-            <Stack.Navigator initialRouteName="Login">
-              <Stack.Screen name="Login" component={Screens.LoginScreen} options= {{ headerShown: false }} />
-              <Stack.Screen name="Register" component={Screens.RegisterScreen} options= {{ headerShown: false }} />
-              <Stack.Screen name="Navigator" component={AppNavigator} options={{ headerShown: false }} />
-              <Stack.Screen name="Product" component={Screens.ProductScreen} options={{ headerShown: false }} />
-              <Stack.Screen name="RegisterConfirmation" component={Screens.RegisterConfirmationScreen} options={{ headerShown: false }} />
-              <Stack.Screen name="Category" component={Screens.CategoryScreen} options={{ headerShown: false }} />
-              <Stack.Screen name="Checkout" component={Screens.CheckoutScreen} options={{ headerShown: false }} />
-              <Stack.Screen name="Suggestion" component={Screens.SuggestionScreen} options={{ headerShown: false }} />
-              <Stack.Screen name="Info" component={Screens.InformationScreen} options={{ headerShown: false }}/>
-              <Stack.Screen name="FeedbackConfirmation" component={Screens.FeedbackConfirmationScreen} options={{ headerShown: false }} />
-              <Stack.Screen name="ResetPassword" component={Screens.ResetPasswordScreen} options={{ headerShown: false }} />
-              <Stack.Screen name="ShoppingBag" component={Screens.ShoppingBagScreen} options={{ headerShown: false }} />
-              <Stack.Screen name="PasswordFeedback" component={Screens.PasswordFeedbackScreen} options={{ headerShown: false }} />
-              <Stack.Screen name="PaymentConfirmed" component={Screens.PaymentConfirmedScreen} options={{ headerShown: false }} />
-              <Stack.Screen name="PaymentError" component={Screens.PaymentErrorScreen} options={{ headerShown: false }} />
-            </Stack.Navigator>
-          </CartContext.Provider>
+          <AuthenticationContext.Provider value={[isLogged, setIsLogged]}>
+            <CartContext.Provider value={[cartInfo, setCartInfo]}>
+              <Stack.Navigator initialRouteName="Login">
+                <Stack.Screen name="Login" component={Screens.LoginScreen} options={{ headerShown: false }} />
+                <Stack.Screen name="Register" component={Screens.RegisterScreen} options= {{ headerShown: false }} />
+                <Stack.Screen name="Navigator" component={AppNavigator} options={{ headerShown: false }} />
+                <Stack.Screen name="Product" component={Screens.ProductScreen} options={{ headerShown: false }} />
+                <Stack.Screen name="RegisterConfirmation" component={Screens.RegisterConfirmationScreen} options={{ headerShown: false }} />
+                <Stack.Screen name="Category" component={Screens.CategoryScreen} options={{ headerShown: false }} />
+                <Stack.Screen name="Checkout" component={Screens.CheckoutScreen} options={{ headerShown: false }} />
+                <Stack.Screen name="Suggestion" component={Screens.SuggestionScreen} options={{ headerShown: false }} />
+                <Stack.Screen name="Info" component={Screens.InformationScreen} options={{ headerShown: false }}/>
+                <Stack.Screen name="FeedbackConfirmation" component={Screens.FeedbackConfirmationScreen} options={{ headerShown: false }} />
+                <Stack.Screen name="ResetPassword" component={Screens.ResetPasswordScreen} options={{ headerShown: false }} />
+                <Stack.Screen name="ShoppingBag" component={Screens.ShoppingBagScreen} options={{ headerShown: false }} />
+                <Stack.Screen name="PasswordFeedback" component={Screens.PasswordFeedbackScreen} options={{ headerShown: false }} />
+                <Stack.Screen name="PaymentConfirmed" component={Screens.PaymentConfirmedScreen} options={{ headerShown: false }} />
+                <Stack.Screen name="PaymentError" component={Screens.PaymentErrorScreen} options={{ headerShown: false }} />
+              </Stack.Navigator>
+            </CartContext.Provider>
+          </AuthenticationContext.Provider>
         </UserContext.Provider>
     </NavigationContainer>
   );

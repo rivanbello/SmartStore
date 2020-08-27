@@ -19,7 +19,7 @@ const HomeScreen = ({ route: { params = {} } = {}, navigation }) => {
     name={userInfo.nome}
     condoName={userInfo.condo && userInfo.condo.name}
     searchActive={filterValue}
-    onBack={() => setFilterValue('') }
+    onBack={() => setFilterValue('')}
     navigation={navigation}
   />
     <Screen>

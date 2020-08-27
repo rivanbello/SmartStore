@@ -5,12 +5,13 @@ import { Row } from '../layout';
 import FormItem from './FormItem';
 import { FontAwesome, Entypo } from '@expo/vector-icons';
 import validateField from './formValidators';
-import { UserContext } from '../../context';
+import { UserContext, AuthenticationContext } from '../../context';
 import { AsyncStorage } from 'react-native';
 import { login } from '../../auth';
 
 const LoginForm = ({ navigation, loading, setLoading }) => {
   const [userInfo, setUserInfo] = useContext(UserContext);
+  const [isLogged, setIsLogged] = useContext(AuthenticationContext);
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
@@ -51,8 +52,10 @@ const LoginForm = ({ navigation, loading, setLoading }) => {
         senha: password,
         logged: true,
       };
+      setIsLogged(true);
       setUserInfo(newUserInfo);
       try {
+        console.warn('setting item: ', newUserInfo)
         await AsyncStorage.setItem('userInfo', JSON.stringify(newUserInfo))
       } catch (error) {
         setError(error.message)
@@ -69,12 +72,6 @@ const LoginForm = ({ navigation, loading, setLoading }) => {
     setLoading(!!userInfo.email && !!userInfo.password)
     if(userInfo.logged) navigation.navigate('Navigator', { username, password });
   }, [userInfo.logged])
-
-  useEffect(() => {
-    if (userInfo.condos.length > 0) {
-      signIn();
-    }
-  }, [userInfo.condos]);
 
   return (
     <>

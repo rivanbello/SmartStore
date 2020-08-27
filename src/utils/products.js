@@ -1,7 +1,7 @@
 import all from '../client/list';
 
 const getProductsAndCategories = async ({ pointOfSaleId, token }) => {
-  const products = await all({ pointOfSaleId: userInfo.condo.id, token: userInfo.condo.token })
+  const products = await all({ pointOfSaleId, token })
       let categories = [];
       products.map(({ categoryId, categoryName }) => {
         if (!categoryName) {

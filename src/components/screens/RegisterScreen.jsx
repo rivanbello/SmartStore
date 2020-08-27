@@ -161,7 +161,7 @@ const RegisterScreen = ({ navigation }) => {
             };
             setUserInfo(newUserInfo)
             setChosenCondo(value);
-            setSteps(generateSteps(newUserInfo)); 
+            setSteps(generateSteps(newUserInfo));
             setLastValue(value);
           }}
         />}
