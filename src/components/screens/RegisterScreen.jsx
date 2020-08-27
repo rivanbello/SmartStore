@@ -88,7 +88,7 @@ const RegisterScreen = ({ navigation }) => {
       register(infoToSave).then(() => {
         const newUserInfo = { ...userInfo, logged: true }
         AsyncStorage.setItem('userInfo', JSON.stringify(newUserInfo))
-        .then(() => setUserInfo(newUserInfo));
+          .then(() => setUserInfo(newUserInfo));
       })
       .catch((e) => {
         setfadeOpacity(new Animated.Value(1));

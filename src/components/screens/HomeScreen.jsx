@@ -1,5 +1,5 @@
-import React, { useContext, useState, useEffect } from 'react';
-import { StyleSheet } from 'react-native';
+import React, { useContext, useState } from 'react';
+import { StyleSheet, AsyncStorage } from 'react-native';
 import List from '../list/List';
 import FreeList from '../list/FreeList';
 import Filter from '../filter/Filter';

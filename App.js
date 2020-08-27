@@ -40,7 +40,6 @@ export default function App() {
     let storedInfo = {};
     if (!username || !password) {
       storedInfo = JSON.parse(await AsyncStorage.getItem('userInfo'));
-      console.warn('condos inside auto login: ', condos);
       if (storedInfo && storedInfo.email && storedInfo.senha) {
         username = storedInfo.email;
         password = storedInfo.senha;
