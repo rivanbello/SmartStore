@@ -134,25 +134,31 @@ export default function App() {
     <NavigationContainer>
         <UserContext.Provider value={[userInfo, setUserInfo]}>
           <AuthenticationContext.Provider value={[isLogged, setIsLogged]}>
-            <CartContext.Provider value={[cartInfo, setCartInfo]}>
-              <Stack.Navigator initialRouteName="Login">
-                <Stack.Screen name="Login" component={Screens.LoginScreen} options={{ headerShown: false }} />
-                <Stack.Screen name="Register" component={Screens.RegisterScreen} options= {{ headerShown: false }} />
-                <Stack.Screen name="Navigator" component={AppNavigator} options={{ headerShown: false }} />
-                <Stack.Screen name="Product" component={Screens.ProductScreen} options={{ headerShown: false }} />
-                <Stack.Screen name="RegisterConfirmation" component={Screens.RegisterConfirmationScreen} options={{ headerShown: false }} />
-                <Stack.Screen name="Category" component={Screens.CategoryScreen} options={{ headerShown: false }} />
-                <Stack.Screen name="Checkout" component={Screens.CheckoutScreen} options={{ headerShown: false }} />
-                <Stack.Screen name="Suggestion" component={Screens.SuggestionScreen} options={{ headerShown: false }} />
-                <Stack.Screen name="Info" component={Screens.InformationScreen} options={{ headerShown: false }}/>
-                <Stack.Screen name="FeedbackConfirmation" component={Screens.FeedbackConfirmationScreen} options={{ headerShown: false }} />
-                <Stack.Screen name="ResetPassword" component={Screens.ResetPasswordScreen} options={{ headerShown: false }} />
-                <Stack.Screen name="ShoppingBag" component={Screens.ShoppingBagScreen} options={{ headerShown: false }} />
-                <Stack.Screen name="PasswordFeedback" component={Screens.PasswordFeedbackScreen} options={{ headerShown: false }} />
-                <Stack.Screen name="PaymentConfirmed" component={Screens.PaymentConfirmedScreen} options={{ headerShown: false }} />
-                <Stack.Screen name="PaymentError" component={Screens.PaymentErrorScreen} options={{ headerShown: false }} />
-              </Stack.Navigator>
-            </CartContext.Provider>
+            {isLogged ? 
+              <CartContext.Provider value={[cartInfo, setCartInfo]}>
+                <Stack.Navigator initialRouteName="Main">
+                  <Stack.Screen name="Login" component={Screens.LoginScreen} options={{ headerShown: false }} />
+                  <Stack.Screen name="Register" component={Screens.RegisterScreen} options= {{ headerShown: false }} />
+                  <Stack.Screen name="Navigator" component={AppNavigator} options={{ headerShown: false }} />
+                  <Stack.Screen name="Product" component={Screens.ProductScreen} options={{ headerShown: false }} />
+                  <Stack.Screen name="RegisterConfirmation" component={Screens.RegisterConfirmationScreen} options={{ headerShown: false }} />
+                  <Stack.Screen name="Category" component={Screens.CategoryScreen} options={{ headerShown: false }} />
+                  <Stack.Screen name="Checkout" component={Screens.CheckoutScreen} options={{ headerShown: false }} />
+                  <Stack.Screen name="Suggestion" component={Screens.SuggestionScreen} options={{ headerShown: false }} />
+                  <Stack.Screen name="Info" component={Screens.InformationScreen} options={{ headerShown: false }}/>
+                  <Stack.Screen name="FeedbackConfirmation" component={Screens.FeedbackConfirmationScreen} options={{ headerShown: false }} />
+                  <Stack.Screen name="ResetPassword" component={Screens.ResetPasswordScreen} options={{ headerShown: false }} />
+                  <Stack.Screen name="ShoppingBag" component={Screens.ShoppingBagScreen} options={{ headerShown: false }} />
+                  <Stack.Screen name="PasswordFeedback" component={Screens.PasswordFeedbackScreen} options={{ headerShown: false }} />
+                  <Stack.Screen name="PaymentConfirmed" component={Screens.PaymentConfirmedScreen} options={{ headerShown: false }} />
+                  <Stack.Screen name="PaymentError" component={Screens.PaymentErrorScreen} options={{ headerShown: false }} />
+                </Stack.Navigator>
+              </CartContext.Provider>
+              : <Stack.Navigator initialRouteName="Login">
+                  <Stack.Screen name="Login" component={Screens.LoginScreen} options={{ headerShown: false }} />
+                  <Stack.Screen name="Register" component={Screens.RegisterScreen} options= {{ headerShown: false }} />
+                </Stack.Navigator>
+          }
           </AuthenticationContext.Provider>
         </UserContext.Provider>
     </NavigationContainer>
