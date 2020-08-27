@@ -11,6 +11,7 @@ import { AsyncStorage } from 'react-native';
 import Screens from './src/components/screens';
 import NetInfo from '@react-native-community/netinfo';
 import { getCondoAddress } from './src/utils/condoHelpers';
+import { checkNetworkStatus, monitorNetworkStatus } from './src/network';
 import { UserContext, CartContext } from './src/context';
 import {
   Foundation,
@@ -35,57 +36,71 @@ export default function App() {
   const [userInfo, setUserInfo] = useState({ condos: [] });
   const [cartInfo, setCartInfo] = useState({ items: [] });
   const [networkStatus, setNetworkStatus] = useState(true);
-  const autoLogin = useCallback(async ({ userInfo }) => {
-    const storedInfo = JSON.parse(await AsyncStorage.getItem('userInfo'));
-    if (storedInfo && storedInfo.email && storedInfo.senha) {
-      try {
-        const {
-          name: nome,
-          phoneNumber: telefone,
-          birthDate: nascimento,
-          machineCompanyCode,
-          email,
-          condoId,
-        } = await login({ email: storedInfo.email, password: storedInfo.senha })
-          const newUserInfo = {
-            ...userInfo,
-            nome,
-            telefone,
-            nascimento,
-            condo: {
-              ...userInfo.condo,
-              name: userInfo && userInfo.condos && userInfo.condos.filter(({ machineCompanyCode: code }) => code === machineCompanyCode)[0] && userInfo.condos.filter(({ machineCompanyCode: code }) => code === machineCompanyCode)[0].name,
-              token: userInfo && userInfo.condos && userInfo.condos.filter(({ machineCompanyCode: code }) => code === machineCompanyCode)[0] && userInfo.condos.filter(({ machineCompanyCode: code }) => code === machineCompanyCode)[0].token,
-              machineCompanyCode,
-              id: condoId,
-            },
-            email,
-            senha: storedInfo.senha,
-            logged: true,
-          };
-          await AsyncStorage.setItem('userInfo', JSON.stringify(newUserInfo))
-          await setUserInfo(newUserInfo);
-      } catch (error) {
-        console.warn('auto login error: ', error);
-        throw error;
-      } finally {
+  const [isLoading, setIsLoading] = useState(true);
+  const autoLogin = useCallback(async ({ username, password } = {}) => {
+    let storedInfo = {};
+    if (!username || !password) {
+      storedInfo = JSON.parse(await AsyncStorage.getItem('userInfo'));
+      if (storedInfo && storedInfo.email && storedInfo.senha) {
+        username = storedInfo.email;
+        password = storedInfo.senha;
+      } else {
+        setIsLoading(false);
+        return;
       }
+    }
+    try {
+      const {
+        name: nome,
+        phoneNumber: telefone,
+        birthDate: nascimento,
+        machineCompanyCode,
+        email,
+        condoId,
+      } = await login({ email: username, password })
+      const newUserInfo = {
+        ...userInfo,
+        nome,
+        telefone,
+        nascimento,
+        condo: {
+          ...userInfo.condo,
+          name: userInfo && userInfo.condos && userInfo.condos.filter(({ machineCompanyCode: code }) => code === machineCompanyCode)[0] && userInfo.condos.filter(({ machineCompanyCode: code }) => code === machineCompanyCode)[0].name,
+          token: userInfo && userInfo.condos && userInfo.condos.filter(({ machineCompanyCode: code }) => code === machineCompanyCode)[0] && userInfo.condos.filter(({ machineCompanyCode: code }) => code === machineCompanyCode)[0].token,
+          machineCompanyCode,
+          id: condoId,
+        },
+        email,
+        senha: password,
+        logged: true,
+      };
+      setUserInfo(newUserInfo);
+      try {
+        await AsyncStorage.setItem('userInfo', JSON.stringify(newUserInfo))
+      } catch (error) {
+        setError(error.message)
+      }
+    } catch (e) {
+      console.warn('catch error: ', e)
+      setError(e.message)
+    }
+    finally{
+      console.warn('setting loading to false')
+      setIsLoading(false)
     }
   }, []);
 
   useEffect(() => {
     // console.disableYellowBox = true;
-    NetInfo.fetch().then(state => {
-      if (!state.isConnected) {
-        setLoading(false);
-        setError('Sem conexão com a internet!')
-      }
-    }).then(() => 
-      NetInfo.addEventListener(state => {
-        if(state.isConnected !== networkStatus) setNetworkStatus(state.isConnected);
-      })
-    );
-    
+    checkNetworkStatus()
+      .then(status => {
+        if(!status) {
+          setIsLoading(false);
+          setError('Sem conexão com a internet!')
+        }
+      });
+    monitorNetworkStatus((status) => setNetworkStatus(status));
+
     getTokens()
     .then(tokens =>
     pointsOfSale({ tokens }).then(response => {
@@ -116,23 +131,31 @@ export default function App() {
 
   useEffect(() => {
     if (userInfo.condo && userInfo.condo.token)
-    all({ pointOfSaleId: userInfo.condo.id, token: userInfo.condo.token })
-    //bug login aqui
-    .then(response => {
-      let categories = [];
-      response.map(({ categoryId, categoryName }) => {
-        if (!categoryName) {
-          if (!categories.includes(`Categoria ${categoryId}`)) categories.push(`Categoria ${categoryId}`)
-        } else {
-          if (!categories.includes(categoryName)) categories.push(categoryName)
-        }
+      all({ pointOfSaleId: userInfo.condo.id, token: userInfo.condo.token })
+      //bug login aqui
+      .then(response => {
+        let categories = [];
+        response.map(({ categoryId, categoryName }) => {
+          if (!categoryName) {
+            if (!categories.includes(`Categoria ${categoryId}`)) categories.push(`Categoria ${categoryId}`)
+          } else {
+            if (!categories.includes(categoryName)) categories.push(categoryName)
+          }
+        })
+        const newUserInfo = { ...userInfo, availableProducts: response, categories };
+        setUserInfo(newUserInfo)
+          .then(() => autoLogin({ email: newUserInfo.email, password: newUserInfo.senha }))
+          .finally(() => setIsLoading(false))
       })
-      const newUserInfo = { ...userInfo, availableProducts: response, categories };
-      setUserInfo(newUserInfo);
-    })
   }, [userInfo.condo]);
 
+
+  if (isLoading) {
+    // We haven't finished checking for the token yet
+    return <Screens.SplashScreen />;
+  }
   return (
+    
     <NavigationContainer>
         <UserContext.Provider value={[userInfo, setUserInfo]}>
           <CartContext.Provider value={[cartInfo, setCartInfo]}>

@@ -13,6 +13,7 @@ import ResetPasswordScreen from './ResetPasswordScreen';
 import ProfileScreen from './ProfileScreen';
 import PasswordFeedbackScreen from './PasswordFeedbackScreen';
 import ShoppingBagScreen from './ShoppingBagScreen';
+import SplashScreen from './SplashScreen';
 import PaymentConfirmedScreen from './PaymentConfirmedScreen';
 import LoadingScreen from './LoadingScreen';
 import PaymentErrorScreen from './PaymentErrorScreen';
@@ -33,6 +34,7 @@ const Screens = {
   ProductScreen,
   ShoppingBagScreen,
   SuggestionScreen,
+  SplashScreen,
   ProfileScreen,
   PaymentConfirmedScreen,
   PaymentErrorScreen,

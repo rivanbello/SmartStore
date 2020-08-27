@@ -7,6 +7,7 @@ import ProfileBackground from './profileBackground.png';
 import ProfileBackground2 from './profileBackground2.png';
 import LoginLogo from './loginLogo.png'
 import LogoLogin from './logoLogin.png'
+import SplashPNG from './splash.png';
 import PaymentFailed from './paymentFailed.png';
 
 export {
@@ -20,4 +21,5 @@ export {
   ProfileBackground,
   ProfileBackground2,
   ResetPassword,
+  SplashPNG,
 }
