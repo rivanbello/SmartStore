@@ -9,8 +9,7 @@ import { getTokens } from './src/firebase';
 import pointsOfSale from './src/client/pointsOfSale';
 import { AsyncStorage } from 'react-native';
 import Screens from './src/components/screens';
-import NetInfo from '@react-native-community/netinfo';
-import { getCondoAddress, loadCondos } from './src/utils/condoHelpers';
+import { loadCondos } from './src/utils/condoHelpers';
 import { getProductsAndCategories } from './src/utils/products';
 import { checkNetworkStatus, monitorNetworkStatus } from './src/network';
 import { UserContext, CartContext } from './src/context';
@@ -113,7 +112,7 @@ export default function App() {
   
   useEffect(() => {
     if (userInfo.condo && userInfo.condo.token)
-    getProductsAndCategories()
+    getProductsAndCategories({ pointOfSaleId: userInfo.condo.id, token: userInfo.condo.token })
       .then((res) => {
         const { availableProducts, categories } = res;
         const newUserInfo = { ...userInfo, availableProducts, categories };
