@@ -124,9 +124,6 @@ export default function App() {
           const newUserInfo = { ...userInfo, availableProducts, categories };
           setUserInfo(newUserInfo)
         })
-        .finally(() => setIsLoading(false))
-      else
-        setIsLoading(false);
     }, [userInfo.condo]);
 
   if (isLoading) {
