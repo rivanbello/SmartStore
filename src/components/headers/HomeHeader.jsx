@@ -8,7 +8,7 @@ import { CartContext } from '../../context';
 
 const HomeHeader = ({ navigation, name, condoName, searchActive = false, onBack }) => {
   
-  const [cartInfo, setCartInfo] = useContext(CartContext);
+  // const [cartInfo, setCartInfo] = useContext(CartContext);
 
   return (<View style={styles.container}>
     <Image source={HomeHeaderBackground} style={styles.image}/>

@@ -17,6 +17,7 @@ const Filter = ({
       style={{...styles.container, ...style}}
     >
       <TextInput
+        style={{ flex: 1 }}
         placeholder={placeholder}
         onFocus={() => onFocus()}
         value={value}
@@ -24,7 +25,7 @@ const Filter = ({
         onChangeText={onChangeText}
         onBlur={() => onBlur()}
         placeholderTextColor={placeholderTextColor}
-        />
+      />
         {Icon} 
     </View>
 );
