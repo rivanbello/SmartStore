@@ -5,13 +5,14 @@ import { Row } from '../layout';
 import FormItem from './FormItem';
 import { FontAwesome, Entypo } from '@expo/vector-icons';
 import validateField from './formValidators';
-import { UserContext, AuthenticationContext } from '../../context';
+import { UserContext, AuthenticationContext, CondosContext } from '../../context';
 import { AsyncStorage } from 'react-native';
 import { login } from '../../auth';
 
 const LoginForm = ({ navigation, loading, setLoading }) => {
   const [userInfo, setUserInfo] = useContext(UserContext);
   const [isLogged, setIsLogged] = useContext(AuthenticationContext);
+  const [allCondos, setAllCondos] = useContext(CondosContext);
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
@@ -43,8 +44,8 @@ const LoginForm = ({ navigation, loading, setLoading }) => {
         nascimento,
         condo: {
           ...userInfo.condo,
-          name: userInfo && userInfo.condos && userInfo.condos.filter(({ machineCompanyCode: code }) => code === machineCompanyCode)[0] && userInfo.condos.filter(({ machineCompanyCode: code }) => code === machineCompanyCode)[0].name,
-          token: userInfo && userInfo.condos && userInfo.condos.filter(({ machineCompanyCode: code }) => code === machineCompanyCode)[0] && userInfo.condos.filter(({ machineCompanyCode: code }) => code === machineCompanyCode)[0].token,
+          name: Array.isArray(allCondos) && allCondos.filter(({ machineCompanyCode: code }) => code === machineCompanyCode)[0] && allCondos.filter(({ machineCompanyCode: code }) => code === machineCompanyCode)[0].name,
+          token: Array.isArray(allCondos) && allCondos.filter(({ machineCompanyCode: code }) => code === machineCompanyCode)[0] && allCondos.filter(({ machineCompanyCode: code }) => code === machineCompanyCode)[0].token,
           machineCompanyCode,
           id: condoId,
         },
@@ -70,7 +71,7 @@ const LoginForm = ({ navigation, loading, setLoading }) => {
 
   useEffect(() => {
     setLoading(!!userInfo.email && !!userInfo.password)
-    if(userInfo.logged) navigation.navigate('Navigator', { username, password });
+    if(userInfo.logged) setIsLogged(true)
   }, [userInfo.logged])
 
   return (

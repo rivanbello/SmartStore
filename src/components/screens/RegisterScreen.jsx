@@ -17,7 +17,7 @@ import {
   MaterialCommunityIcons,
 } from '@expo/vector-icons';
 import { TopAlert } from '../misc';
-import { UserContext } from '../../context';
+import { UserContext, CondosContext, AuthenticationContext } from '../../context';
 import { CondoForm } from '../forms';
 
 const icons = {
@@ -30,12 +30,14 @@ const icons = {
 
 const RegisterScreen = ({ navigation }) => {
   const [userInfo, setUserInfo] = useContext(UserContext);
+  const [isLogged, setIsLogged] = useContext(AuthenticationContext);
   const [emailAlreadyUsed, setEmailAlreadyUsed] = useState(false);
   const [steps, setSteps] = useState(generateSteps(userInfo));
   const [stepIndex, setStepIndex] = useState(0);
   const [registerError, setRegisterError] = useState('');
   const [chosenCondo, setChosenCondo] = useState(false);
   const [hideHeader, setHideHeader] = useState(false);
+  const [allCondos, setAllCondos] = useContext(CondosContext);
   const [lastValue, setLastValue] = useState('');
   const [fadeOpacity, setfadeOpacity] = useState(new Animated.Value(0));
 
@@ -88,7 +90,8 @@ const RegisterScreen = ({ navigation }) => {
       register(infoToSave).then(() => {
         const newUserInfo = { ...userInfo, logged: true }
         AsyncStorage.setItem('userInfo', JSON.stringify(newUserInfo))
-          .then(() => setUserInfo(newUserInfo));
+          .then(() => setUserInfo(newUserInfo))
+          .then(() => setIsLogged(true));
       })
       .catch((e) => {
         setfadeOpacity(new Animated.Value(1));
@@ -108,7 +111,7 @@ const RegisterScreen = ({ navigation }) => {
 
   useEffect(() => {
     setLastValue(userInfo[`${steps[stepIndex].formItems[0].placeholder.toLowerCase().replace('-','')}`] || '')
-  },[stepIndex])
+  }, [stepIndex])
 
   return (
     <Screen>
@@ -151,8 +154,8 @@ const RegisterScreen = ({ navigation }) => {
             {steps[stepIndex].label}
           </>
         }
-        {stepIndex === 6 && userInfo.condos && userInfo.condos.length > 0 && <CondoForm
-          data={userInfo.condos}
+        {stepIndex === 6 && allCondos && allCondos.length > 0 && <CondoForm
+          data={allCondos}
           setHideHeader={setHideHeader}
           setFormValue={(value) => {
             const newUserInfo = {
