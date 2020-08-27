@@ -40,7 +40,7 @@ export default function App() {
     let storedInfo = {};
     if (!username || !password) {
       storedInfo = JSON.parse(await AsyncStorage.getItem('userInfo'));
-      console.warn('storedInfo', storedInfo);
+      console.warn('condos inside auto login: ', condos);
       if (storedInfo && storedInfo.email && storedInfo.senha) {
         username = storedInfo.email;
         password = storedInfo.senha;
@@ -58,8 +58,7 @@ export default function App() {
         email,
         condoId,
       } = await login({ email: username, password })
-      const condo = condos.filter(({ machineCompanyCode: code }) => code === machineCompanyCode)[0] && userInfo.condos.filter(({ machineCompanyCode: code }) => code === machineCompanyCode)[0] || {};
-      console.warn("condo!: ", condo)
+      const condo = condos.filter(({ machineCompanyCode: code }) => code === machineCompanyCode)[0] && condos.filter(({ machineCompanyCode: code }) => code === machineCompanyCode)[0] || {};
       const newUserInfo = {
         ...userInfo,
         nome,
@@ -105,16 +104,16 @@ export default function App() {
       });
     monitorNetworkStatus((status) => setNetworkStatus(status));
     getTokens()
-      .then(tokens =>
+      .then(tokens => {
         pointsOfSale({ tokens })
           .then(response => {
             const condos = loadCondos(response);
             const newUserInfo = { ...userInfo, condos };
-            console.warn('condos param: ', condos)
             setUserInfo(newUserInfo);
             autoLogin({ condos });
             return newUserInfo;
           })
+        }
   )}, []);
   
   useEffect(() => {
