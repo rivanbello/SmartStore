@@ -10,7 +10,8 @@ import pointsOfSale from './src/client/pointsOfSale';
 import { AsyncStorage } from 'react-native';
 import Screens from './src/components/screens';
 import NetInfo from '@react-native-community/netinfo';
-import { getCondoAddress } from './src/utils/condoHelpers';
+import { getCondoAddress, loadCondos } from './src/utils/condoHelpers';
+import { getProductsAndCategories } from './src/utils/products';
 import { checkNetworkStatus, monitorNetworkStatus } from './src/network';
 import { UserContext, CartContext } from './src/context';
 import {
@@ -20,7 +21,6 @@ import {
   MaterialCommunityIcons,
 } from '@expo/vector-icons';
 import { COLORS } from './src/constants';
-
 
 Sentry.init({
   dsn: "https://0e53614aa30d4eef8be38c058ddbdf0a@o372799.ingest.sentry.io/5400308",
@@ -100,62 +100,37 @@ export default function App() {
         }
       });
     monitorNetworkStatus((status) => setNetworkStatus(status));
-
     getTokens()
-    .then(tokens =>
-    pointsOfSale({ tokens }).then(response => {
-      const condos = [];
-      response.map((pos) => {
-        const name = `Cond. ${pos.localName}`;
-        let condoInfo = {};
-        condoInfo = getCondoAddress(pos.localName);
-
-        // para tratar erros no nome vindo da AMLabs
-        if (condoInfo.localName) pos.localName = condoInfo.localName;
-        // console.warn('tokens: ', tokens)
-        condos.push({
-          ...condoInfo,
-          token: pos.token,
-          name,
-          machineCompanyCode: pos.machineCompanyCode,
-          id: pos.id,
-          distance: "15m",
-        });
-        // const newUserInfo = { ...userInfo, ...(JSON.parse(storedInfo)), condos };
-        const newUserInfo = { ...userInfo, condos };
-        setUserInfo(newUserInfo);
-        return newUserInfo;
-      })
-  })
+      .then(tokens =>
+        pointsOfSale({ tokens })
+        .then(response => {
+          const condos = loadCondos(response);
+          const newUserInfo = { ...userInfo, condos };
+          setUserInfo(newUserInfo);
+          return newUserInfo;
+        })
   )}, []);
-
+  
   useEffect(() => {
     if (userInfo.condo && userInfo.condo.token)
-      all({ pointOfSaleId: userInfo.condo.id, token: userInfo.condo.token })
-      //bug login aqui
-      .then(response => {
-        let categories = [];
-        response.map(({ categoryId, categoryName }) => {
-          if (!categoryName) {
-            if (!categories.includes(`Categoria ${categoryId}`)) categories.push(`Categoria ${categoryId}`)
-          } else {
-            if (!categories.includes(categoryName)) categories.push(categoryName)
-          }
-        })
-        const newUserInfo = { ...userInfo, availableProducts: response, categories };
+    getProductsAndCategories()
+      .then((res) => {
+        const { availableProducts, categories } = res;
+        const newUserInfo = { ...userInfo, availableProducts, categories };
         setUserInfo(newUserInfo)
-          .then(() => autoLogin({ email: newUserInfo.email, password: newUserInfo.senha }))
-          .finally(() => setIsLoading(false))
+          .then(() => {
+            if (userInfo.condos.length > 0)
+              autoLogin({ username: newUserInfo.email, password: newUserInfo.senha });
+          })
+        .finally(() => setIsLoading(false))
       })
-  }, [userInfo.condo]);
-
+    }, [userInfo.condo]);
 
   if (isLoading) {
     // We haven't finished checking for the token yet
     return <Screens.SplashScreen />;
   }
   return (
-    
     <NavigationContainer>
         <UserContext.Provider value={[userInfo, setUserInfo]}>
           <CartContext.Provider value={[cartInfo, setCartInfo]}>
@@ -179,14 +154,6 @@ export default function App() {
           </CartContext.Provider>
         </UserContext.Provider>
     </NavigationContainer>
-
-    // <NavigationContainer>
-    //   <UserContext.Provider value={[userInfo, setUserInfo]}>
-    //     <Stack.Navigator initialRouteName={"Suggestion"}>
-    //       <Stack.Screen name="Suggestion" component={SuggestionScreen} options={{ headerShown: false }}/>
-    //     </Stack.Navigator>
-    //   </UserContext.Provider>
-    // </NavigationContainer>
   );
 }
 

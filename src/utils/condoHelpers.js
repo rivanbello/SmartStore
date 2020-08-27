@@ -1,3 +1,22 @@
+const loadCondos = (posArr = []) => (
+  Array.isArray(posArr) && posArr.map((pos) => {
+    const name = `Cond. ${pos.localName}`;
+    let condoInfo = {};
+    condoInfo = getCondoAddress(pos.localName);
+
+    // para tratar erros no nome vindo da AMLabs
+    if (condoInfo.localName) pos.localName = condoInfo.localName;
+    // console.warn('tokens: ', tokens)
+    return({
+      ...condoInfo,
+      token: pos.token,
+      name,
+      machineCompanyCode: pos.machineCompanyCode,
+      id: pos.id,
+      distance: "15m",
+    });
+  }))
+
 const getCondoAddress = (condoName) => {
   let condoInfo = {};
   switch (condoName) {
@@ -78,4 +97,4 @@ const getCondoAddress = (condoName) => {
   return condoInfo;
 }
 
-export { getCondoAddress };
+export { getCondoAddress, loadCondos };
