@@ -8,36 +8,36 @@ import { CartContext } from '../../context';
 
 const HomeHeader = ({ navigation, name, condoName, searchActive = false, onBack }) => {
   
-  const [cartInfo, setCartInfo] = useContext(CartContext);
+  // const [cartInfo, setCartInfo] = useContext(CartContext);
 
   return (<View style={styles.container}>
     <Image source={HomeHeaderBackground} style={styles.image}/>
-    {!searchActive ? 
-      <Row style={
-         styles.smallScreenLabel
-      }>
-        <Column style={{ flex: 1, justifyContent: 'center' }}>
-            <Text style={{ color: '#FFA5AD', fontSize: 17 }}>
-              Olá
-              <Text style={{ color: '#fff', fontWeight: 'bold' }}> {name}</Text>
-            </Text>
-            <Text style={styles.condoName}> {condoName} </Text>
-          </Column>
-          <View style={{ top: 15, position: 'absolute', right: 21 }}>
-          {/* <ShoppingBag
-            quantity={cartInfo.totalItems}
-            handleOnPress={() => navigation.navigate('ShoppingBag')}
-          /> */}
-          </View>
-        </Row>
-    : <StackHeader
-        style={styles.stackHeader}
-        fontStyle={{ color: 'white' }}
-        handleOnPress={() => navigation.navigate('ShoppingBag')}
-        handleGoBack={() => onBack()}
-        getBackFromSearch
-      />
-    }
+      {!searchActive ? 
+        <Row style={
+          styles.smallScreenLabel
+        }>
+          <Column style={{ flex: 1, justifyContent: 'center' }}>
+              <Text style={{ color: '#FFA5AD', fontSize: 17 }}>
+                Olá
+                <Text style={{ color: '#fff', fontWeight: 'bold' }}> {name}</Text>
+              </Text>
+              <Text style={styles.condoName}> {condoName} </Text>
+            </Column>
+            <View style={{ top: 15, position: 'absolute', right: 21 }}>
+            {/* <ShoppingBag
+              quantity={cartInfo.totalItems}
+              handleOnPress={() => navigation.navigate('ShoppingBag')}
+            /> */}
+            </View>
+          </Row>
+      : <StackHeader
+          style={styles.stackHeader}
+          fontStyle={{ color: 'white' }}
+          handleOnPress={() => navigation.navigate('ShoppingBag')}
+          handleGoBack={() => onBack()}
+          getBackFromSearch
+        />
+      }
   </View>)
 };
 
@@ -47,7 +47,7 @@ const styles = StyleSheet.create({
   },
   stackHeader: {
     position: 'absolute',
-    top: '10%',
+    top: 25,
     left: 20,
     color: 'white',
   },
@@ -62,7 +62,7 @@ const styles = StyleSheet.create({
     position: 'absolute',
     flexDirection: 'column',
     paddingTop: 10,
-    top: 5,
+    top: 25,
     paddingHorizontal: 20,
   },
   regularLabel: {

@@ -29,8 +29,10 @@ const Item = ({ img, description, qty, price, style, onPress }) => {
       <Text style={{ ...styles.price, ...styles.text }}>R$ {price && price.toFixed(2).replace('.', ',')}</Text>
       <Text style={{ ...styles.description, ...styles.text }} numberOfLines={2}>{description}</Text>
       <Text style={{ ...styles.quantity, ...styles.text }}>
-        {Number(qty) < 9 ? '0' : ''}{qty}un
-      </Text>
+        {Number(qty) === 0 && 'Esgotado'
+          || (Number(qty) < 9 && Number(qty) >= 1  ? `0${qty}un` : `${qty}un`)
+        }
+        </Text>
     </View>
   </TouchableOpacity>)
 };

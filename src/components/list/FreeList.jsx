@@ -1,7 +1,7 @@
 import React from 'react';
 import Item from './Item';
 import { COLORS } from '../../constants';
-import { Dimensions, ScrollView, FlatList } from 'react-native';
+import { Dimensions, FlatList } from 'react-native';
 import { Row } from '../layout';
 
 const screenWidth = Math.round(Dimensions.get('window').width);
@@ -13,29 +13,31 @@ const FreeList = ({ list = [], navigation }) => {
   }
   return (
     <FlatList style={styles.container}
-    data={rows}
-    renderItem={({ item: row }) => (
-    <Row style={{ justifyContent: 'flex-start' }}>
-    {row.map(({ description, price, quantity, imageUrl, ageRestricted, id }) => (
-      <Item
-        style={styles.item}
-        description={description}
-        img={imageUrl}
-        // category={category}
-        price={price}
-        qty={quantity}
-        onPress={() => navigation.navigate('Product', {
-          stock: quantity == 0 ? false : true,
-          name: description,
-          price,
-          ageRestricted,
-          qty: quantity,
-          imageUrl,
-          id,
-        })}
-      />
-    ))}
-    </Row>
+      data={rows}
+      keyExtractor={(item, index) => `${item}${index}`}
+      renderItem={({ item: row }) => (
+        <Row style={{ justifyContent: 'flex-start' }}>
+          {row.map(({ description, price, quantity, imageUrl, ageRestricted, id }, index) => (
+            <Item
+              style={styles.item}
+              key={`${description}${index}`}
+              description={description}
+              img={imageUrl}
+              // category={category}
+              price={price}
+              qty={quantity}
+              onPress={() => navigation.navigate('Product', {
+                stock: quantity == 0 ? false : true,
+                name: description,
+                price,
+                ageRestricted,
+                qty: quantity,
+                imageUrl,
+                id,
+              })}
+            />
+          ))}
+        </Row>
     )}
   />
 )}

@@ -1,5 +1,5 @@
 import React, { useContext, useState } from 'react';
-import { StyleSheet } from 'react-native';
+import { StyleSheet, AsyncStorage } from 'react-native';
 import List from '../list/List';
 import FreeList from '../list/FreeList';
 import Filter from '../filter/Filter';
@@ -19,7 +19,7 @@ const HomeScreen = ({ route: { params = {} } = {}, navigation }) => {
     name={userInfo.nome}
     condoName={userInfo.condo && userInfo.condo.name}
     searchActive={filterValue}
-    onBack={() => setFilterValue('') }
+    onBack={() => setFilterValue('')}
     navigation={navigation}
   />
     <Screen>

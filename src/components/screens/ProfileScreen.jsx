@@ -5,11 +5,12 @@ import { Image, Text, View, TouchableOpacity, AsyncStorage, ScrollView } from 'r
 import UnsafeScreen from './UnsafeScreen';
 import { Ionicons } from '@expo/vector-icons'; 
 import { COLORS } from '../../constants';
-import { UserContext, CartContext } from '../../context';
+import { UserContext, CartContext, AuthenticationContext } from '../../context';
 import * as SecureStore from 'expo-secure-store';
 
 const ProfileScreen = ({ navigation }) => {
   const [userInfo, setUserInfo] = useContext(UserContext);
+  const [isLogged, setIsLogged] = useContext(AuthenticationContext);
   const [cartInfo, setCartInfo] = useContext(CartContext);
   return (
     <>
@@ -37,7 +38,7 @@ const ProfileScreen = ({ navigation }) => {
             .then(() => 
               setUserInfo({ ...userInfo, logged: false, password: '', email: '', cart: { items: [] } }))
             .then(() => SecureStore.setItemAsync('qwe', '{}'))
-            .then(() => navigation.navigate('Login'));
+            .then(() => setIsLogged(false));
           }}>
             <Text style={{ alignSelf: 'center', marginVertical: 40, fontWeight: 'bold', color: COLORS.darkGray }}>Sair da minha conta</Text>
           </TouchableOpacity>

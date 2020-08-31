@@ -39,6 +39,7 @@ const CategoryScreen = ({ route, navigation, state }) => {
         <Row style={{ justifyContent: 'flex-start' }}>
           <FlatList
             data={row}
+            keyExtractor={(item, index) => `${item}${index}`}
             horizontal
             scrollEnabled={false}
             keyExtractor={(item, index) => item + index}

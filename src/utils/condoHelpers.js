@@ -1,13 +1,30 @@
+const loadCondos = (posArr = []) => (
+  Array.isArray(posArr) && posArr.map((pos) => {
+    const name = `Cond. ${pos.localName}`;
+    let condoInfo = {};
+    condoInfo = getCondoAddress(pos.localName);
+
+    // para tratar erros no nome vindo da AMLabs
+    if (condoInfo.localName) pos.localName = condoInfo.localName;
+    // console.warn('tokens: ', tokens)
+    return({
+      ...condoInfo,
+      token: pos.token,
+      name,
+      machineCompanyCode: pos.machineCompanyCode,
+      id: pos.id,
+      distance: "15m",
+    });
+  }))
+
 const getCondoAddress = (condoName) => {
   let condoInfo = {};
   switch (condoName) {
     case 'Spazio Castellon':
-      condoInfo.address ="R. Profa. Maria Pilar Bórgia, 215";
-      condoInfo.neighborhood = "Vila Carminha, Campinas - SP";
-      break;
+    case 'Spazio Castellon PDV1':
     case 'Spazio Castellon PDV2':
       condoInfo.address ="R. Profa. Maria Pilar Bórgia, 215";
-      condoInfo.neighborhood = "Vila Carminha, Campinas - SP";
+      condoInfo.neighborhood = "Vila Carminha, Campinas - SP, 13045-410";
       break;
     case 'Topazio Ville':
       condoInfo.address = 'Av. São José dos Campos, 150';
@@ -68,6 +85,10 @@ const getCondoAddress = (condoName) => {
       condoInfo.neighborhood = 'Vila Taruma, Pinhais - PR, 83323-123';
       break;
 
+    case 'Ilhas do Mediterrâneo':
+      condoInfo.address = 'R. Francisco Bueno Lacerda, 250';
+      condoInfo.neighborhood = 'Parque Italia, Campinas - SP, 13036-265';
+      break;
     default:
       condoInfo.address = '';
       condoInfo.neighborhood = '';
@@ -76,4 +97,4 @@ const getCondoAddress = (condoName) => {
   return condoInfo;
 }
 
-export { getCondoAddress };
+export { getCondoAddress, loadCondos };
