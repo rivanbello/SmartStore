@@ -222,7 +222,7 @@ const styles = {
   },
   content: {
     flex: 1,
-    marginTop: '6%',
+    marginTop: '2%',
   },
 }
 

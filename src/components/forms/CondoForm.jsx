@@ -114,8 +114,8 @@ const styles = {
     flexDirection: 'row',
     // width: '34%',
     borderRadius: 20,
-    marginTop: 26,
-    marginBottom: 22,
+    marginTop: '2%',
+    marginBottom: '10%',
   },
   searchPlaceholder: {
     fontWeight: 'bold',

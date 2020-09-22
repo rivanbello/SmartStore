@@ -60,7 +60,7 @@ const getCondoAddress = (condoName) => {
       condoInfo.address = 'Avenida Visconde de Guarapuava, 3806';
       condoInfo.neighborhood = 'Curitiba - PR';
       break;
-    case 'Condomínio Rubi Ville': 
+    case 'Rubi Ville': 
       condoInfo.localName = 'Rubi Ville'
       condoInfo.address = 'Bairro Jardim Nova Europa';
       condoInfo.neighborhood = 'Campinas - SP';

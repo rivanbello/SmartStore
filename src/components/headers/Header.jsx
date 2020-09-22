@@ -12,7 +12,7 @@ const Header = ({ children, style }) => (
 const styles = StyleSheet.create({
   container: {
     maxHeight: SCREEN_HEIGHT * 0.08,
-    marginTop: 25,
+    marginTop: '5%',
   }
 })
 
